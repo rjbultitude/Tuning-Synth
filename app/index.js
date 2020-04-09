@@ -11,7 +11,8 @@ const sketchFn = (p5Sketch) => {
   }
 
   p5Sketch.setup = function setup() {
-    let cnv = p5Sketch.createCanvas(100,100);
+    let cnv = p5Sketch.createCanvas(1920,1080);
+    cnv.parent('wrapper');
     cnv.mouseClicked(togglePlay);
     fft = new p5.FFT();
     console.log('fft', fft);
@@ -19,7 +20,7 @@ const sketchFn = (p5Sketch) => {
   }
 
   p5Sketch.draw = function draw() {
-    p5Sketch.background(220);
+    p5Sketch.background(0, 0, 0);
 
     let spectrum = fft.analyze();
     p5Sketch.noStroke();
