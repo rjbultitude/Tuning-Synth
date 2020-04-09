@@ -1,0 +1,12 @@
+# Dist
+dist/**/*.js
+
+# Webpack
+webpack.config.js
+webpack/**/*.js
+
+# Unit tests
+app/**/*.spec.js
+
+# Assets
+img/
