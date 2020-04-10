@@ -3,12 +3,13 @@ import 'p5/lib/addons/p5.sound';
 import './global.css';
 
 const sketchFn = (p5Sketch) => {
-  let sound;
   let freq;
   let playing;
   let fft;
-  const controls = document.waveControls.wave;
-  let waveType = controls.value || 'sine';
+  let grainSize;
+  const waveControls = document.controls.wave;
+  const grainControl = document.controls.grainSize;
+  let waveType = waveControls.value || 'sine';
   let osc = new p5.Oscillator(waveType);
 
 
@@ -16,18 +17,22 @@ const sketchFn = (p5Sketch) => {
     osc.setType(waveType);
   }
 
-  function setupControls() {
-    for (let index = 0; index < controls.length; index++) {
-      controls[index].addEventListener('change', function() {
+  function setupWaveControls() {
+    for (let index = 0; index < waveControls.length; index++) {
+      waveControls[index].addEventListener('change', function() {
         waveType = this.value;
-
         changeWave();
       });
     }
   }
 
+  function setUpGrainControl() {
+    grainControl.addEventListener('change', function() {
+      grainSize = this.value;
+    });
+  }
+
   p5Sketch.preload = function preload() {
-    // sound = p5Sketch.loadSound('../audio/Forbidden.mp3');
     osc = new p5.Oscillator(waveType);
   }
 
@@ -35,10 +40,11 @@ const sketchFn = (p5Sketch) => {
     let cnv = p5Sketch.createCanvas(1920,1080);
     cnv.parent('wrapper');
     cnv.mouseClicked(togglePlay);
-    setupControls();
+    setupWaveControls();
+    setUpGrainControl();
     fft = new p5.FFT();
-    // sound.amp(0.2);
     osc.amp(0.2);
+    grainSize = 20;
   }
 
   p5Sketch.draw = function draw() {
@@ -55,18 +61,16 @@ const sketchFn = (p5Sketch) => {
       let x = p5Sketch.map(i, 0, spectrum.length, p5Sketch.width, 0);
       let y = p5Sketch.map(spectrum[i], 0, 255, p5Sketch.height, 0);
       p5Sketch.fill(r, 50, b);
-      p5Sketch.ellipse(x, y, 18);
+      p5Sketch.ellipse(x, y, grainSize);
     }
 
   }
 
   function togglePlay() {
     if (playing) {
-      // sound.pause();
       osc.stop();
       playing = false;
     } else {
-      // sound.loop();
       osc.start();
       playing = true;
     }

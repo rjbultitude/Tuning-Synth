@@ -3,23 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Audio Visual</title>
+    <title>Synesthesia</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <h1>Audio Visual</h1>
-    <div id="wrapper" class="wrapper"></div>
-    <div class="controls">
-      <form name="waveControls">
-        <label for="sawtooth">Sawtooth</label>
-        <input type="radio" name="wave" id="sawtooth" value="sawtooth" checked>
-        <label for="sine">Sine</label>
-        <input type="radio" name="wave" id="sine" value="sine">
-        <label for="square">Square</label>
-        <input type="radio" name="wave" id="square" value="square">
-        <label for="triangle">Triangle</label>
-        <input type="radio" name="wave" id="triangle" value="triangle">
+    <div class="wrapper">
+      <h1>Synesthesia</h1>
+      <p>Making frequencies visible since 2020</p>
+      <div id="wrapper" class="video-wrapper">
+      </div>
+      <form name="controls" class="controls">
+        <div class="radio-wrapper">
+          <label for="sawtooth">Sawtooth</label>
+          <input type="radio" name="wave" id="sawtooth" value="sawtooth" checked>
+        </div>
+        <div class="radio-wrapper">
+          <label for="sine">Sine</label>
+          <input type="radio" name="wave" id="sine" value="sine">
+        </div>
+        <div class="radio-wrapper">
+          <label for="square">Square</label>
+          <input type="radio" name="wave" id="square" value="square">
+        </div>
+        <div class="radio-wrapper">
+          <label for="triangle">Triangle</label>
+          <input type="radio" name="wave" id="triangle" value="triangle">
+        </div>
+        <div class="range-wrapper">
+          <input type="range" id="grainSize" name="grainSize" min="2" max="22">
+          <label for="grainSize">Grain Size</label>
+        </div>
       </form>
     </div>
   </body>
