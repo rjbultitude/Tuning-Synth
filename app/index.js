@@ -6,17 +6,16 @@ const sketchFn = p5Sketch => {
   const config = {
     playing: false,
     fft: null,
+    osc: null,
     grainSize: 10,
     mouseInCanvas: false,
   };
   // Form controls
   const waveControls = document.controls.wave;
   const grainControl = document.controls.grainSize;
-  // Sound source
-  const osc = new p5.Oscillator(waveType);
 
   function changeWave(waveType) {
-    osc.setType(waveType);
+    config.osc.setType(waveType);
     return waveType;
   }
 
@@ -47,7 +46,7 @@ const sketchFn = p5Sketch => {
       config.mouseInCanvas = false;
     }
     if (config.playing && config.mouseInCanvas) {
-      osc.freq(freq);
+      config.osc.freq(freq);
     }
   }
 
@@ -66,7 +65,8 @@ const sketchFn = p5Sketch => {
 
   p5Sketch.preload = function preload() {
     const initialWaveType = waveControls.value || 'sine';
-    osc = new p5.Oscillator(initialWaveType);
+    config.osc = new p5.Oscillator(initialWaveType);
+    config.osc.amp(0.2);
   };
 
   p5Sketch.setup = function setup() {
@@ -76,7 +76,6 @@ const sketchFn = p5Sketch => {
     setupWaveControls();
     setUpGrainControl();
     config.fft = new p5.FFT();
-    osc.amp(0.2);
   };
 
   p5Sketch.draw = function draw() {
@@ -87,10 +86,10 @@ const sketchFn = p5Sketch => {
 
   function togglePlay() {
     if (config.playing) {
-      osc.stop();
+      config.osc.stop();
       config.playing = false;
     } else {
-      osc.start();
+      config.osc.start();
       config.playing = true;
     }
   }
