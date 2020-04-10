@@ -12,19 +12,18 @@ const sketchFn = p5Sketch => {
   // Form controls
   const waveControls = document.controls.wave;
   const grainControl = document.controls.grainSize;
-  let waveType = waveControls.value || 'sine';
   // Sound source
   const osc = new p5.Oscillator(waveType);
 
-  function changeWave() {
+  function changeWave(waveType) {
     osc.setType(waveType);
+    return waveType;
   }
 
   function setupWaveControls() {
     for (let index = 0; index < waveControls.length; index++) {
       waveControls[index].addEventListener('change', function() {
-        waveType = this.value;
-        changeWave();
+        changeWave(this.value);
       });
     }
   }
@@ -66,7 +65,8 @@ const sketchFn = p5Sketch => {
   }
 
   p5Sketch.preload = function preload() {
-    osc = new p5.Oscillator(waveType);
+    const initialWaveType = waveControls.value || 'sine';
+    osc = new p5.Oscillator(initialWaveType);
   };
 
   p5Sketch.setup = function setup() {
