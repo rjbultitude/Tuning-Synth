@@ -8,7 +8,7 @@
     "build:dev": "webpack --env dev --mode=development",
     "build:devserver": "webpack-dev-server --open --config=webpack/webpack.dev.js",
     "build:prod": "webpack --env prod --mode=production",
-    "test": "jest",
+    "test": "NODE_ENV=test mocha --recursive **/*.spec.js --require @babel/register -r jsdom-global/register",
     "lint:quality": "eslint .",
     "lint:css": "stylelint './app/**/*.css'",
     "lint:format-js": "prettier --write ./app/**/*.js",
@@ -24,9 +24,11 @@
     "@babel/core": "^7.7.7",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.9.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.4.2",
     "browserslist": "^4.8.3",
+    "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.1",
@@ -40,8 +42,10 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.1.0",
     "husky": "^3.0.5",
-    "jest": "^24.9.0",
+    "jsdom": "16.2.2",
+    "jsdom-global": "3.0.2",
     "mini-css-extract-plugin": "^0.9.0",
+    "mocha": "^7.1.1",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "1.18.2",
@@ -57,6 +61,11 @@
   "browserslist": [
     "last 2 versions"
   ],
+  "mocha": {
+    "watch-files": [
+      "**/*.spec.js"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && npm run lint:format-css",

@@ -104,5 +104,5 @@ const sketchFn = p5Sketch => {
   };
 };
 
-const P5 = new p5(sketchFn);
-export default P5;
+const app = new p5(sketchFn);
+export default app;
