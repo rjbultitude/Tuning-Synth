@@ -7,6 +7,7 @@ const sketchFn = (p5Sketch) => {
   let playing;
   let fft;
   let grainSize;
+  let mouseInCanvas = false;
   const waveControls = document.controls.wave;
   const grainControl = document.controls.grainSize;
   let waveType = waveControls.value || 'sine';
@@ -49,10 +50,17 @@ const sketchFn = (p5Sketch) => {
 
   p5Sketch.draw = function draw() {
     p5Sketch.background(0, 0, 0);
+    // Constrain playback to canvas
     freq = p5Sketch.constrain(p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024), 10, 2024);
-    if (playing) {
+    if (p5Sketch.mouseY < p5Sketch.height && p5Sketch.mouseY > 0) {
+      mouseInCanvas = true;
+    } else {
+      mouseInCanvas = false;
+    }
+    if (playing && mouseInCanvas) {
       osc.freq(freq);
     }
+    // Obtain spectrum and draw freqs
     let spectrum = fft.analyze();
     p5Sketch.noStroke();
     for (let i = 0; i< spectrum.length; i++){
@@ -63,7 +71,6 @@ const sketchFn = (p5Sketch) => {
       p5Sketch.fill(r, 50, b);
       p5Sketch.ellipse(x, y, grainSize);
     }
-
   }
 
   function togglePlay() {
