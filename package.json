@@ -60,7 +60,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && npm run lint:format-css",
-      "pre-push": "npm run lint:quality && npm test"
+      "pre-push": "npm run lint:quality"
     }
   }
 }
