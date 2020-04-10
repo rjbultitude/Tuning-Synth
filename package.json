@@ -10,7 +10,7 @@
     "build:prod": "webpack --env prod --mode=production",
     "test": "jest",
     "lint:quality": "eslint .",
-    "lint:css": "stylelint './app/**/*.js'",
+    "lint:css": "stylelint './app/**/*.css'",
     "lint:format-js": "prettier --write ./app/**/*.js",
     "lint:format-css": "prettier-stylelint --write ./app/**/*.css",
     "lint:format-check": "prettier --check ./app/**/*.js"

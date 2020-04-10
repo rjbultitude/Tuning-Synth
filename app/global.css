@@ -53,12 +53,18 @@ p {
   padding: 0 6px;
 }
 
-.controls .range-wrapper {
-  flex-basis: 100%;
-}
-
 .controls input[type="range"] {
   width: 70%;
+}
+
+.range-wrapper {
+  padding: 6px 0;
+  margin-top: 6px;
+  border-top: 1px solid #ccc;
+}
+
+.controls .range-wrapper {
+  flex-basis: 100%;
 }
 
 .radio-wrapper {
@@ -73,10 +79,4 @@ p {
 .radio-wrapper label {
   position: relative;
   left: -30%;
-}
-
-.range-wrapper {
-  padding: 6px 0;
-  margin-top: 6px;
-  border-top: 1px solid #cccccc;
 }
