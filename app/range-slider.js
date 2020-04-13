@@ -20,7 +20,7 @@ export function getVals(sliders) {
 export function setupSlider(sliders, config, callBack) {
   for (let i = 0; i < sliders.length; i++) {
     if (sliders[i].type === 'range') {
-      sliders[i].oninput = function() {
+      sliders[i].oninput = function () {
         const sliderVals = getVals(sliders);
         callBack(sliderVals, config);
       };

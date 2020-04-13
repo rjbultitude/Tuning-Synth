@@ -41,7 +41,7 @@ export function setupWaveControls(waveControls, config) {
 }
 
 export function setUpGrainControl(grainControl, config) {
-  grainControl.addEventListener('change', function() {
+  grainControl.addEventListener('change', function () {
     config.grainSize = this.value;
   });
   return grainControl;

@@ -13,7 +13,7 @@ import {
 } from './controllers';
 import { setupSlider } from './range-slider';
 
-const sketchFn = p5Sketch => {
+const sketchFn = (p5Sketch) => {
   const config = {
     playing: false,
     fft: null,
@@ -41,7 +41,7 @@ const sketchFn = p5Sketch => {
   p5Sketch.setup = function setup() {
     const cnv = p5Sketch.createCanvas(1920, 1080);
     cnv.parent('wrapper');
-    cnv.mouseClicked(function() {
+    cnv.mouseClicked(function () {
       togglePlay(p5Sketch, config);
     });
     setupWaveControls(waveControls, config);

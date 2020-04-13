@@ -66,9 +66,6 @@ p {
   padding: 6px 0;
   margin-top: 6px;
   border-top: 1px solid #ccc;
-}
-
-.range-wrapper {
   flex-basis: 100%;
 }
 
