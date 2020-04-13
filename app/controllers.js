@@ -22,7 +22,10 @@ export function togglePlay(config) {
 }
 
 export function getInitialWaveType(waveControls) {
-  return waveControls.value || 'sine';
+  if (waveControls && waveControls.hasOwnProperty('value')) {
+    return waveControls.value;
+  }
+  return 'sine';
 }
 
 export function setupWaveControls(waveControls, config) {
