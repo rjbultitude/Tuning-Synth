@@ -101,6 +101,7 @@ p {
   position: absolute;
   left: 0;
   top: 0;
+
   /* -webkit-appearance: none; */
   height: var(--slider-height);
   width: 70%;
