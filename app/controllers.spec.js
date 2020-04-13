@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import jsdom from 'jsdom';
 
 chai.use(sinonChai);
 
@@ -77,23 +76,15 @@ describe('toggle play', function() {
     this.configPlaying = {
       playing: true,
       osc: {
-        start: function() {
-          return true;
-        },
-        stop: function() {
-          return true;
-        },
+        start: function() {},
+        stop: function() {},
       },
     };
     this.configStopped = {
       playing: false,
       osc: {
-        start: function() {
-          return true;
-        },
-        stop: function() {
-          return true;
-        },
+        start: function() {},
+        stop: function() {},
       },
     };
     this.startSpy = sinon.spy(this.configStopped.osc, 'start');
@@ -204,8 +195,7 @@ describe('constrain And Play', function() {
     this.configPlaying = {
       osc: {
         freq: function(freq) {
-          this.frequency = freq;
-          return this;
+          return freq;
         },
         frequency: null,
       },
@@ -213,30 +203,28 @@ describe('constrain And Play', function() {
     };
     this.configStopped = {
       osc: {
-        freq: function(freq) {
-          this.frequency = freq;
-          return this;
-        },
-        frequency: null,
+        freq: function(freq) {},
       },
       playing: false,
     };
+    this.freqSpyPlaying = sinon.spy(this.configPlaying.osc, 'freq');
+    this.freqSpyStopped = sinon.spy(this.configStopped.osc, 'freq');
   });
-  it('should set osc frequency if playing and mouse is in canvas', function() {
-    expect(
-      constrainAndPlay(this.p5SketchInRange, this.configPlaying).osc.frequency
-    ).to.equal(440);
+  it('should call osc.freq if playing and mouse is in canvas', function() {
+    constrainAndPlay(this.p5SketchInRange, this.configPlaying);
+    expect(this.freqSpyPlaying).calledOnce;
   });
-  it('should not set osc frequency if playing is true but mouse is not in canvas', function() {
-    expect(
-      constrainAndPlay(this.p5SketchOutOfRange, this.configPlaying).osc
-        .frequency
-    ).to.be.null;
+  it('should not call osc.freq if playing is true but mouse is not in canvas', function() {
+    constrainAndPlay(this.p5SketchOutOfRange, this.configPlaying);
+    expect(this.freqSpyStopped).to.not.have.been.called;
   });
-  it('should not set osc frequency if playing is false and mouse is in canvas', function() {
-    expect(
-      constrainAndPlay(this.p5SketchInRange, this.configStopped).osc.frequency
-    ).to.be.null;
+  it('should not call osc.freq if playing is false and mouse is in canvas', function() {
+    constrainAndPlay(this.p5SketchInRange, this.configStopped);
+    expect(this.freqSpyStopped).to.not.have.been.called;
+  });
+  it('should return osc.freq argument if playing is true and mouse is in canvas', function() {
+    constrainAndPlay(this.p5SketchInRange, this.configPlaying);
+    expect(this.freqSpyPlaying).to.have.been.calledWith(440);
   });
 });
 

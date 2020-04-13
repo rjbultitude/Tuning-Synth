@@ -49,3 +49,4 @@ Desktop.ini
 .env
 /dist
 /audio
+.nyc_output/
