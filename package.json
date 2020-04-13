@@ -54,7 +54,6 @@
     "sinon-chai": "^3.5.0",
     "stylelint": "^13.3.2",
     "stylelint-config-prettier": "^8.0.1",
-    "stylelint-config-standard": "^20.0.0",
     "stylelint-prettier": "^1.1.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
@@ -71,7 +70,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern **/*.js",
+      "pre-commit": "pretty-quick --staged --pattern **/*.js && npm run lint:format-css",
       "pre-push": "npm run lint:quality"
     }
   }
