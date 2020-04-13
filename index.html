@@ -11,28 +11,61 @@
     <div class="wrapper">
       <h1>Synesthesia</h1>
       <p>Making frequencies visible since 2020</p>
-      <div id="wrapper" class="video-wrapper">
-      </div>
+      <div id="wrapper" class="video-wrapper"></div>
       <form name="controls" class="controls">
         <div class="radio-wrapper">
           <label for="sawtooth">Sawtooth</label>
-          <input type="radio" name="wave" id="sawtooth" value="sawtooth" checked>
+          <input
+            type="radio"
+            name="wave"
+            id="sawtooth"
+            value="sawtooth"
+            checked
+          />
         </div>
         <div class="radio-wrapper">
           <label for="sine">Sine</label>
-          <input type="radio" name="wave" id="sine" value="sine">
+          <input type="radio" name="wave" id="sine" value="sine" />
         </div>
         <div class="radio-wrapper">
           <label for="square">Square</label>
-          <input type="radio" name="wave" id="square" value="square">
+          <input type="radio" name="wave" id="square" value="square" />
         </div>
         <div class="radio-wrapper">
           <label for="triangle">Triangle</label>
-          <input type="radio" name="wave" id="triangle" value="triangle">
+          <input type="radio" name="wave" id="triangle" value="triangle" />
         </div>
         <div class="range-wrapper">
-          <input type="range" id="grainSize" name="grainSize" min="4" max="22">
+          <input
+            type="range"
+            id="grainSize"
+            name="grainSize"
+            min="4"
+            max="22"
+          />
           <label for="grainSize">Grain Size</label>
+        </div>
+        <div class="range-wrapper range-slider">
+          <label for="freqRangeLow">Range Low</label>
+          <input
+            type="range"
+            id="freqRangeLow"
+            name="freqRangeLow"
+            min="0"
+            max="1024"
+            step="30"
+            value="0"
+          />
+          <input
+            type="range"
+            id="freqRangeHigh"
+            name="freqRangeHigh"
+            min="0"
+            max="1024"
+            step="30"
+            value="1024"
+          />
+          <label for="freqRangeHigh">Range High</label>
         </div>
       </form>
     </div>

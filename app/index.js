@@ -8,7 +8,10 @@ import {
   setUpGrainControl,
   constrainAndPlay,
   drawFreqs,
-} from './controllers.js';
+  updateSliderVals,
+  setSpectrum,
+} from './controllers';
+import { setupSlider } from './range-slider';
 
 const sketchFn = p5Sketch => {
   const config = {
@@ -17,13 +20,19 @@ const sketchFn = p5Sketch => {
     osc: null,
     grainSize: 10,
     mouseInCanvas: false,
+    spectrum: [],
+    slider1: 0,
+    slider2: 1024,
   };
   // Form controls
   const waveControls = document.controls.wave;
   const grainControl = document.controls.grainSize;
+  const spectrumControlLow = document.controls.freqRangeLow;
+  const spectrumControlHigh = document.controls.freqRangeHigh;
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
+    console.log('initialWaveType', initialWaveType);
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT();
@@ -33,15 +42,21 @@ const sketchFn = p5Sketch => {
     const cnv = p5Sketch.createCanvas(1920, 1080);
     cnv.parent('wrapper');
     cnv.mouseClicked(function() {
-      togglePlay(config);
+      togglePlay(p5Sketch, config);
     });
     setupWaveControls(waveControls, config);
     setUpGrainControl(grainControl, config);
+    setupSlider(
+      [spectrumControlLow, spectrumControlHigh],
+      config,
+      updateSliderVals
+    );
   };
 
   p5Sketch.draw = function draw() {
     p5Sketch.background(0, 0, 0);
     constrainAndPlay(p5Sketch, config);
+    setSpectrum(config);
     drawFreqs(p5Sketch, config);
   };
 };

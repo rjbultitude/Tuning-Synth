@@ -10,29 +10,32 @@ export function isMouseInCanvas(p5Sketch) {
   return false;
 }
 
-export function togglePlay(config) {
+export function togglePlay(p5Sketch, config) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
+    // p5Sketch.noLoop();
   } else {
     config.osc.start();
     config.playing = true;
+    // p5Sketch.loop();
   }
   return config;
 }
 
 export function getInitialWaveType(waveControls) {
-  if (waveControls && waveControls.hasOwnProperty('value')) {
+  if (waveControls && 'value' in waveControls) {
     return waveControls.value;
   }
   return 'sine';
 }
 
 export function setupWaveControls(waveControls, config) {
+  function waveControlHandler(event) {
+    changeWave(event.target.value, config);
+  }
   for (let index = 0; index < waveControls.length; index++) {
-    waveControls[index].addEventListener('change', function() {
-      changeWave(this.value, config);
-    });
+    waveControls[index].addEventListener('change', waveControlHandler);
   }
   return waveControls;
 }
@@ -58,14 +61,22 @@ export function constrainAndPlay(p5Sketch, config) {
   return config;
 }
 
+export function updateSliderVals(sliderVals, config) {
+  config.slider1 = sliderVals.slider1;
+  config.slider2 = sliderVals.slider2;
+}
+
+export function setSpectrum(config) {
+  config.spectrum = config.fft.analyze().slice(config.slider1, config.slider2);
+}
+
 export function drawFreqs(p5Sketch, config) {
-  const spectrum = config.fft.analyze();
   p5Sketch.noStroke();
-  for (let i = 0; i < spectrum.length; i++) {
-    let r = p5Sketch.map(i, 0, spectrum.length, 50, 255);
-    let b = p5Sketch.map(i, 0, spectrum.length, 255, 50);
-    let x = p5Sketch.map(i, 0, spectrum.length, p5Sketch.width, 0);
-    let y = p5Sketch.map(spectrum[i], 0, 255, p5Sketch.height, 0);
+  for (let i = 0; i < config.spectrum.length; i++) {
+    let r = p5Sketch.map(i, 0, config.spectrum.length, 50, 255);
+    let b = p5Sketch.map(i, 0, config.spectrum.length, 255, 50);
+    let x = p5Sketch.map(i, 0, config.spectrum.length, p5Sketch.width, 0);
+    let y = p5Sketch.map(config.spectrum[i], 0, 255, p5Sketch.height, 0);
     p5Sketch.fill(r, 50, b);
     p5Sketch.ellipse(x, y, config.grainSize);
   }
