@@ -77,7 +77,7 @@ export function drawFreqs(p5Sketch, config) {
     let b = p5Sketch.map(i, 0, config.spectrum.length, 255, 50);
     let x = p5Sketch.map(i, 0, config.spectrum.length, p5Sketch.width, 0);
     let y = p5Sketch.map(config.spectrum[i], 0, 255, p5Sketch.height, 0);
-    p5Sketch.fill(r, 50, b);
+    p5Sketch.fill(r, 80, b);
     p5Sketch.ellipse(x, y, config.grainSize);
   }
   return p5Sketch;
