@@ -69,4 +69,5 @@ export function drawFreqs(p5Sketch, config) {
     p5Sketch.fill(r, 50, b);
     p5Sketch.ellipse(x, y, config.grainSize);
   }
+  return p5Sketch;
 }

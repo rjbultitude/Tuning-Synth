@@ -143,7 +143,6 @@ describe('setup Wave Controls', function() {
     };
     this.waveControlOne = new this.DomNode();
     this.waveControls = [this.waveControlOne];
-    console.log('this.waveControls', this.waveControls);
     this.addEventSpy = sinon.spy(this.waveControlOne, 'addEventListener');
   });
   this.afterEach(function() {
@@ -152,5 +151,135 @@ describe('setup Wave Controls', function() {
   it('should have called changeWave on each item in waveControls array', function() {
     setupWaveControls(this.waveControls, this.config);
     expect(this.addEventSpy).calledOnce;
+  });
+});
+
+describe('setup Grain Controls', function() {
+  this.beforeEach(function() {
+    this.config = {};
+    this.DomNode = function DomNode() {
+      this.addEventListener = function() {
+        return this;
+      };
+      this.value = '10';
+    };
+    this.grainControl = new this.DomNode();
+    this.addEventSpy = sinon.spy(this.grainControl, 'addEventListener');
+  });
+  this.afterEach(function() {
+    sinon.restore();
+  });
+  it('should have called changeWave on each item in waveControls array', function() {
+    setUpGrainControl(this.grainControl, this.config);
+    expect(this.addEventSpy).calledOnce;
+  });
+});
+
+describe('constrain And Play', function() {
+  this.beforeEach(function() {
+    this.p5SketchInRange = {
+      mouseY: 100,
+      mouseX: 200,
+      height: 600,
+      width: 1200,
+      constrain: function() {
+        return 440;
+      },
+      map: function() {
+        return true;
+      },
+    };
+    this.p5SketchOutOfRange = {
+      mouseY: -100,
+      mouseX: 200,
+      height: 600,
+      width: 1200,
+      constrain: function() {
+        return 440;
+      },
+      map: function() {
+        return true;
+      },
+    };
+    this.configPlaying = {
+      osc: {
+        freq: function(freq) {
+          this.frequency = freq;
+          return this;
+        },
+        frequency: null,
+      },
+      playing: true,
+    };
+    this.configStopped = {
+      osc: {
+        freq: function(freq) {
+          this.frequency = freq;
+          return this;
+        },
+        frequency: null,
+      },
+      playing: false,
+    };
+  });
+  it('should set osc frequency if playing and mouse is in canvas', function() {
+    expect(
+      constrainAndPlay(this.p5SketchInRange, this.configPlaying).osc.frequency
+    ).to.equal(440);
+  });
+  it('should not set osc frequency if playing is true but mouse is not in canvas', function() {
+    expect(
+      constrainAndPlay(this.p5SketchOutOfRange, this.configPlaying).osc
+        .frequency
+    ).to.be.null;
+  });
+  it('should not set osc frequency if playing is false and mouse is in canvas', function() {
+    expect(
+      constrainAndPlay(this.p5SketchInRange, this.configStopped).osc.frequency
+    ).to.be.null;
+  });
+});
+
+describe('draw freqs', function() {
+  this.beforeEach(function() {
+    this.p5Sketch = {
+      noStroke: function() {
+        return true;
+      },
+      map: function() {
+        return true;
+      },
+      fill: function() {
+        return true;
+      },
+      ellipse: function() {
+        return true;
+      },
+    };
+    this.config = {
+      fft: {
+        analyze: function() {
+          return [{}, {}, {}];
+        },
+      },
+    };
+    this.fillSpy = sinon.spy(this.p5Sketch, 'fill');
+    this.ellipseSpy = sinon.spy(this.p5Sketch, 'ellipse');
+    this.noStrokeSpy = sinon.spy(this.p5Sketch, 'noStroke');
+  });
+  this.afterEach(function() {
+    sinon.restore();
+  });
+  it('should call fill once for each item in spectrum', function() {
+    drawFreqs(this.p5Sketch, this.config);
+    expect(this.fillSpy).calledThrice;
+  });
+  it('should call fill once for each item in spectrum', function() {
+    drawFreqs(this.p5Sketch, this.config);
+    expect(this.ellipseSpy).calledThrice;
+  });
+  it('should call noStroke once', function() {
+    drawFreqs(this.p5Sketch, this.config);
+    expect(this.noStrokeSpy).calledOnce;
   });
 });
