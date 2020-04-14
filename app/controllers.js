@@ -11,12 +11,15 @@ export function isMouseInCanvas(p5Sketch) {
 }
 
 export function togglePlay(config, p5Sketch) {
+  console.log('config', config);
   if (config.playing) {
     config.osc.stop();
+    config.mod.stop();
     config.playing = false;
     // p5Sketch.noLoop();
   } else {
     config.osc.start();
+    config.mod.start();
     config.playing = true;
     // p5Sketch.loop();
   }
@@ -42,21 +45,29 @@ export function setupWaveControls(waveControls, config) {
 
 export function setUpGrainControl(grainControl, config) {
   grainControl.addEventListener('change', function () {
-    config.grainSize = this.value;
+    config.grainSize = parseFloat(this.value);
   });
   return grainControl;
 }
 
+export function setUpModulatorControl(modulator, config) {
+  modulator.addEventListener('change', function () {
+    config.modFreq = parseFloat(this.value);
+    console.log('config.modFreq', config.modFreq);
+  });
+  return modulator;
+}
+
 export function constrainAndPlay(p5Sketch, config) {
-  // Constrain playback to canvas
-  const freq = p5Sketch.constrain(
-    p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024),
-    10,
-    2024
-  );
+  // const freq = p5Sketch.constrain(
+  //   p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024),
+  //   10,
+  //   2024
+  // );
   const mouseInCanvas = isMouseInCanvas(p5Sketch);
-  if (config.playing && mouseInCanvas) {
-    config.osc.freq(freq);
+  if (config.playing) {
+    config.mod.freq(config.modFreq);
+    config.osc.freq(config.mod);
   }
   return config;
 }

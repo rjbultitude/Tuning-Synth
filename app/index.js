@@ -6,6 +6,7 @@ import {
   getInitialWaveType,
   setupWaveControls,
   setUpGrainControl,
+  setUpModulatorControl,
   constrainAndPlay,
   drawFreqs,
   updateSliderVals,
@@ -18,6 +19,9 @@ const sketchFn = (p5Sketch) => {
     playing: false,
     fft: null,
     osc: null,
+    mod: null,
+    modFreq: 440,
+    modFreqSwing: 10,
     grainSize: 10,
     mouseInCanvas: false,
     spectrum: [],
@@ -27,14 +31,16 @@ const sketchFn = (p5Sketch) => {
   // Form controls
   const waveControls = document.controls.wave;
   const grainControl = document.controls.grainSize;
+  const modulatorControl = document.controls.modulator;
   const spectrumControlLow = document.controls.freqRangeLow;
   const spectrumControlHigh = document.controls.freqRangeHigh;
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
-    console.log('initialWaveType', initialWaveType);
     config.osc = new p5.Oscillator(initialWaveType);
+    config.mod = new p5.Oscillator('sawtooth');
     config.osc.amp(0.2);
+    config.mod.amp(0.05);
     config.fft = new p5.FFT();
   };
 
@@ -42,10 +48,11 @@ const sketchFn = (p5Sketch) => {
     const cnv = p5Sketch.createCanvas(1920, 1080);
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay(p5Sketch, config);
+      togglePlay(config, p5Sketch);
     });
     setupWaveControls(waveControls, config);
     setUpGrainControl(grainControl, config);
+    setUpModulatorControl(modulatorControl, config);
     setupSlider(
       [spectrumControlLow, spectrumControlHigh],
       config,
