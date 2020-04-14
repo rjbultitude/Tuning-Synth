@@ -12,6 +12,8 @@ import {
   setupWaveControls,
   setUpGrainControl,
   constrainAndPlay,
+  updateSliderVals,
+  setSpectrum,
   drawFreqs,
 } from './controllers.js';
 
@@ -166,6 +168,25 @@ describe('setup Grain Controls', function () {
   });
 });
 
+describe('update Slider Vals', function() {
+  this.beforeAll(function() {
+    this.slidervals = {
+      slider1: 10,
+      slider2: 20,
+    }
+    this.config = {
+      slider1: null,
+      slider2: null,
+    }
+  });
+  it('should set config slider1 value using to sliderVals.slider1', function() {
+    expect(updateSliderVals(this.slidervals, this.config).slider1).to.equal(10);
+  });
+  it('should set config slider2 value using to sliderVals.slider2', function() {
+    expect(updateSliderVals(this.slidervals, this.config).slider2).to.equal(20);
+  });
+});
+
 describe('constrain And Play', function () {
   this.beforeEach(function () {
     this.p5SketchInRange = {
@@ -228,6 +249,24 @@ describe('constrain And Play', function () {
   });
 });
 
+describe('set Spectrum', function() {
+  this.beforeAll(function() {
+    this.config = {
+      fft: {
+        analyze: function() {
+          return [0, 1, 2, 3];
+        }
+      },
+      spectrum: [],
+      slider1: 1,
+      slider2: 3
+    }
+  });
+  it('should set the spectrum array prop of config using slice values', function() {
+    expect(setSpectrum(this.config).spectrum).to.eql([1, 2]);
+  });
+});
+
 describe('draw freqs', function () {
   this.beforeEach(function () {
     this.p5Sketch = {
@@ -250,6 +289,7 @@ describe('draw freqs', function () {
           return [{}, {}, {}];
         },
       },
+      spectrum: [0, 1, 2]
     };
     this.fillSpy = sinon.spy(this.p5Sketch, 'fill');
     this.ellipseSpy = sinon.spy(this.p5Sketch, 'ellipse');

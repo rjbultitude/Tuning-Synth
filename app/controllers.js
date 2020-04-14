@@ -10,7 +10,7 @@ export function isMouseInCanvas(p5Sketch) {
   return false;
 }
 
-export function togglePlay(p5Sketch, config) {
+export function togglePlay(config, p5Sketch) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
@@ -64,10 +64,12 @@ export function constrainAndPlay(p5Sketch, config) {
 export function updateSliderVals(sliderVals, config) {
   config.slider1 = sliderVals.slider1;
   config.slider2 = sliderVals.slider2;
+  return config;
 }
 
 export function setSpectrum(config) {
   config.spectrum = config.fft.analyze().slice(config.slider1, config.slider2);
+  return config;
 }
 
 export function drawFreqs(p5Sketch, config) {
