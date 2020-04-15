@@ -13,13 +13,13 @@ export function isMouseInCanvas(p5Sketch) {
 export function togglePlay(config, p5Sketch) {
   console.log('config', config);
   if (config.playing) {
-    config.osc.stop();
-    config.mod.stop();
+    config.mod.amp(0);
+    config.osc.amp(0);
     config.playing = false;
     // p5Sketch.noLoop();
   } else {
-    config.osc.start();
-    config.mod.start();
+    config.mod.amp(0.2);
+    config.osc.amp(0.2);
     config.playing = true;
     // p5Sketch.loop();
   }
@@ -38,48 +38,72 @@ export function setupWaveControls(waveControls, config) {
     changeWave(event.target.value, config);
   }
   for (let index = 0; index < waveControls.length; index++) {
-    waveControls[index].addEventListener('change', waveControlHandler);
+    waveControls[index].addEventListener('input', waveControlHandler);
   }
   return waveControls;
 }
 
 export function setUpGrainControl(grainControl, config) {
-  grainControl.addEventListener('change', function () {
+  grainControl.addEventListener('input', function () {
     config.grainSize = parseFloat(this.value);
   });
   return grainControl;
 }
 
 export function setUpModulatorControl(modulator, config) {
-  modulator.addEventListener('change', function () {
+  modulator.addEventListener('input', function () {
     config.modFreq = parseFloat(this.value);
     console.log('config.modFreq', config.modFreq);
   });
   return modulator;
 }
 
+export function setUpModulatorActiveControl(modulatorActive, config) {
+  modulatorActive.addEventListener(
+    'click',
+    function (e) {
+      e.preventDefault();
+      if (config.modActive) {
+        config.modActive = false;
+        modulatorActive.innerText = 'On';
+      } else {
+        config.modActive = true;
+        modulatorActive.innerText = 'Off';
+      }
+    },
+    false
+  );
+  return modulatorActive;
+}
+
 export function constrainAndPlay(p5Sketch, config) {
-  // const freq = p5Sketch.constrain(
-  //   p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024),
-  //   10,
-  //   2024
-  // );
+  const freq = p5Sketch.constrain(
+    p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024),
+    10,
+    2024
+  );
   const mouseInCanvas = isMouseInCanvas(p5Sketch);
   if (config.playing) {
     config.mod.freq(config.modFreq);
-    config.osc.freq(config.mod);
+    if (config.modActive) {
+      config.osc.freq(config.mod);
+    } else {
+      config.osc.freq(freq);
+    }
   }
   return config;
 }
 
 export function updateSliderVals(sliderVals, config) {
-  config.slider1 = sliderVals.slider1;
-  config.slider2 = sliderVals.slider2;
+  config.spectrumLower = sliderVals.slider1;
+  config.spectrumUpper = sliderVals.slider2;
   return config;
 }
 
 export function setSpectrum(config) {
-  config.spectrum = config.fft.analyze().slice(config.slider1, config.slider2);
+  config.spectrum = config.fft
+    .analyze()
+    .slice(config.spectrumLower, config.spectrumUpper);
   return config;
 }
 

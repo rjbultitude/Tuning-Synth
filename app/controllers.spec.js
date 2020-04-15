@@ -258,8 +258,8 @@ describe('set Spectrum', function() {
         }
       },
       spectrum: [],
-      slider1: 1,
-      slider2: 3
+      spectrumLower: 1,
+      spectrumUpper: 3
     }
   });
   it('should set the spectrum array prop of config using slice values', function() {
