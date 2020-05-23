@@ -10,11 +10,46 @@
   <body>
     <div class="wrapper">
       <h1>Synesthesia</h1>
-      <p>Making frequencies visible since 2020</p>
       <div id="wrapper" class="video-wrapper"></div>
-      <form name="controls" class="controls">
+      <form name="visualControls" class="visual-controls">
+        <h2>Visualiser controls</h2>
+        <div class="range-wrapper">
+        <input
+          type="range"
+          id="grainSize"
+          name="grainSize"
+          min="4"
+          max="22"
+        />
+        <label for="grainSize" class="controls_label">Grain Size</label>
+        </div>
+        <div class="range-wrapper range-slider">
+        <label for="freqRangeLow" class="controls_label">Range Low</label>
+        <input
+          type="range"
+          id="freqRangeLow"
+          name="freqRangeLow"
+          min="0"
+          max="1024"
+          step="30"
+          value="0"
+        />
+        <input
+          type="range"
+          id="freqRangeHigh"
+          name="freqRangeHigh"
+          min="0"
+          max="1024"
+          step="30"
+          value="1024"
+        />
+        <label for="freqRangeHigh" class="controls_label">Range High</label>
+        </div>
+      </form>
+      <form name="audioControls" class="audio-controls">
+        <h2>Audio controls</h2>
         <div class="radio-wrapper">
-          <label for="sawtooth">Sawtooth</label>
+          <label for="sawtooth" class="controls_label">Sawtooth</label>
           <input
             type="radio"
             name="wave"
@@ -24,48 +59,16 @@
           />
         </div>
         <div class="radio-wrapper">
-          <label for="sine">Sine</label>
+          <label for="sine" class="controls_label">Sine</label>
           <input type="radio" name="wave" id="sine" value="sine" />
         </div>
         <div class="radio-wrapper">
-          <label for="square">Square</label>
+          <label for="square" class="controls_label">Square</label>
           <input type="radio" name="wave" id="square" value="square" />
         </div>
         <div class="radio-wrapper">
-          <label for="triangle">Triangle</label>
+          <label for="triangle" class="controls_label">Triangle</label>
           <input type="radio" name="wave" id="triangle" value="triangle" />
-        </div>
-        <div class="range-wrapper">
-          <input
-            type="range"
-            id="grainSize"
-            name="grainSize"
-            min="4"
-            max="22"
-          />
-          <label for="grainSize">Grain Size</label>
-        </div>
-        <div class="range-wrapper range-slider">
-          <label for="freqRangeLow">Range Low</label>
-          <input
-            type="range"
-            id="freqRangeLow"
-            name="freqRangeLow"
-            min="0"
-            max="1024"
-            step="30"
-            value="0"
-          />
-          <input
-            type="range"
-            id="freqRangeHigh"
-            name="freqRangeHigh"
-            min="0"
-            max="1024"
-            step="30"
-            value="1024"
-          />
-          <label for="freqRangeHigh">Range High</label>
         </div>
       </form>
     </div>

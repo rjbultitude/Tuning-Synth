@@ -6,7 +6,7 @@
 }
 
 html {
-  font-size: 0.85em;
+  font-size: 1em;
 }
 
 body {
@@ -19,7 +19,15 @@ body {
 h1 {
   font-variation-settings: 'wdth' 200, 'wght' 200;
   font-size: 2.8rem;
-  margin: 0.2rem;
+  margin: 0.2rem 1rem;
+  position: absolute;
+  z-index: 2;
+  color: white;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
 }
 
 p {
@@ -29,6 +37,7 @@ p {
 .wrapper {
   margin: 0 auto;
   max-width: 960px;
+  position: relative;
 }
 
 .video-wrapper {
@@ -46,7 +55,8 @@ p {
   height: 100% !important;
 }
 
-.controls {
+.audio-controls,
+.visual-controls {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,7 +64,18 @@ p {
   padding: 12px 0;
 }
 
-.controls label {
+.audio-controls {
+  padding: 6px 0;
+  margin-top: 6px;
+  border-top: 1px solid #ccc;
+}
+
+.audio-controls h2,
+.visual-controls h2 {
+  flex-basis: 100%;
+}
+
+.controls_label {
   padding: 0 6px;
 }
 
@@ -63,10 +84,7 @@ p {
 }
 
 .range-wrapper {
-  padding: 6px 0;
-  margin-top: 6px;
-  border-top: 1px solid #ccc;
-  flex-basis: 100%;
+  flex-basis: 50%;
 }
 
 .radio-wrapper {

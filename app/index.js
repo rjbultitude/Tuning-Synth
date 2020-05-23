@@ -25,10 +25,10 @@ const sketchFn = (p5Sketch) => {
     slider2: 1024,
   };
   // Form controls
-  const waveControls = document.controls.wave;
-  const grainControl = document.controls.grainSize;
-  const spectrumControlLow = document.controls.freqRangeLow;
-  const spectrumControlHigh = document.controls.freqRangeHigh;
+  const waveControls = document.audioControls.wave;
+  const grainControl = document.visualControls.grainSize;
+  const spectrumControlLow = document.visualControls.freqRangeLow;
+  const spectrumControlHigh = document.visualControls.freqRangeHigh;
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
