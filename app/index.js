@@ -14,7 +14,10 @@ import {
 } from './controllers';
 import { setupSlider } from './range-slider';
 
+// Freqi
 writeFreqiControls();
+const intervals = [0, 3, 5, 7];
+const startFreq = 440;
 
 const sketchFn = (p5Sketch) => {
   const config = {
