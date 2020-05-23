@@ -42,7 +42,7 @@ const sketchFn = (p5Sketch) => {
     const cnv = p5Sketch.createCanvas(1920, 1080);
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay(p5Sketch, config);
+      togglePlay(config, p5Sketch);
     });
     setupWaveControls(waveControls, config);
     setUpGrainControl(grainControl, config);
