@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
+import { writeFreqiControls } from './freqi-controls';
 import './global.css';
 import {
   togglePlay,
@@ -12,6 +13,8 @@ import {
   setSpectrum,
 } from './controllers';
 import { setupSlider } from './range-slider';
+
+writeFreqiControls();
 
 const sketchFn = (p5Sketch) => {
   const config = {
