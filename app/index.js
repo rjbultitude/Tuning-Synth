@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import { writeFreqiControls } from './freqi-controls';
+import { getSysFrequencies } from './freqi-freqs';
 import './global.css';
 import {
   togglePlay,
@@ -16,8 +17,8 @@ import { setupSlider } from './range-slider';
 
 // Freqi
 writeFreqiControls();
-const intervals = [0, 3, 5, 7];
-const startFreq = 440;
+const sysFreqs = getSysFrequencies();
+console.log('sysFreqs', sysFreqs);
 
 const sketchFn = (p5Sketch) => {
   const config = {
