@@ -3,6 +3,11 @@ export function changeWave(waveType, config) {
   return waveType;
 }
 
+export function changeTuningSys(sysTypeKey, sysFreqs, config) {
+  const freq = sysFreqs[sysTypeKey][0];
+  config.osc(freq);
+}
+
 export function isMouseInCanvas(p5Sketch) {
   if (p5Sketch.mouseY < p5Sketch.height && p5Sketch.mouseY > 0) {
     return true;

@@ -5,6 +5,7 @@ import { getSysFrequencies } from './freqi-freqs';
 import './global.css';
 import {
   togglePlay,
+  changeTuningSys,
   getInitialWaveType,
   setupWaveControls,
   setUpGrainControl,
@@ -16,9 +17,8 @@ import {
 import { setupSlider } from './range-slider';
 
 // Freqi
-writeFreqiControls();
-const sysFreqs = getSysFrequencies();
-console.log('sysFreqs', sysFreqs);
+const tuningSysFreqs = getSysFrequencies();
+writeFreqiControls(changeTuningSys, tuningSysFreqs);
 
 const sketchFn = (p5Sketch) => {
   const config = {
@@ -39,7 +39,6 @@ const sketchFn = (p5Sketch) => {
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
-    console.log('initialWaveType', initialWaveType);
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT();

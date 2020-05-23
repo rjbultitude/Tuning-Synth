@@ -1,6 +1,12 @@
 import freqi from 'freqi';
 
-export function createControls() {
+export function addFreqiCtrlListners(input, changeCB, data) {
+  input.addEventListener('change', function changeCBWrapper(e) {
+    changeCB(e.target.value, data);
+  });
+}
+
+export function createControls(changeCB, data) {
   const tuningSysArr = [];
   const freqiTuningSys = freqi.getModes();
   for (let index = 0; index < freqiTuningSys.length; index++) {
@@ -12,6 +18,7 @@ export function createControls() {
     newInput.setAttribute('id', freqiTuningSys[index]);
     newInput.setAttribute('value', freqiTuningSys[index]);
     newInput.setAttribute('type', 'radio');
+    addFreqiCtrlListners(newInput, changeCB, data);
     const inputPair = [];
     inputPair.push(newLabel, newInput);
     tuningSysArr.push(inputPair);
@@ -19,9 +26,10 @@ export function createControls() {
   return tuningSysArr;
 }
 
-export function writeFreqiControls() {
+// entry point
+export function writeFreqiControls(changeCB, data) {
   const container = document.getElementById('freqiControls');
-  const tuningSysArr = createControls();
+  const tuningSysArr = createControls(changeCB);
   for (let index = 0; index < tuningSysArr.length; index++) {
     const radioWrapper = document.createElement('div');
     radioWrapper.setAttribute('class', 'radio-wrapper');
