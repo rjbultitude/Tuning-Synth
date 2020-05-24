@@ -4,7 +4,7 @@ import { getSysFrequencies } from './freqi-freqs';
 export function changeTuningSys(sysTypeKey, sysFreqs, config) {
   const freq = sysFreqs[sysTypeKey][1];
   config.osc.freq(freq);
-  console.log('config.osc', config.osc);
+  console.log('config', config);
 }
 
 export function addFreqiCtrlListners(input, config) {

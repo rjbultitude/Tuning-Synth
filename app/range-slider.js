@@ -8,21 +8,26 @@ export function getVals(sliders) {
     slider2 = slider1;
     slider1 = tmp;
   }
-
-  // var displayElement = parent.getElementsByClassName('rangeValues')[0];
-  // displayElement.innerHTML = `${slider1} ${slider2}`;
   return {
     slider1,
     slider2,
   };
 }
 
-export function setupSlider(sliders, config, callBack) {
-  for (let i = 0; i < sliders.length; i++) {
-    if (sliders[i].type === 'range') {
-      sliders[i].oninput = function () {
-        const sliderVals = getVals(sliders);
-        callBack(sliderVals, config);
+export function setupSlider(sliders, config, sliderTextNode, callBack) {
+  console.log(
+    'sliders.spectrumControlHigh.value',
+    sliders.spectrumControlHigh.value
+  );
+  sliders.spectrumControlHigh.value = config.numFreqBands;
+  const sliderEls = Object.keys(sliders);
+  for (let i = 0; i < sliderEls.length; i++) {
+    const key = sliderEls[i];
+    if (sliders[key].type === 'range') {
+      sliders[key].max = config.numFreqBands;
+      sliders[key].oninput = function () {
+        const sliderVals = getVals(sliderEls);
+        callBack(sliderVals, config, sliderTextNode);
       };
     }
   }

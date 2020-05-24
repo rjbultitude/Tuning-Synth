@@ -18,21 +18,30 @@ import {
 import { setupSlider } from './range-slider';
 
 const sketchFn = (p5Sketch) => {
+  const fftResolution = 512;
   const config = {
     playing: false,
     fft: null,
     osc: null,
     grainSize: 10,
+    numFreqBands: fftResolution,
     mouseInCanvas: false,
+    displaySize: {
+      width: 1920,
+      height: 1080,
+    },
     spectrum: [],
-    slider1: 0,
-    slider2: 1024,
+    sliders: {
+      one: 0,
+      two: fftResolution,
+    },
   };
   // Form controls
   const waveControls = document.audioControls.wave;
   const grainControl = document.visualControls.grainSize;
   const spectrumControlLow = document.visualControls.freqRangeLow;
   const spectrumControlHigh = document.visualControls.freqRangeHigh;
+  const sliderTextNode = document.getElementById('rangeValueText');
   // Dynamic controls creation
   writeFreqiControls(config);
 
@@ -40,11 +49,14 @@ const sketchFn = (p5Sketch) => {
     const initialWaveType = getInitialWaveType(waveControls);
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
-    config.fft = new p5.FFT();
+    config.fft = new p5.FFT(0, config.numFreqBands);
   };
 
   p5Sketch.setup = function setup() {
-    const cnv = p5Sketch.createCanvas(1920, 1080);
+    const cnv = p5Sketch.createCanvas(
+      config.displaySize.width,
+      config.displaySize.height
+    );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
       togglePlay(config, p5Sketch);
@@ -52,8 +64,12 @@ const sketchFn = (p5Sketch) => {
     setupWaveControls(waveControls, config);
     setUpGrainControl(grainControl, config);
     setupSlider(
-      [spectrumControlLow, spectrumControlHigh],
+      {
+        spectrumControlLow,
+        spectrumControlHigh,
+      },
       config,
+      sliderTextNode,
       updateSliderVals
     );
   };

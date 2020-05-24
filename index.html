@@ -14,14 +14,15 @@
       <form name="visualControls" class="visual-controls">
         <h2>Visualiser controls</h2>
         <div class="range-wrapper">
-        <input
-          type="range"
-          id="grainSize"
-          name="grainSize"
-          min="4"
-          max="22"
-        />
-        <label for="grainSize" class="controls_label">Grain Size</label>
+          <label for="grainSize" class="controls_label">Grain Size</label>
+          <input
+            type="range"
+            id="grainSize"
+            name="grainSize"
+            min="4"
+            max="22"
+          />
+          <p class="range-value" id="gainValueText"></p>
         </div>
         <div class="range-wrapper range-slider">
         <label for="freqRangeLow" class="controls_label">Range Low</label>
@@ -44,6 +45,7 @@
           value="1024"
         />
         <label for="freqRangeHigh" class="controls_label">Range High</label>
+        <p class="range-value" id="rangeValueText"></p>
         </div>
       </form>
       <form name="audioControls" class="audio-controls">

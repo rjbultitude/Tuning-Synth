@@ -6,13 +6,17 @@ export function setUpGrainControl(grainControl, config) {
 }
 
 export function setSpectrum(config) {
-  config.spectrum = config.fft.analyze().slice(config.slider1, config.slider2);
+  config.spectrum = config.fft
+    .analyze()
+    .slice(config.sliders.one, config.sliders.two);
+  // config.spectrum = config.fft.analyze();
   return config;
 }
 
-export function updateSliderVals(sliderVals, config) {
-  config.slider1 = sliderVals.slider1;
-  config.slider2 = sliderVals.slider2;
+export function updateSliderVals(sliderVals, config, textNode) {
+  config.sliders.one = sliderVals.slider1;
+  config.sliders.two = sliderVals.slider2;
+  textNode.innerText = `${config.sliders.one} ${config.sliders.two}`;
   return config;
 }
 
