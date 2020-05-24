@@ -1,7 +1,6 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import { writeFreqiControls } from './freqi-controls';
-import { getSysFrequencies } from './freqi-freqs';
 import './global.css';
 import {
   togglePlay,

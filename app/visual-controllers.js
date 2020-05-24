@@ -14,8 +14,8 @@ export function setSpectrum(config) {
 }
 
 export function updateSliderVals(sliderVals, config, textNode) {
-  config.sliders.one = sliderVals.slider1;
-  config.sliders.two = sliderVals.slider2;
+  config.sliders.one = sliderVals.sliderLow;
+  config.sliders.two = sliderVals.sliderHigh;
   textNode.innerText = `${config.sliders.one} ${config.sliders.two}`;
   return config;
 }

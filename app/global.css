@@ -98,14 +98,6 @@ p {
   border-top: var(--border-size) solid var(--border-color);
 }
 
-.controls_label {
-  padding: 0 6px;
-}
-
-.controls input[type='range'] {
-  width: 70%;
-}
-
 .range-wrapper {
   flex-basis: 50%;
 }

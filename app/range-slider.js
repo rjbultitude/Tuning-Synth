@@ -1,32 +1,29 @@
 export function getVals(sliders) {
-  let slider1 = parseFloat(sliders[0].value);
-  let slider2 = parseFloat(sliders[1].value);
+  let sliderLow = parseFloat(sliders.spectrumControlLow.value);
+  let sliderHigh = parseFloat(sliders.spectrumControlHigh.value);
   let tmp;
   // Determine which is larger
-  if (slider1 > slider2) {
-    tmp = slider2;
-    slider2 = slider1;
-    slider1 = tmp;
+  if (sliderLow > sliderHigh) {
+    tmp = sliderHigh;
+    sliderHigh = sliderLow;
+    sliderLow = tmp;
   }
   return {
-    slider1,
-    slider2,
+    sliderLow,
+    sliderHigh,
   };
 }
 
 export function setupSlider(sliders, config, sliderTextNode, callBack) {
-  console.log(
-    'sliders.spectrumControlHigh.value',
-    sliders.spectrumControlHigh.value
-  );
   sliders.spectrumControlHigh.value = config.numFreqBands;
   const sliderEls = Object.keys(sliders);
   for (let i = 0; i < sliderEls.length; i++) {
     const key = sliderEls[i];
     if (sliders[key].type === 'range') {
       sliders[key].max = config.numFreqBands;
+      sliders[key].step = config.numFreqBands / 20;
       sliders[key].oninput = function () {
-        const sliderVals = getVals(sliderEls);
+        const sliderVals = getVals(sliders);
         callBack(sliderVals, config, sliderTextNode);
       };
     }
