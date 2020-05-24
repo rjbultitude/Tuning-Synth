@@ -41,6 +41,7 @@ const sketchFn = (p5Sketch) => {
   const spectrumControlLow = document.visualControls.freqRangeLow;
   const spectrumControlHigh = document.visualControls.freqRangeHigh;
   const sliderTextNode = document.getElementById('rangeValueText');
+  const gainTextNode = document.getElementById('gainValueText');
   // Dynamic controls creation
   writeFreqiControls(config);
 
@@ -61,7 +62,7 @@ const sketchFn = (p5Sketch) => {
       togglePlay(config, p5Sketch);
     });
     setupWaveControls(waveControls, config);
-    setUpGrainControl(grainControl, config);
+    setUpGrainControl(grainControl, config, gainTextNode);
     setupSlider(
       {
         spectrumControlLow,

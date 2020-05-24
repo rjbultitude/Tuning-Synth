@@ -99,7 +99,20 @@ p {
 }
 
 .range-wrapper {
+  display: flex;
   flex-basis: 50%;
+}
+
+.range-wrapper .controls_label {
+  flex-basis: 25%;
+}
+
+.range-wrapper .range_value {
+  flex-basis: 15%;
+}
+
+.range-wrapper input {
+  flex-basis: 60%;
 }
 
 .radio-wrapper {

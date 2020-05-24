@@ -1,7 +1,12 @@
-export function setUpGrainControl(grainControl, config) {
-  grainControl.addEventListener('change', function () {
-    config.grainSize = this.value;
-  });
+export function setUpGrainControl(grainControl, config, textNode) {
+  grainControl.addEventListener(
+    'change',
+    function () {
+      config.grainSize = this.value;
+      textNode.innerText = this.value;
+    },
+    false
+  );
   return grainControl;
 }
 
