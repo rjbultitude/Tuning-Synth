@@ -5,20 +5,17 @@ import { getSysFrequencies } from './freqi-freqs';
 import './global.css';
 import {
   togglePlay,
-  changeTuningSys,
   getInitialWaveType,
   setupWaveControls,
-  setUpGrainControl,
   constrainAndPlay,
+} from './audio-controllers';
+import {
+  setUpGrainControl,
   drawFreqs,
   updateSliderVals,
   setSpectrum,
-} from './controllers';
+} from './visual-controllers';
 import { setupSlider } from './range-slider';
-
-// Freqi
-const tuningSysFreqs = getSysFrequencies();
-writeFreqiControls(changeTuningSys, tuningSysFreqs);
 
 const sketchFn = (p5Sketch) => {
   const config = {
@@ -36,6 +33,8 @@ const sketchFn = (p5Sketch) => {
   const grainControl = document.visualControls.grainSize;
   const spectrumControlLow = document.visualControls.freqRangeLow;
   const spectrumControlHigh = document.visualControls.freqRangeHigh;
+  // Dynamic controls creation
+  writeFreqiControls(config);
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
@@ -61,7 +60,7 @@ const sketchFn = (p5Sketch) => {
 
   p5Sketch.draw = function draw() {
     p5Sketch.background(0, 0, 0);
-    constrainAndPlay(p5Sketch, config);
+    // constrainAndPlay(p5Sketch, config);
     setSpectrum(config);
     drawFreqs(p5Sketch, config);
   };

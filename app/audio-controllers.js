@@ -1,8 +1,3 @@
-export function changeTuningSys(sysTypeKey, sysFreqs, config) {
-  const freq = sysFreqs[sysTypeKey][0];
-  config.osc(freq);
-}
-
 export function changeWave(waveType, config) {
   config.osc.setType(waveType);
   return waveType;

@@ -3,6 +3,9 @@
 :root {
   --slider-height: 20px;
   --input-thumb-colour: #000;
+  --spacing: 6px;
+  --border-color: #ccc;
+  --border-size: 1px;
 }
 
 html {
@@ -18,11 +21,17 @@ body {
 
 h1 {
   font-variation-settings: 'wdth' 200, 'wght' 200;
-  font-size: 2.8rem;
+  font-size: 4vw;
   margin: 0.2rem 1rem;
   position: absolute;
   z-index: 2;
   color: white;
+}
+
+@media all and (max-width: 580px) {
+  h1 {
+    font-size: 1.5rem;
+  }
 }
 
 h2 {
@@ -65,9 +74,9 @@ p {
 }
 
 .audio-controls {
-  padding: 6px 0;
-  margin-top: 6px;
-  border-top: 1px solid #ccc;
+  padding: var(--spacing) 0;
+  margin-top: var(--spacing);
+  border-top: var(--border-size) solid var(--border-color);
 }
 
 .audio-controls h2,
@@ -81,6 +90,12 @@ p {
   flex-direction: row;
   justify-content: space-between;
   margin: 1rem 0;
+}
+
+.fieldset + .fieldset {
+  margin-top: var(--spacing);
+  padding-top: var(--spacing);
+  border-top: var(--border-size) solid var(--border-color);
 }
 
 .controls_label {

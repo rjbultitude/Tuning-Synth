@@ -1,12 +1,20 @@
 import freqi from 'freqi';
+import { getSysFrequencies } from './freqi-freqs';
 
-export function addFreqiCtrlListners(input, changeCB, data) {
+export function changeTuningSys(sysTypeKey, sysFreqs, config) {
+  const freq = sysFreqs[sysTypeKey][1];
+  config.osc.freq(freq);
+  console.log('config.osc', config.osc);
+}
+
+export function addFreqiCtrlListners(input, config) {
+  const tuningSysFreqs = getSysFrequencies();
   input.addEventListener('change', function changeCBWrapper(e) {
-    changeCB(e.target.value, data);
+    changeTuningSys(e.target.value, tuningSysFreqs, config);
   });
 }
 
-export function createControls(changeCB, data) {
+export function createControls(config) {
   const tuningSysArr = [];
   const freqiTuningSys = freqi.getModes();
   for (let index = 0; index < freqiTuningSys.length; index++) {
@@ -18,7 +26,7 @@ export function createControls(changeCB, data) {
     newInput.setAttribute('id', freqiTuningSys[index]);
     newInput.setAttribute('value', freqiTuningSys[index]);
     newInput.setAttribute('type', 'radio');
-    addFreqiCtrlListners(newInput, changeCB, data);
+    addFreqiCtrlListners(newInput, config);
     const inputPair = [];
     inputPair.push(newLabel, newInput);
     tuningSysArr.push(inputPair);
@@ -27,9 +35,9 @@ export function createControls(changeCB, data) {
 }
 
 // entry point
-export function writeFreqiControls(changeCB, data) {
+export function writeFreqiControls(config) {
   const container = document.getElementById('freqiControls');
-  const tuningSysArr = createControls(changeCB);
+  const tuningSysArr = createControls(config);
   for (let index = 0; index < tuningSysArr.length; index++) {
     const radioWrapper = document.createElement('div');
     radioWrapper.setAttribute('class', 'radio-wrapper');
