@@ -39,6 +39,12 @@ h2 {
   margin: 0 0 1rem;
 }
 
+.controls_heading {
+  font-size: 1.2rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
 p {
   font-variation-settings: 'wdth' 280, 'wght' 300;
 }
@@ -108,7 +114,7 @@ p {
 }
 
 .range-wrapper .range_value {
-  flex-basis: 15%;
+  margin: 0;
 }
 
 .range-wrapper input {
@@ -135,7 +141,7 @@ p {
 
 .range-slider label {
   position: absolute;
-  right: 19%;
+  left: -999em;
 }
 
 .range-slider input[type='range'] {
@@ -143,7 +149,7 @@ p {
   pointer-events: none;
   position: absolute;
   left: 0;
-  top: 0;
+  top: 50%;
 
   /* -webkit-appearance: none; */
   height: var(--slider-height);

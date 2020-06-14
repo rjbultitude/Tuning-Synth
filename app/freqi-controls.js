@@ -15,23 +15,23 @@ export function addFreqiCtrlListners(input, config) {
 }
 
 export function createControls(config) {
-  const tuningSysArr = [];
-  const freqiTuningSys = freqi.getModes();
-  for (let index = 0; index < freqiTuningSys.length; index++) {
+  const inputArr = [];
+  const tuningSysArr = ['eqTemp', 'truePythag', 'pythagorean', 'fiveLimit'];
+  for (let index = 0; index < tuningSysArr.length; index++) {
     const newLabel = document.createElement('label');
     const newInput = document.createElement('input');
-    newLabel.setAttribute('for', freqiTuningSys[index]);
-    newLabel.innerText = freqiTuningSys[index];
+    newLabel.setAttribute('for', tuningSysArr[index]);
+    newLabel.innerText = tuningSysArr[index];
     newInput.setAttribute('name', 'tuningSystems');
-    newInput.setAttribute('id', freqiTuningSys[index]);
-    newInput.setAttribute('value', freqiTuningSys[index]);
+    newInput.setAttribute('id', tuningSysArr[index]);
+    newInput.setAttribute('value', tuningSysArr[index]);
     newInput.setAttribute('type', 'radio');
     addFreqiCtrlListners(newInput, config);
     const inputPair = [];
     inputPair.push(newLabel, newInput);
-    tuningSysArr.push(inputPair);
+    inputArr.push(inputPair);
   }
-  return tuningSysArr;
+  return inputArr;
 }
 
 // entry point
