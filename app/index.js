@@ -37,7 +37,7 @@ const sketchFn = (p5Sketch) => {
     },
   };
   // Form controls
-  const waveControls = document.audioControls.wave;
+  const waveControls = document.audioControls.waveType;
   const grainControl = document.visualControls.grainSize;
   const spectrumControlLow = document.visualControls.freqRangeLow;
   const spectrumControlHigh = document.visualControls.freqRangeHigh;

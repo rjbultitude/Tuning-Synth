@@ -4,6 +4,8 @@
 
 Making audio visible since 2020
 
+The purpose of this app is to visualise the frequency domain of a given sound and to show the differences between different tuning systems. 
+
 ## Installation
 
 _Run (in this directory):_

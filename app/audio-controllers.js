@@ -1,4 +1,24 @@
+export function getVolForWaveType(waveType) {
+  switch (waveType) {
+    case 'sawtooth':
+      return 0.08;
+    case 'sine':
+      return 0.75;
+    case 'triangle':
+      return 0.35;
+    case 'square':
+      return 0.03;
+    default:
+      return 0.5;
+  }
+}
+
 export function changeWave(waveType, config) {
+  if (config.osc.started) {
+    const oscVolume = getVolForWaveType(waveType);
+    console.log('oscVolume', oscVolume);
+    config.osc.amp(oscVolume);
+  }
   config.osc.setType(waveType);
   return waveType;
 }
@@ -48,9 +68,7 @@ export function setupWaveControls(waveControls, config) {
   function waveControlHandler(event) {
     changeWave(event.target.value, config);
   }
-  for (let index = 0; index < waveControls.length; index++) {
-    waveControls[index].addEventListener('change', waveControlHandler);
-  }
+  waveControls.addEventListener('change', waveControlHandler);
   return waveControls;
 }
 

@@ -63,28 +63,13 @@
           />
         </div>
         <div class="fieldset">
-          <div class="radio-wrapper">
-            <label for="sawtooth" class="controls_label">Sawtooth</label>
-            <input
-              type="radio"
-              name="wave"
-              id="sawtooth"
-              value="sawtooth"
-              checked
-            />
-          </div>
-          <div class="radio-wrapper">
-            <label for="sine" class="controls_label">Sine</label>
-            <input type="radio" name="wave" id="sine" value="sine" />
-          </div>
-          <div class="radio-wrapper">
-            <label for="square" class="controls_label">Square</label>
-            <input type="radio" name="wave" id="square" value="square" />
-          </div>
-          <div class="radio-wrapper">
-            <label for="triangle" class="controls_label">Triangle</label>
-            <input type="radio" name="wave" id="triangle" value="triangle" />
-          </div>
+          <label for="waveType" class="controls_label">Wavte Type</label>
+          <select name="waveType" id="waveType">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="triangle">Triangle</option>
+            <option value="sawtooth">Sawtooth</option>
+          </select>
         </div>
         <div class="fieldset" id="freqiControls">
           <h3>Tuning system</h3>
