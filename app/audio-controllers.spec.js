@@ -159,15 +159,14 @@ describe('setup Wave Controls', function () {
       };
       this.value = 'sawtooth';
     };
-    this.waveControlOne = new this.DomNode();
-    this.waveControls = [this.waveControlOne];
-    this.addEventSpy = sinon.spy(this.waveControlOne, 'addEventListener');
+    this.waveControl = new this.DomNode();
+    this.addEventSpy = sinon.spy(this.waveControl, 'addEventListener');
   });
   this.afterEach(function () {
     sinon.restore();
   });
-  it('should have called changeWave on each item in waveControls array', function () {
-    setupWaveControls(this.waveControls, this.config);
+  it('should called changeWave when changed', function () {
+    setupWaveControls(this.waveControl, this.config);
     expect(this.addEventSpy).calledOnce;
   });
 });
