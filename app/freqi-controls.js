@@ -7,42 +7,37 @@ export function changeTuningSys(sysTypeKey, sysFreqs, config) {
   console.log('config', config);
 }
 
-export function addFreqiCtrlListners(input, config) {
+export function addTuningSelectListner(select, config) {
   const tuningSysFreqs = getSysFrequencies();
-  input.addEventListener('change', function changeCBWrapper(e) {
-    changeTuningSys(e.target.value, tuningSysFreqs, config);
-  });
+  select.addEventListener(
+    'input',
+    function changeCBWrapper(e) {
+      const selected = e.target.value;
+      console.log('selected', selected);
+      changeTuningSys(selected, tuningSysFreqs, config);
+    },
+    false
+  );
 }
 
-export function createControls(config) {
-  const inputArr = [];
+export function createTuningSelect(config) {
   const tuningSysArr = ['eqTemp', 'truePythag', 'pythagorean', 'fiveLimit'];
+  const select = document.createElement('select');
   for (let index = 0; index < tuningSysArr.length; index++) {
-    const newLabel = document.createElement('label');
-    const newInput = document.createElement('input');
-    newLabel.setAttribute('for', tuningSysArr[index]);
-    newLabel.innerText = tuningSysArr[index];
-    newInput.setAttribute('name', 'tuningSystems');
-    newInput.setAttribute('id', tuningSysArr[index]);
-    newInput.setAttribute('value', tuningSysArr[index]);
-    newInput.setAttribute('type', 'radio');
-    addFreqiCtrlListners(newInput, config);
-    const inputPair = [];
-    inputPair.push(newLabel, newInput);
-    inputArr.push(inputPair);
+    const newOption = document.createElement('option');
+    newOption.setAttribute('name', 'tuningSystems');
+    newOption.setAttribute('id', tuningSysArr[index]);
+    newOption.setAttribute('value', tuningSysArr[index]);
+    newOption.innerText = tuningSysArr[index];
+    select.appendChild(newOption);
   }
-  return inputArr;
+  addTuningSelectListner(select, config);
+  return select;
 }
 
 // entry point
 export function writeFreqiControls(config) {
   const container = document.getElementById('freqiControls');
-  const tuningSysArr = createControls(config);
-  for (let index = 0; index < tuningSysArr.length; index++) {
-    const radioWrapper = document.createElement('div');
-    radioWrapper.setAttribute('class', 'radio-wrapper');
-    const thisRadioWrapper = container.insertBefore(radioWrapper, null);
-    thisRadioWrapper.insertBefore(tuningSysArr[index][0], null);
-    thisRadioWrapper.insertBefore(tuningSysArr[index][1], null);
-  }
+  const select = createTuningSelect(config);
+  container.insertBefore(select, null);
 }
