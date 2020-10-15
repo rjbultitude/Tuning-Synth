@@ -7,6 +7,7 @@ import {
   getInitialWaveType,
   setupWaveControls,
   constrainAndPlay,
+  setupPitchControls,
 } from './audio-controllers';
 import {
   setUpGrainControl,
@@ -40,6 +41,7 @@ const sketchFn = (p5Sketch) => {
   const grainControl = document.visualControls.grainSize;
   const spectrumControlLow = document.visualControls.freqRangeLow;
   const spectrumControlHigh = document.visualControls.freqRangeHigh;
+  const pitchControl = document.getElementById('freqPitch');
   const sliderTextNode = document.getElementById('rangeValueText');
   const gainTextNode = document.getElementById('gainValueText');
   // Dynamic controls creation
@@ -62,6 +64,7 @@ const sketchFn = (p5Sketch) => {
       togglePlay(config, p5Sketch);
     });
     setupWaveControls(waveControls, config);
+    setupPitchControls(pitchControl, config);
     setUpGrainControl(grainControl, config, gainTextNode);
     setupSlider(
       {

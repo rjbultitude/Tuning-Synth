@@ -53,3 +53,9 @@ export function setupWaveControls(waveControls, config) {
   }
   return waveControls;
 }
+
+// export function setupPitchControls(pichControl, config) {
+//   pichControl.addEventListener('change', (e) => {
+//     config.osc.freq(e.target.value);
+//   });
+// }

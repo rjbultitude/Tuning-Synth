@@ -52,6 +52,17 @@
       <form name="audioControls" class="audio-controls">
         <h2>Audio controls</h2>
         <div class="fieldset">
+          <label>Frequency</label>
+          <input
+            type="range"
+            id="freqPitch"
+            name="freqPitch"
+            min="20"
+            max="20000"
+            value="440"
+          />
+        </div>
+        <div class="fieldset">
           <div class="radio-wrapper">
             <label for="sawtooth" class="controls_label">Sawtooth</label>
             <input
@@ -76,7 +87,7 @@
           </div>
         </div>
         <div class="fieldset" id="freqiControls">
-
+          <h3>Tuning system</h3>
         </div>
       </form>
     </div>

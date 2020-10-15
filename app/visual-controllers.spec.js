@@ -35,19 +35,24 @@ describe('setup Grain Controls', function () {
 describe('update Slider Vals', function() {
   this.beforeAll(function() {
     this.slidervals = {
-      slider1: 10,
-      slider2: 20,
+      sliderLow: 10,
+      sliderHigh: 20,
     }
     this.config = {
-      slider1: null,
-      slider2: null,
+      sliders: {
+        one: null,
+        two: null
+      }
+    }
+    this.textNode = {
+      innerText: ''
     }
   });
-  it('should set config slider1 value using to sliderVals.slider1', function() {
-    expect(updateSliderVals(this.slidervals, this.config).slider1).to.equal(10);
+  it('should set config.slider.one value using to sliderVals.sliderLow', function() {
+    expect(updateSliderVals(this.slidervals, this.config, this.textNode).sliders.one).to.equal(10);
   });
-  it('should set config slider2 value using to sliderVals.slider2', function() {
-    expect(updateSliderVals(this.slidervals, this.config).slider2).to.equal(20);
+  it('should set config.slider.two value using to sliderVals.sliderHigh', function() {
+    expect(updateSliderVals(this.slidervals, this.config, this.textNode).sliders.two).to.equal(20);
   });
 });
 
@@ -60,8 +65,10 @@ describe('set Spectrum', function() {
         }
       },
       spectrum: [],
-      slider1: 1,
-      slider2: 3
+      sliders: {
+        one: 1,
+        two: 3
+      }
     }
   });
   it('should set the spectrum array prop of config using slice values', function() {
