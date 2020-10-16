@@ -86,7 +86,6 @@ export function setupPitchControls(pichControl, config) {
   pichControl.addEventListener('change', (e) => {
     const newFreq = parseInt(e.target.value);
     if (config.osc.started) {
-      console.log('config.osc', config.osc);
       config.osc.freq(newFreq);
     }
   });

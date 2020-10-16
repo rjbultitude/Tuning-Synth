@@ -1,20 +1,35 @@
-import { getSysFrequencies } from './freqi-freqs';
+import { setTuningSysState } from './freqi-freqs';
 
-export function applyTuningSystem(e) {
-  const selected = e.target.value;
-  changeTuningSys(selected, tuningSysFreqs, config);
+export function setOscFreqToTuningSys(tuningSysKey, config) {
+  // set state
+  setTuningSysState(config);
+  // read state
+  const freq = config.tuningSystems[tuningSysKey][23];
+  // update Oscillator
+  config.osc.freq(freq);
+  return config;
 }
 
-export function changeTuningSys(sysTypeKey, sysFreqs, config) {
-  const freq = sysFreqs[sysTypeKey][23];
-  config.osc.freq(freq);
+export function applyTuningSystem(e, config) {
+  const tuningSysKey = e.target.value;
+  // set state
+  config.selectedTuningSys = tuningSysKey;
+  // update Oscillator
+  setOscFreqToTuningSys(tuningSysKey, config);
 }
 
 export function addTuningSelectListner(select, config) {
-  const tuningSysFreqs = getSysFrequencies();
-  select.addEventListener('input', applyTuningSystem, false);
+  select.addEventListener(
+    'input',
+    (e) => {
+      applyTuningSystem(e, config);
+    },
+    false
+  );
 }
 
+// Dynamically create the tuning systems
+// selectmenu from tuningSystems Map
 export function createTuningSelect(config) {
   const select = document.createElement('select');
   select.setAttribute('id', 'tuningSystem');

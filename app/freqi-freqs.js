@@ -4,7 +4,6 @@ const intervalsRange = {
   lower: -12,
   upper: 12,
 };
-const startFreq = 440;
 const modes = freqi.getModes();
 
 export function setDefaultIntervals() {
@@ -18,7 +17,7 @@ export function setDefaultIntervals() {
   return intervals;
 }
 
-export function getSysFrequencies() {
+export function setTuningSysState(config, startFreq = 440) {
   const freqs = {};
   for (let index = 0; index < modes.length; index++) {
     const value = freqi.getFreqs({
@@ -30,5 +29,6 @@ export function getSysFrequencies() {
       value,
     });
   }
+  config.tuningSystems = freqs;
   return freqs;
 }
