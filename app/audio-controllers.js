@@ -1,3 +1,6 @@
+import { setOscFreqToTuningSys } from './freqi-controls';
+import { setTuningSysNotes } from './freqi-freqs';
+
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
   tuningSystems.set('eqTemp', '12TET');
@@ -84,9 +87,8 @@ export function setupWaveControls(waveControls, config) {
 
 export function setupPitchControls(pichControl, config) {
   pichControl.addEventListener('change', (e) => {
-    const newFreq = parseInt(e.target.value);
-    if (config.osc.started) {
-      config.osc.freq(newFreq);
-    }
+    config.startFreq = parseInt(e.target.value);
+    // read state and update Osc
+    setOscFreqToTuningSys(config);
   });
 }

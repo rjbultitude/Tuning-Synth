@@ -17,18 +17,33 @@ export function setDefaultIntervals() {
   return intervals;
 }
 
-export function setTuningSysState(config, startFreq = 440) {
-  const freqs = {};
+export function createTuningSysNotes(config) {
+  const tuningSysNotes = {};
   for (let index = 0; index < modes.length; index++) {
-    const value = freqi.getFreqs({
-      startFreq,
+    const currentMode = modes[index];
+    const notesArray = freqi.getFreqs({
+      startFreq: config.startFreq,
       intervals: setDefaultIntervals(),
-      mode: modes[index],
+      mode: currentMode,
     });
-    Object.defineProperty(freqs, modes[index], {
-      value,
+    Object.defineProperty(tuningSysNotes, currentMode, {
+      value: notesArray,
+      enumerable: true,
+      writable: true,
     });
   }
-  config.tuningSystems = freqs;
-  return freqs;
+  config.tuningSysNotes = tuningSysNotes;
+  return tuningSysNotes;
+}
+
+export function setTuningSysNotes(config) {
+  Object.keys(config.tuningSysNotes).map((tuningSys) => {
+    const val = config.tuningSysNotes[tuningSys];
+    config.tuningSysNotes[tuningSys] = freqi.getFreqs({
+      startFreq: config.startFreq,
+      intervals: setDefaultIntervals(),
+      mode: tuningSys,
+    });
+  });
+  return config;
 }

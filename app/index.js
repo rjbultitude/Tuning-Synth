@@ -15,6 +15,7 @@ import {
   updateSliderVals,
   setSpectrum,
 } from './visual-controllers';
+import { createTuningSysNotes } from './freqi-freqs';
 import { setupSlider } from './range-slider';
 
 const sketchFn = (p5Sketch) => {
@@ -23,6 +24,7 @@ const sketchFn = (p5Sketch) => {
     playing: false,
     fft: null,
     osc: null,
+    startFreq: 400,
     grainSize: 10,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
@@ -37,6 +39,7 @@ const sketchFn = (p5Sketch) => {
     },
     tuningSystems: null,
     selectedTuningSys: '',
+    tuningSysNotes: null,
   };
   // Form controls
   const waveControls = document.audioControls.waveType;
@@ -53,6 +56,7 @@ const sketchFn = (p5Sketch) => {
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
     // Dynamic controls creation
+    createTuningSysNotes(config);
     createTuningSystems(config);
     writeFreqiControls(config);
   };

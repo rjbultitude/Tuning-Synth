@@ -1,21 +1,25 @@
-import { setTuningSysState } from './freqi-freqs';
+import { setTuningSysNotes } from './freqi-freqs';
 
-export function setOscFreqToTuningSys(tuningSysKey, config) {
-  // set state
-  setTuningSysState(config);
+export function setOscFreqToTuningSys(config) {
+  console.log('config', config);
+  // set and update state
+  setTuningSysNotes(config);
   // read state
-  const freq = config.tuningSystems[tuningSysKey][23];
+  const freq = config.tuningSysNotes[config.selectedTuningSys][23];
   // update Oscillator
-  config.osc.freq(freq);
+  if (config.osc.started) {
+    config.osc.freq(freq);
+  }
   return config;
 }
 
 export function applyTuningSystem(e, config) {
+  // get value
   const tuningSysKey = e.target.value;
   // set state
   config.selectedTuningSys = tuningSysKey;
   // update Oscillator
-  setOscFreqToTuningSys(tuningSysKey, config);
+  setOscFreqToTuningSys(config);
 }
 
 export function addTuningSelectListner(select, config) {
