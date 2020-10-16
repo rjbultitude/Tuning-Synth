@@ -1,3 +1,13 @@
+export function createTuningSystems(config) {
+  const tuningSystems = new Map();
+  tuningSystems.set('eqTemp', '12TET');
+  tuningSystems.set('truePythag', 'Just Intonation 5ths');
+  tuningSystems.set('pythagorean', 'Pythagorean');
+  tuningSystems.set('fiveLimit', 'Just Intonation five limit');
+  config.tuningSystems = tuningSystems;
+  return config;
+}
+
 export function getVolForWaveType(waveType) {
   switch (waveType) {
     case 'sawtooth':
@@ -75,7 +85,6 @@ export function setupWaveControls(waveControls, config) {
 export function setupPitchControls(pichControl, config) {
   pichControl.addEventListener('change', (e) => {
     const newFreq = parseInt(e.target.value);
-    console.log('e.target.value', e.target.value);
     if (config.osc.started) {
       console.log('config.osc', config.osc);
       config.osc.freq(newFreq);

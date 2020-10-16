@@ -6,7 +6,7 @@ import {
   togglePlay,
   getInitialWaveType,
   setupWaveControls,
-  constrainAndPlay,
+  createTuningSystems,
   setupPitchControls,
 } from './audio-controllers';
 import {
@@ -35,6 +35,7 @@ const sketchFn = (p5Sketch) => {
       one: 0,
       two: fftResolution,
     },
+    tuningSystems: null,
   };
   // Form controls
   const waveControls = document.audioControls.waveType;
@@ -44,14 +45,15 @@ const sketchFn = (p5Sketch) => {
   const pitchControl = document.getElementById('freqPitch');
   const sliderTextNode = document.getElementById('rangeValueText');
   const gainTextNode = document.getElementById('gainValueText');
-  // Dynamic controls creation
-  writeFreqiControls(config);
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
+    // Dynamic controls creation
+    createTuningSystems(config);
+    writeFreqiControls(config);
   };
 
   p5Sketch.setup = function setup() {
