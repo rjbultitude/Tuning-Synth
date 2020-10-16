@@ -30,6 +30,5 @@ export function getSysFrequencies() {
       value,
     });
   }
-  console.log('freqs', freqs);
   return freqs;
 }

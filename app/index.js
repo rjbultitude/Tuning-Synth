@@ -36,6 +36,7 @@ const sketchFn = (p5Sketch) => {
       two: fftResolution,
     },
     tuningSystems: null,
+    selectedTuningSys: '',
   };
   // Form controls
   const waveControls = document.audioControls.waveType;
