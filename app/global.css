@@ -76,7 +76,21 @@ p {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 12px 0;
+}
+
+.visual-controls {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0 var(--spacing);
+  position: absolute;
+  top: calc(var(--spacing) * 2);
+  right: calc(var(--spacing) * 2);
+  width: 360px;
+  z-index: 1;
+}
+
+.visual-controls .form__heading {
+  position: absolute;
+  left: -999em;
 }
 
 .audio-controls {
@@ -85,8 +99,8 @@ p {
   border-top: var(--border-size) solid var(--border-color);
 }
 
-.audio-controls h2,
-.visual-controls h2 {
+.audio-controls .form__heading,
+.visual-controls .form__heading {
   flex-basis: 100%;
 }
 
@@ -101,24 +115,36 @@ p {
 .fieldset + .fieldset {
   margin-top: var(--spacing);
   padding-top: var(--spacing);
-  border-top: var(--border-size) solid var(--border-color);
+}
+
+.audio-controls .fieldset:not(:last-child) {
+  flex-basis: 50%;
 }
 
 .range-wrapper {
   display: flex;
+  flex-basis: 100%;
+  justify-content: space-between;
+}
+
+.range__input-wrapper {
   flex-basis: 50%;
+  position: relative;
 }
 
-.range-wrapper .controls_label {
-  flex-basis: 25%;
-}
-
-.range-wrapper .range_value {
+.range-wrapper .controls__label {
+  flex-basis: 20%;
   margin: 0;
+  font-size: 1.2rem;
 }
 
-.range-wrapper input {
-  flex-basis: 60%;
+.range-wrapper .range__value {
+  margin: 0;
+  flex-basis: 18%;
+}
+
+.range__input {
+  width: 100%;
 }
 
 .radio-wrapper {
@@ -149,11 +175,10 @@ p {
   pointer-events: none;
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 5%;
 
   /* -webkit-appearance: none; */
   height: var(--slider-height);
-  width: 70%;
   background-image: linear-gradient(
     to bottom,
     lighten(var(--input-thumb-colour), 60%) 0,

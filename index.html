@@ -9,48 +9,67 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1>Synesthesia</h1>
+      <h1 class="page__heading">Synesthesia</h1>
       <div id="wrapper" class="video-wrapper"></div>
       <form name="visualControls" class="visual-controls">
-        <h2>Visualiser controls</h2>
+        <h2 class="form__heading">Visualiser controls</h2>
         <div class="range-wrapper">
-          <label for="grainSize" class="controls_label">Grain Size</label>
-          <input
-            type="range"
-            id="grainSize"
-            name="grainSize"
-            min="4"
-            max="22"
-          />
-          <p class="range_value" id="gainValueText">0</p>
+          <label for="grainSize" class="controls__label">Grain Size</label>
+          <div class="range__input-wrapper">
+            <input
+              class="range__input"
+              type="range"
+              id="grainSize"
+              name="grainSize"
+              min="4"
+              max="22"
+            />
+          </div>
+          <p class="range__value" id="gainValueText">0</p>
         </div>
         <div class="range-wrapper range-slider">
-        <h3 class="controls_heading">Zoom:&nbsp;</h3>
-        <p class="range_value" id="rangeValueText">0</p>
-        <label for="freqRangeLow" class="controls_label">Range Low</label>
-        <input
-          type="range"
-          id="freqRangeLow"
-          name="freqRangeLow"
-          min="0"
-          max="1024"
-          step="30"
-          value="0"
-        />
-        <input
-          type="range"
-          id="freqRangeHigh"
-          name="freqRangeHigh"
-          min="0"
-          max="1024"
-          step="30"
-          value="1024"
-        />
-        <label for="freqRangeHigh" class="controls_label">Range High</label>
+          <h3 class="controls__label">Zoom:&nbsp;</h3>
+          <label for="freqRangeLow" class="controls__label">Range Low</label>
+          <div class="range__input-wrapper">
+            <input
+              class="range__input"
+              type="range"
+              id="freqRangeLow"
+              name="freqRangeLow"
+              min="0"
+              max="1024"
+              step="30"
+              value="0"
+            />
+            <input
+              class="range__input"
+              type="range"
+              id="freqRangeHigh"
+              name="freqRangeHigh"
+              min="0"
+              max="1024"
+              step="30"
+              value="1024"
+            />
+          </div>
+          <p class="range__value" id="rangeValueText">0</p>
+          <label for="freqRangeHigh" class="controls__label">Range High</label>
         </div>
       </form>
       <form name="audioControls" class="audio-controls">
-        <h2>Audio controls</h2>
+        <h2 class="form__heading">Audio controls</h2>
+        <div class="fieldset">
+          <label for="waveType" class="controls__label">Wave Type</label>
+          <select name="waveType" id="waveType">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="triangle">Triangle</option>
+            <option value="sawtooth">Sawtooth</option>
+          </select>
+        </div>
+        <div class="fieldset" id="freqiControls">
+          <label for="tuningSystem">Tuning system</label>
+        </div>
         <div class="fieldset">
           <label>Root note</label>
           <input
@@ -61,18 +80,6 @@
             max="4000"
             value="440"
           />
-        </div>
-        <div class="fieldset">
-          <label for="waveType" class="controls_label">Wave Type</label>
-          <select name="waveType" id="waveType">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
-            <option value="sawtooth">Sawtooth</option>
-          </select>
-        </div>
-        <div class="fieldset" id="freqiControls">
-          <label for="tuningSystem">Tuning system</label>
         </div>
       </form>
     </div>

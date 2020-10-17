@@ -3,7 +3,7 @@ export function setUpGrainControl(grainControl, config, textNode) {
     'change',
     function () {
       config.grainSize = this.value;
-      textNode.innerText = this.value;
+      textNode.innerText = `${parseInt(this.value).toFixed()}`;
     },
     false
   );
@@ -21,7 +21,9 @@ export function setSpectrum(config) {
 export function updateSliderVals(sliderVals, config, textNode) {
   config.sliders.one = sliderVals.sliderLow;
   config.sliders.two = sliderVals.sliderHigh;
-  textNode.innerText = `${config.sliders.one} ${config.sliders.two}`;
+  textNode.innerText = `${parseInt(config.sliders.one).toFixed()} ${parseInt(
+    config.sliders.two
+  ).toFixed()}`;
   return config;
 }
 
