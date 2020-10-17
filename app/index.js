@@ -24,7 +24,8 @@ const sketchFn = (p5Sketch) => {
     playing: false,
     fft: null,
     osc: null,
-    startFreq: 400,
+    startFreq: 440,
+    currentFreq: 440,
     grainSize: 10,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
@@ -41,18 +42,9 @@ const sketchFn = (p5Sketch) => {
     selectedTuningSys: '',
     tuningSysNotes: null,
   };
-  // Form controls
-  const waveControls = document.audioControls.waveType;
-  const grainControl = document.visualControls.grainSize;
-  const spectrumControlLow = document.visualControls.freqRangeLow;
-  const spectrumControlHigh = document.visualControls.freqRangeHigh;
-  const pitchControl = document.getElementById('freqPitch');
-  const sliderTextNode = document.getElementById('rangeValueText');
-  const gainTextNode = document.getElementById('gainValueText');
-  const rootNoteTextNode = document.getElementById('rootNoteText');
 
   p5Sketch.preload = function preload() {
-    const initialWaveType = getInitialWaveType(waveControls);
+    const initialWaveType = getInitialWaveType();
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
@@ -69,20 +61,12 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay(config, p5Sketch);
+      togglePlay({ config, p5Sketch });
     });
-    setupWaveControls(waveControls, config);
-    setupPitchControls(pitchControl, config, rootNoteTextNode);
-    setUpGrainControl(grainControl, config, gainTextNode);
-    setupSlider(
-      {
-        spectrumControlLow,
-        spectrumControlHigh,
-      },
-      config,
-      sliderTextNode,
-      updateSliderVals
-    );
+    setupWaveControls(config);
+    setupPitchControls(config);
+    setUpGrainControl(config);
+    setupSlider(config, updateSliderVals);
   };
 
   p5Sketch.draw = function draw() {

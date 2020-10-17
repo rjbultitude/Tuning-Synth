@@ -8,7 +8,7 @@
     "build:dev": "webpack --env dev --mode=development",
     "build:devserver": "webpack-dev-server --open --config=webpack/webpack.dev.js",
     "build:prod": "webpack --env prod --mode=production",
-    "test": "NODE_ENV=test nyc mocha --recursive **/*.spec.js --require @babel/register -r jsdom-global/register",
+    "test": "NODE_ENV=test nyc mocha --recursive **/*.spec.js",
     "lint:quality": "eslint .",
     "lint:css": "stylelint './app/**/*.css'",
     "lint:format-js": "prettier --write ./app/**/*.js",
@@ -42,11 +42,11 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
     "husky": "^4.2.5",
-    "jsdom": "16.2.2",
-    "jsdom-global": "3.0.2",
+    "jsdom": "^16.4.0",
+    "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^0.9.0",
-    "mocha": "^7.2.0",
-    "nyc": "^15.0.1",
+    "mocha": "^8.2.0",
+    "nyc": "^15.1.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.0.5",
@@ -67,6 +67,10 @@
   "mocha": {
     "watch-files": [
       "**/*.spec.js"
+    ],
+    "require": [
+      "@babel/register",
+      "jsdom-global/register"
     ]
   },
   "husky": {

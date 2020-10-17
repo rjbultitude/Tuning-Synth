@@ -1,5 +1,5 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import { setTuningSysNotes } from './freqi-freqs';
+import * as domEls from './dom-els';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -11,8 +11,8 @@ export function createTuningSystems(config) {
   return config;
 }
 
-export function getVolForWaveType(waveType) {
-  switch (waveType) {
+export function getVolForWaveType(waveTypeStr) {
+  switch (waveTypeStr) {
     case 'sawtooth':
       return 0.08;
     case 'sine':
@@ -26,10 +26,9 @@ export function getVolForWaveType(waveType) {
   }
 }
 
-export function changeWave(waveType, config) {
+export function changeWave(waveTypeStr, config) {
   if (config.osc.started) {
-    const oscVolume = getVolForWaveType(waveType);
-    console.log('oscVolume', oscVolume);
+    const oscVolume = getVolForWaveType(waveTypeStr);
     config.osc.amp(oscVolume);
   }
   config.osc.setType(waveType);
@@ -57,7 +56,17 @@ export function constrainAndPlay(p5Sketch, config) {
   return config;
 }
 
-export function togglePlay(config, p5Sketch) {
+export function updateAudioOutput(config) {
+  if (config.playing !== true) {
+    domEls.freqTextNode.innerText = '';
+    domEls.statusTextNode.innerText = 'Stopped';
+  } else {
+    domEls.freqTextNode.innerText = config.currentFreq;
+    domEls.statusTextNode.innerText = 'Playing';
+  }
+}
+
+export function togglePlay({ config, p5Sketch }) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
@@ -67,28 +76,30 @@ export function togglePlay(config, p5Sketch) {
     config.playing = true;
     // p5Sketch.loop();
   }
+  // update UI
+  updateAudioOutput(config);
   return config;
 }
 
-export function getInitialWaveType(waveControls) {
-  if (waveControls && 'value' in waveControls) {
-    return waveControls.value;
+export function getInitialWaveType() {
+  if (domEls.waveControls && 'value' in domEls.waveControls) {
+    return domEls.waveControls.value;
   }
   return 'sine';
 }
 
-export function setupWaveControls(waveControls, config) {
+export function setupWaveControls(config) {
   function waveControlHandler(event) {
     changeWave(event.target.value, config);
   }
-  waveControls.addEventListener('change', waveControlHandler);
-  return waveControls;
+  domEls.waveControls.addEventListener('change', waveControlHandler);
+  return domEls.waveControls;
 }
 
-export function setupPitchControls(pichControl, config, rootNoteTextNode) {
-  pichControl.addEventListener('change', (e) => {
+export function setupPitchControls(config) {
+  domEls.pitchControl.addEventListener('change', (e) => {
     config.startFreq = parseInt(e.target.value);
-    rootNoteTextNode.innerText = `${parseInt(e.target.value).toFixed()}`;
+    domEls.rootNoteTextNode.innerText = `${parseInt(e.target.value).toFixed()}`;
     // read state and update Osc
     setOscFreqToTuningSys(config);
   });

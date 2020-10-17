@@ -1,3 +1,4 @@
+import { updateAudioOutput } from './audio-controllers';
 import { setTuningSysNotes } from './freqi-freqs';
 
 export function setOscFreqToTuningSys(config) {
@@ -6,10 +7,13 @@ export function setOscFreqToTuningSys(config) {
   setTuningSysNotes(config);
   // read state
   const freq = config.tuningSysNotes[config.selectedTuningSys][23];
+  // set state
+  config.currentFreq = freq.toFixed();
   // update Oscillator
   if (config.osc.started) {
     config.osc.freq(freq);
   }
+  updateAudioOutput(config);
   return config;
 }
 

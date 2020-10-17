@@ -1,13 +1,15 @@
-export function setUpGrainControl(grainControl, config, textNode) {
-  grainControl.addEventListener(
+import * as domEls from './dom-els';
+
+export function setUpGrainControl(config) {
+  domEls.grainControl.addEventListener(
     'change',
     function () {
       config.grainSize = this.value;
-      textNode.innerText = `${parseInt(this.value).toFixed()}`;
+      domEls.grainTextNode.innerText = `${parseInt(this.value).toFixed()}`;
     },
     false
   );
-  return grainControl;
+  return domEls.grainControl;
 }
 
 export function setSpectrum(config) {

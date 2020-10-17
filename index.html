@@ -10,6 +10,10 @@
   <body>
     <div class="wrapper">
       <h1 class="page__heading">Synesthesia</h1>
+      <dl class="audio-output">
+        <dt>Frequency</dt><dd id="audioOutputFreq"></dd>
+        <dt>Status</dt><dd id="audioOutputStatus"></dd>
+      </dl>
       <div id="wrapper" class="video-wrapper"></div>
       <form name="visualControls" class="visual-controls">
         <h2 class="form__heading">Visualiser controls</h2>
@@ -25,7 +29,7 @@
               max="22"
             />
           </div>
-          <p class="range__value" id="gainValueText">0</p>
+          <p class="range__value" id="grainValueText">0</p>
         </div>
         <div class="range-wrapper range-slider">
           <h3 class="controls__label">Zoom:&nbsp;</h3>

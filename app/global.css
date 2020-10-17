@@ -70,6 +70,27 @@ p {
   height: 100% !important;
 }
 
+.audio-output {
+  color: white;
+  position: absolute;
+  margin: 1rem;
+  top: 50px;
+  z-index: 1;
+}
+
+.audio-output dt,
+.audio-output dd {
+  display: block;
+  float: left;
+  margin-inline-start: 0;
+  min-width: 76px;
+  padding-right: var(--spacing);
+}
+
+.audio-output dt {
+  clear: left;
+}
+
 .audio-controls,
 .visual-controls {
   display: flex;
