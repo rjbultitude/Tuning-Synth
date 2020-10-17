@@ -49,6 +49,7 @@ const sketchFn = (p5Sketch) => {
   const pitchControl = document.getElementById('freqPitch');
   const sliderTextNode = document.getElementById('rangeValueText');
   const gainTextNode = document.getElementById('gainValueText');
+  const rootNoteTextNode = document.getElementById('rootNoteText');
 
   p5Sketch.preload = function preload() {
     const initialWaveType = getInitialWaveType(waveControls);
@@ -71,7 +72,7 @@ const sketchFn = (p5Sketch) => {
       togglePlay(config, p5Sketch);
     });
     setupWaveControls(waveControls, config);
-    setupPitchControls(pitchControl, config);
+    setupPitchControls(pitchControl, config, rootNoteTextNode);
     setUpGrainControl(grainControl, config, gainTextNode);
     setupSlider(
       {

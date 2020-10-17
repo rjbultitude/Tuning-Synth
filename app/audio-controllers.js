@@ -85,9 +85,10 @@ export function setupWaveControls(waveControls, config) {
   return waveControls;
 }
 
-export function setupPitchControls(pichControl, config) {
+export function setupPitchControls(pichControl, config, rootNoteTextNode) {
   pichControl.addEventListener('change', (e) => {
     config.startFreq = parseInt(e.target.value);
+    rootNoteTextNode.innerText = `${parseInt(e.target.value).toFixed()}`;
     // read state and update Osc
     setOscFreqToTuningSys(config);
   });

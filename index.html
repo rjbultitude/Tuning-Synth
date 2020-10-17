@@ -68,18 +68,21 @@
           </select>
         </div>
         <div class="fieldset" id="freqiControls">
-          <label for="tuningSystem">Tuning system</label>
+          <label for="tuningSystem" class="controls__label">Tuning system</label>
         </div>
         <div class="fieldset">
-          <label>Root note</label>
-          <input
-            type="range"
-            id="freqPitch"
-            name="freqPitch"
-            min="60"
-            max="4000"
-            value="440"
-          />
+          <label for="freqPitch" class="controls__label">Root note</label>
+          <div class="range__input-wrapper">
+            <input
+              type="range"
+              id="freqPitch"
+              name="freqPitch"
+              min="60"
+              max="4000"
+              value="440"
+            />
+          </div>
+          <p class="range__value" id="rootNoteText">440</p>
         </div>
       </form>
     </div>

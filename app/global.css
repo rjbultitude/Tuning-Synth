@@ -88,7 +88,7 @@ p {
   z-index: 1;
 }
 
-.visual-controls .form__heading {
+.form__heading {
   position: absolute;
   left: -999em;
 }
@@ -108,7 +108,7 @@ p {
   flex-basis: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 1rem 0;
 }
 
@@ -117,8 +117,12 @@ p {
   padding-top: var(--spacing);
 }
 
-.audio-controls .fieldset:not(:last-child) {
-  flex-basis: 50%;
+.audio-controls .fieldset {
+  flex-basis: 33%;
+}
+
+.audio-controls .controls__label {
+  flex-basis: 30%;
 }
 
 .range-wrapper {
@@ -138,7 +142,7 @@ p {
   font-size: 1.2rem;
 }
 
-.range-wrapper .range__value {
+.range__value {
   margin: 0;
   flex-basis: 18%;
 }
