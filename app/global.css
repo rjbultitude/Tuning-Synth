@@ -88,6 +88,15 @@ p {
   z-index: 1;
 }
 
+@media all and (max-width: 540px) {
+  .visual-controls {
+    margin: var(--spacing) 0;
+    padding: var(--spacing);
+    position: static;
+    width: auto;
+  }
+}
+
 .form__heading {
   position: absolute;
   left: -999em;
@@ -109,7 +118,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin: 1rem 0;
+  padding: var(--spacing) 0;
 }
 
 .fieldset + .fieldset {
@@ -121,6 +130,12 @@ p {
   flex-basis: 33%;
 }
 
+@media all and (max-width: 540px) {
+  .audio-controls .fieldset {
+    flex-basis: 100%;
+  }
+}
+
 .audio-controls .controls__label {
   flex-basis: 30%;
 }
@@ -129,6 +144,12 @@ p {
   display: flex;
   flex-basis: 100%;
   justify-content: space-between;
+}
+
+@media all and (max-width: 540px) {
+  .range-wrapper {
+    padding: var(--spacing) 0;
+  }
 }
 
 .range__input-wrapper {
