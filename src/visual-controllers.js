@@ -1,15 +1,17 @@
-import * as domEls from './dom-els';
+import { getDOMEls } from './dom-els';
+import { updateUI } from './utils';
 
 export function setUpGrainControl(config) {
-  domEls.grainControl.addEventListener(
+  const { grainControl } = getDOMEls();
+  grainControl.addEventListener(
     'change',
     function () {
       config.grainSize = this.value;
-      domEls.grainTextNode.innerText = `${parseInt(this.value).toFixed()}`;
+      updateUI(config.grainSize, grainControl);
     },
     false
   );
-  return domEls.grainControl;
+  return grainControl;
 }
 
 export function setSpectrum(config) {
@@ -20,12 +22,12 @@ export function setSpectrum(config) {
   return config;
 }
 
-export function updateSliderVals(sliderVals, config, textNode) {
+export function updateSliderVals(sliderVals, config) {
+  const { sliderTextNode } = getDOMEls();
   config.sliders.one = sliderVals.sliderLow;
   config.sliders.two = sliderVals.sliderHigh;
-  textNode.innerText = `${parseInt(config.sliders.one).toFixed()} ${parseInt(
-    config.sliders.two
-  ).toFixed()}`;
+  sliderTextNode.innerText = `${parseInt(config.sliders.one).toFixed()}
+    ${parseInt(config.sliders.two).toFixed()}`;
   return config;
 }
 

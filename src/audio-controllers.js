@@ -1,5 +1,6 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import * as domEls from './dom-els';
+import { getDOMEls } from './dom-els';
+import { updateUI } from './utils';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -57,12 +58,13 @@ export function constrainAndPlay(p5Sketch, config) {
 }
 
 export function updateAudioOutput(config) {
+  const { freqTextNode, statusTextNode } = getDOMEls();
   if (config.playing !== true) {
-    domEls.freqTextNode.innerText = '';
-    domEls.statusTextNode.innerText = 'Stopped';
+    updateUI('', freqTextNode);
+    updateUI('Stopped', statusTextNode);
   } else {
-    domEls.freqTextNode.innerText = config.currentFreq;
-    domEls.statusTextNode.innerText = 'Playing';
+    updateUI(config.currentFreq, freqTextNode);
+    updateUI('Playing', statusTextNode);
   }
 }
 
@@ -82,24 +84,27 @@ export function togglePlay({ config, p5Sketch }) {
 }
 
 export function getInitialWaveType() {
-  if (domEls.waveControls && 'value' in domEls.waveControls) {
-    return domEls.waveControls.value;
+  const { waveControls } = getDOMEls();
+  if (waveControls && 'value' in waveControls) {
+    return waveControls.value;
   }
   return 'sine';
 }
 
 export function setupWaveControls(config) {
+  const { waveControls } = getDOMEls();
   function waveControlHandler(event) {
     changeWave(event.target.value, config);
   }
-  domEls.waveControls.addEventListener('change', waveControlHandler);
-  return domEls.waveControls;
+  waveControls.addEventListener('change', waveControlHandler);
+  return waveControls;
 }
 
 export function setupPitchControls(config) {
-  domEls.pitchControl.addEventListener('change', (e) => {
+  const { pitchControl, rootNoteTextNode } = getDOMEls();
+  pitchControl.addEventListener('change', (e) => {
     config.startFreq = parseInt(e.target.value);
-    domEls.rootNoteTextNode.innerText = `${parseInt(e.target.value).toFixed()}`;
+    updateUI(config.startFreq, rootNoteTextNode);
     // read state and update Osc
     setOscFreqToTuningSys(config);
   });

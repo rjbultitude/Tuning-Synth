@@ -1,4 +1,4 @@
-import { sliders } from './dom-els';
+import { getDOMEls } from './dom-els';
 
 export function getVals(sliders) {
   let sliderLow = parseFloat(sliders.spectrumControlLow.value);
@@ -17,6 +17,7 @@ export function getVals(sliders) {
 }
 
 export function setupSlider(config, callBack) {
+  const { sliders, sliderTextNode } = getDOMEls();
   sliders.spectrumControlHigh.value = config.numFreqBands;
   const sliderEls = Object.keys(sliders);
   for (let i = 0; i < sliderEls.length; i++) {
@@ -26,7 +27,7 @@ export function setupSlider(config, callBack) {
       sliders[key].step = config.numFreqBands / 20;
       sliders[key].oninput = function () {
         const sliderVals = getVals(sliders);
-        callBack(sliderVals, config, sliderTextNode);
+        callBack(sliderVals, config);
       };
     }
   }
