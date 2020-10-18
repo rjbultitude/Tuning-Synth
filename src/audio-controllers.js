@@ -32,8 +32,8 @@ export function changeWave(waveTypeStr, config) {
     const oscVolume = getVolForWaveType(waveTypeStr);
     config.osc.amp(oscVolume);
   }
-  config.osc.setType(waveType);
-  return waveType;
+  config.osc.setType(waveTypeStr);
+  return waveTypeStr;
 }
 
 export function isMouseInCanvas(p5Sketch) {
@@ -94,6 +94,7 @@ export function getInitialWaveType() {
 export function setupWaveControls(config) {
   const { waveControls } = getDOMEls();
   function waveControlHandler(event) {
+    console.log('event.target.value', event.target.value);
     changeWave(event.target.value, config);
   }
   waveControls.addEventListener('change', waveControlHandler);

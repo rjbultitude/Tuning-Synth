@@ -1,7 +1,9 @@
 import chai, { expect } from 'chai';
-import sinon from 'sinon';
+import sinon, { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
+
+import * as utilDOM from './dom-els';
 
 import {
   changeWave,
@@ -10,6 +12,35 @@ import {
   getInitialWaveType,
   setupWaveControls,
 } from './audio-controllers.js';
+
+const document = {
+  visualControls: {
+    grainSize: 2,
+    freqRangeLow: 100,
+    freqRangeHigh: 200
+  },
+  audioControls: {
+    waveType: 'sine'
+  },
+  getElementById: function(str) {
+    return str;
+  }
+}
+
+const DOMEls = {
+  grainControl: document.visualControls.grainSize,
+  waveControls: document.audioControls.waveType,
+  pitchControl: document.getElementById('freqPitch'),
+  rootNoteTextNode: document.getElementById('rootNoteText'),
+  sliders: {
+    spectrumControlLow: document.visualControls.freqRangeLow,
+    spectrumControlHigh: document.visualControls.freqRangeHigh,
+  },
+  sliderTextNode: document.getElementById('rangeValueText'),
+  grainTextNode: document.getElementById('grainValueText'),
+  freqTextNode: document.getElementById('audioOutputFreq'),
+  statusTextNode: document.getElementById('audioOutputStatus'),
+}
 
 describe('change wave', function () {
   this.beforeEach(function () {
@@ -58,32 +89,30 @@ describe('toggle play', function () {
     sinon.restore();
   });
   it('should set playing to false if playing is true', function () {
-    expect(togglePlay(this.configPlaying).playing).to.be.false;
+    expect(togglePlay({ config: this.configPlaying }).playing).to.be.false;
   });
   it('should set playing to true if playing is false', function () {
-    expect(togglePlay(this.configStopped).playing).to.be.true;
+    expect(togglePlay({ config: this.configStopped }).playing).to.be.true;
   });
   it('should call play method if playing is false', function () {
-    togglePlay(this.configStopped);
+    togglePlay({config: this.configStopped });
     expect(this.startSpy).calledOnce;
   });
   it('should call stop method if playing is true', function () {
-    togglePlay(this.configPlaying);
+    togglePlay({ config: this.configPlaying });
     expect(this.stopSpy).calledOnce;
   });
 });
 
 describe('get Initial Wave Type', function () {
   this.beforeEach(function () {
-    this.waveControls = {
-      value: 'sawTooth',
-    };
+    spy(utilDOM, 'getDOMEls').and.returnValue = DOMEls;
   });
   it('should return "sine" when no argument is passed', function () {
     expect(getInitialWaveType()).to.equal('sine');
   });
   it('should return waveControls value when waveControls argument is passed', function () {
-    expect(getInitialWaveType(this.waveControls)).to.equal('sawTooth');
+    expect(getInitialWaveType()).to.equal('sawTooth');
   });
 });
 
