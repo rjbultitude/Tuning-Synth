@@ -1,13 +1,13 @@
 // DOM elements
 export function getDOMEls() {
   return {
-    grainControl: document.visualControls.grainSize,
-    waveControls: document.audioControls.waveType,
+    grainControl: document.getElementById('grainSize'),
+    waveControl: document.getElementById('waveType'),
     pitchControl: document.getElementById('freqPitch'),
     rootNoteTextNode: document.getElementById('rootNoteText'),
     sliders: {
-      spectrumControlLow: document.visualControls.freqRangeLow,
-      spectrumControlHigh: document.visualControls.freqRangeHigh,
+      spectrumControlLow: document.getElementById('freqRangeLow'),
+      spectrumControlHigh: document.getElementById('freqRangeHigh'),
     },
     sliderTextNode: document.getElementById('rangeValueText'),
     grainTextNode: document.getElementById('grainValueText'),

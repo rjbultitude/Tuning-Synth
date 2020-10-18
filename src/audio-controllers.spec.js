@@ -3,8 +3,6 @@ import sinon, { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import * as utilDOM from './dom-els';
-
 import {
   changeWave,
   togglePlay,
@@ -82,6 +80,7 @@ describe('toggle play', function () {
         stop: function () {},
       },
     };
+    this.updateAudioOutput = () => {};
     this.startSpy = sinon.spy(this.configStopped.osc, 'start');
     this.stopSpy = sinon.spy(this.configPlaying.osc, 'stop');
   });
@@ -89,30 +88,32 @@ describe('toggle play', function () {
     sinon.restore();
   });
   it('should set playing to false if playing is true', function () {
-    expect(togglePlay({ config: this.configPlaying }).playing).to.be.false;
+    expect(togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput }).playing).to.be.false;
   });
   it('should set playing to true if playing is false', function () {
-    expect(togglePlay({ config: this.configStopped }).playing).to.be.true;
+    expect(togglePlay({ config: this.configStopped, updateAudioOutput: this.updateAudioOutput }).playing).to.be.true;
   });
   it('should call play method if playing is false', function () {
-    togglePlay({config: this.configStopped });
+    togglePlay({config: this.configStopped, updateAudioOutput: this.updateAudioOutput });
     expect(this.startSpy).calledOnce;
   });
   it('should call stop method if playing is true', function () {
-    togglePlay({ config: this.configPlaying });
+    togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput });
     expect(this.stopSpy).calledOnce;
   });
 });
 
 describe('get Initial Wave Type', function () {
   this.beforeEach(function () {
-    spy(utilDOM, 'getDOMEls').and.returnValue = DOMEls;
+    this.waveControl = {
+      value: 'sawtooth'
+    };
   });
   it('should return "sine" when no argument is passed', function () {
     expect(getInitialWaveType()).to.equal('sine');
   });
   it('should return waveControls value when waveControls argument is passed', function () {
-    expect(getInitialWaveType()).to.equal('sawTooth');
+    expect(getInitialWaveType(this.waveControl)).to.equal('sawtooth');
   });
 });
 
@@ -194,7 +195,7 @@ describe('setup Wave Controls', function () {
     sinon.restore();
   });
   it('should called changeWave when changed', function () {
-    setupWaveControls(this.waveControl, this.config);
+    setupWaveControls(this.config, this.waveControl);
     expect(this.addEventSpy).calledOnce;
   });
 });

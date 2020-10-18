@@ -16,8 +16,7 @@ export function getVals(sliders) {
   };
 }
 
-export function setupSlider(config, callBack) {
-  const { sliders, sliderTextNode } = getDOMEls();
+export function setupSpectrumZoom(config, sliders, sliderTextNode, callBack) {
   sliders.spectrumControlHigh.value = config.numFreqBands;
   const sliderEls = Object.keys(sliders);
   for (let i = 0; i < sliderEls.length; i++) {
@@ -27,7 +26,7 @@ export function setupSlider(config, callBack) {
       sliders[key].step = config.numFreqBands / 20;
       sliders[key].oninput = function () {
         const sliderVals = getVals(sliders);
-        callBack(sliderVals, config);
+        callBack(config, sliderVals, sliderTextNode);
       };
     }
   }

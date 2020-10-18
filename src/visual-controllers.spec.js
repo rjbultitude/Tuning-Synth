@@ -6,7 +6,7 @@ chai.use(sinonChai);
 
 import {
   setUpGrainControl,
-  updateSliderVals,
+  updateZoomUI,
   setSpectrum,
   drawFreqs,
 } from './visual-controllers.js';
@@ -27,12 +27,12 @@ describe('setup Grain Controls', function () {
     sinon.restore();
   });
   it('should have called changeWave on each item in waveControls array', function () {
-    setUpGrainControl(this.grainControl, this.config);
+    setUpGrainControl(this.config, this.grainControl);
     expect(this.addEventSpy).calledOnce;
   });
 });
 
-describe('update Slider Vals', function() {
+describe('updateZoomUI', function() {
   this.beforeAll(function() {
     this.slidervals = {
       sliderLow: 10,
@@ -49,10 +49,10 @@ describe('update Slider Vals', function() {
     }
   });
   it('should set config.slider.one value using to sliderVals.sliderLow', function() {
-    expect(updateSliderVals(this.slidervals, this.config, this.textNode).sliders.one).to.equal(10);
+    expect(updateZoomUI(this.config, this.slidervals, this.textNode).sliders.one).to.equal(10);
   });
   it('should set config.slider.two value using to sliderVals.sliderHigh', function() {
-    expect(updateSliderVals(this.slidervals, this.config, this.textNode).sliders.two).to.equal(20);
+    expect(updateZoomUI(this.config, this.slidervals, this.textNode).sliders.two).to.equal(20);
   });
 });
 

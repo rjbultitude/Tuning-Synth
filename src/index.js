@@ -8,15 +8,24 @@ import {
   setupWaveControls,
   createTuningSystems,
   setupPitchControls,
+  updateAudioOutput,
 } from './audio-controllers';
 import {
   setUpGrainControl,
   drawFreqs,
-  updateSliderVals,
+  updateZoomUI,
   setSpectrum,
 } from './visual-controllers';
 import { createTuningSysNotes } from './freqi-freqs';
-import { setupSlider } from './range-slider';
+import { setupSpectrumZoom } from './range-slider';
+import { getDOMEls } from './dom-els';
+const {
+  grainControl,
+  waveControl,
+  pitchControl,
+  sliders,
+  sliderTextNode,
+} = getDOMEls();
 
 const sketchFn = (p5Sketch) => {
   const fftResolution = 512;
@@ -44,7 +53,7 @@ const sketchFn = (p5Sketch) => {
   };
 
   p5Sketch.preload = function preload() {
-    const initialWaveType = getInitialWaveType();
+    const initialWaveType = getInitialWaveType(waveControl);
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
@@ -61,12 +70,12 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay({ config, p5Sketch });
+      togglePlay({ config, p5Sketch, updateAudioOutput });
     });
-    setupWaveControls(config);
-    setupPitchControls(config);
-    setUpGrainControl(config);
-    setupSlider(config, updateSliderVals);
+    setupWaveControls(config, waveControl);
+    setupPitchControls(config, pitchControl);
+    setUpGrainControl(config, grainControl);
+    setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
   };
 
   p5Sketch.draw = function draw() {

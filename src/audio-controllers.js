@@ -68,7 +68,7 @@ export function updateAudioOutput(config) {
   }
 }
 
-export function togglePlay({ config, p5Sketch }) {
+export function togglePlay({ config, p5Sketch, updateAudioOutput }) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
@@ -83,22 +83,20 @@ export function togglePlay({ config, p5Sketch }) {
   return config;
 }
 
-export function getInitialWaveType() {
-  const { waveControls } = getDOMEls();
-  if (waveControls && 'value' in waveControls) {
-    return waveControls.value;
+export function getInitialWaveType(waveControl) {
+  if (waveControl && 'value' in waveControl) {
+    return waveControl.value;
   }
   return 'sine';
 }
 
-export function setupWaveControls(config) {
-  const { waveControls } = getDOMEls();
+export function setupWaveControls(config, waveControl) {
   function waveControlHandler(event) {
     console.log('event.target.value', event.target.value);
     changeWave(event.target.value, config);
   }
-  waveControls.addEventListener('change', waveControlHandler);
-  return waveControls;
+  waveControl.addEventListener('change', waveControlHandler);
+  return waveControl;
 }
 
 export function setupPitchControls(config) {

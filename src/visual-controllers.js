@@ -1,8 +1,7 @@
 import { getDOMEls } from './dom-els';
 import { updateUI } from './utils';
 
-export function setUpGrainControl(config) {
-  const { grainControl } = getDOMEls();
+export function setUpGrainControl(config, grainControl) {
   grainControl.addEventListener(
     'change',
     function () {
@@ -22,8 +21,7 @@ export function setSpectrum(config) {
   return config;
 }
 
-export function updateSliderVals(sliderVals, config) {
-  const { sliderTextNode } = getDOMEls();
+export function updateZoomUI(config, sliderVals, sliderTextNode) {
   config.sliders.one = sliderVals.sliderLow;
   config.sliders.two = sliderVals.sliderHigh;
   sliderTextNode.innerText = `${parseInt(config.sliders.one).toFixed()}
