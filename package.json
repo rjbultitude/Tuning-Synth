@@ -10,10 +10,10 @@
     "build:prod": "webpack --env prod --mode=production",
     "test": "NODE_ENV=test nyc mocha --recursive **/*.spec.js",
     "lint:quality": "eslint .",
-    "lint:css": "stylelint './app/**/*.css'",
-    "lint:format-js": "prettier --write ./app/**/*.js",
-    "lint:format-css": "stylelint ./app/**/*.css",
-    "lint:format-check": "prettier --check ./app/**/*.js"
+    "lint:css": "stylelint './src/**/*.css'",
+    "lint:format-js": "prettier --write ./src/**/*.js",
+    "lint:format-css": "stylelint ./src/**/*.css",
+    "lint:format-check": "prettier --check ./src/**/*.js"
   },
   "author": "Richard Bultitude",
   "license": "ISC",
@@ -42,8 +42,6 @@
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
     "husky": "^4.2.5",
-    "jsdom": "^16.4.0",
-    "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^0.9.0",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0",

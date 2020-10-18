@@ -8,7 +8,7 @@ const {src_Path, distDir, copyPluginConfig, splitChunksConfig} = require('./comm
 
 module.exports = {
   entry: {
-    main: src_Path + '/app/index.js'
+    main: src_Path + '/src/index.js'
   },
   output: {
     filename: (data) => {
