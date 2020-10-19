@@ -1,15 +1,5 @@
 import freqi from 'freqi';
-
-export function setDefaultIntervals(config) {
-  const intervals = [];
-  for (let index = config.intervalsRange.lower; index < 0; index++) {
-    intervals.push(index);
-  }
-  for (let index = 0; index <= config.intervalsRange.upper; index++) {
-    intervals.push(index);
-  }
-  return intervals;
-}
+import { getDefaultIntervals } from '../utils/utils';
 
 export function createTuningSysNotes(config, modes) {
   const tuningSysNotes = {};
@@ -17,7 +7,7 @@ export function createTuningSysNotes(config, modes) {
     const currentMode = modes[index];
     const notesArray = freqi.getFreqs({
       startFreq: config.startFreq,
-      intervals: setDefaultIntervals(config),
+      intervals: getDefaultIntervals(config),
       mode: currentMode,
     });
     Object.defineProperty(tuningSysNotes, currentMode, {
@@ -35,7 +25,7 @@ export function setTuningSysNotes(config) {
     const val = config.tuningSysNotes[tuningSys];
     config.tuningSysNotes[tuningSys] = freqi.getFreqs({
       startFreq: config.startFreq,
-      intervals: setDefaultIntervals(config),
+      intervals: getDefaultIntervals(config),
       mode: tuningSys,
     });
   });

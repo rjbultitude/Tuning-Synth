@@ -42,6 +42,7 @@ const sketchFn = (p5Sketch) => {
     osc: null,
     startFreq: 440,
     currentFreq: 440,
+    selectedInterval: 0,
     intervalsRange: {
       lower: -12,
       upper: 12,
@@ -92,9 +93,7 @@ const sketchFn = (p5Sketch) => {
     );
     setUpGrainControl(config, grainControl);
     setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
-    const keyboard = createKeyboard(config);
-    console.log('keyboard', keyboard);
-    console.log('visualControls', visualControls);
+    const keyboard = createKeyboard(config, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
   };
 

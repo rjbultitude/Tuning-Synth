@@ -23,3 +23,14 @@ export function updateAudioOutput(config) {
     updateUI('Playing', statusTextNode);
   }
 }
+
+export function getDefaultIntervals(config) {
+  const intervals = [];
+  for (let index = config.intervalsRange.lower; index < 0; index++) {
+    intervals.push(index);
+  }
+  for (let index = 0; index <= config.intervalsRange.upper; index++) {
+    intervals.push(index);
+  }
+  return intervals;
+}
