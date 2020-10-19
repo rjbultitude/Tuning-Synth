@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
+import freqi from 'freqi';
 import { writeFreqiControls } from './freqi-controls';
 import './global.css';
 import {
@@ -27,6 +28,8 @@ const {
   sliderTextNode,
 } = getDOMEls();
 
+const modes = freqi.getModes();
+
 const sketchFn = (p5Sketch) => {
   const fftResolution = 512;
   const config = {
@@ -35,6 +38,10 @@ const sketchFn = (p5Sketch) => {
     osc: null,
     startFreq: 440,
     currentFreq: 440,
+    intervalsRange: {
+      lower: -12,
+      upper: 12,
+    },
     grainSize: 10,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
@@ -58,7 +65,7 @@ const sketchFn = (p5Sketch) => {
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
     // Dynamic controls creation
-    createTuningSysNotes(config);
+    createTuningSysNotes(config, modes);
     createTuningSystems(config);
     writeFreqiControls(config);
   };

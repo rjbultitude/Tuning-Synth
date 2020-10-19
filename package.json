@@ -73,6 +73,10 @@
       "jsdom-global/register"
     ]
   },
+  "nyc": {
+    "include": "src",
+    "exclude": "**/*.spec.js"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern **/*.js && npm run lint:format-css",
