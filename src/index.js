@@ -18,9 +18,12 @@ import {
 } from './visual-controllers/visual-controllers';
 import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
+import { createKeyboard } from './keyboard/keyboard';
 import { getDOMEls } from './utils/dom-els';
 import { updateAudioOutput } from './utils/utils';
 const {
+  pageWrapper,
+  visualControls,
   grainControl,
   waveControl,
   pitchControl,
@@ -89,6 +92,10 @@ const sketchFn = (p5Sketch) => {
     );
     setUpGrainControl(config, grainControl);
     setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
+    const keyboard = createKeyboard(config);
+    console.log('keyboard', keyboard);
+    console.log('visualControls', visualControls);
+    pageWrapper.insertBefore(keyboard, visualControls);
   };
 
   p5Sketch.draw = function draw() {

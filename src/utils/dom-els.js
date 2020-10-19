@@ -1,6 +1,8 @@
 // DOM elements
 export function getDOMEls() {
   return {
+    pageWrapper: document.getElementById('pageWrapper'),
+    visualControls: document.getElementById('visualControls'),
     grainControl: document.getElementById('grainSize'),
     waveControl: document.getElementById('waveType'),
     pitchControl: document.getElementById('freqPitch'),

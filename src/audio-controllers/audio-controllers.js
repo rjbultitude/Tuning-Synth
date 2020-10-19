@@ -1,5 +1,4 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import { getDOMEls } from '../utils/dom-els';
 import { updateUI } from '../utils/utils';
 
 export function createTuningSystems(config) {
