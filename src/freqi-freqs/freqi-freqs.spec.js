@@ -4,27 +4,8 @@ import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
 import {
-  setDefaultIntervals,
   createTuningSysNotes,
-  setTuningSysNotes
 } from './freqi-freqs';
-
-describe('setDefaultIntervals', function() {
-  beforeEach(function() {
-    this.config = {
-      intervalsRange: {
-        lower: -2,
-        upper: 2,
-      }
-    }
-  });
-  it('should return an array when passed vaild config', function() {
-    expect(Array.isArray(setDefaultIntervals(this.config))).to.be.true;
-  });
-  it('should return an array of length equal to all the integers between lower and upper vals', function() {
-    expect(setDefaultIntervals(this.config)).to.have.length(5);
-  });
-});
 
 describe('createTuningSysNotes', function() {
   beforeEach(function() {
