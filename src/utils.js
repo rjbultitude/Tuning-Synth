@@ -1,9 +1,12 @@
 export function updateUI(value, el) {
-  let stringVal;
   if (typeof value === 'number') {
-    stringVal = `${parseInt(value).toFixed()}`;
-  } else {
-    stringVal = value;
+    const trimNumber = parseInt(value).toFixed();
+    el.innerText = `${trimNumber}`;
+    return el;
   }
-  el.innerText = value;
+  if (typeof value === 'string') {
+    el.innerText = value;
+    return el;
+  }
+  return el;
 }

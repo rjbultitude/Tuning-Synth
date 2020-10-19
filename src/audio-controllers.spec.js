@@ -4,6 +4,8 @@ import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
 import {
+  createTuningSystems,
+  getVolForWaveType,
   changeWave,
   togglePlay,
   constrainAndPlay,
@@ -39,6 +41,30 @@ const DOMEls = {
   freqTextNode: document.getElementById('audioOutputFreq'),
   statusTextNode: document.getElementById('audioOutputStatus'),
 }
+
+describe('createTuningSystems', function() {
+  beforeEach(function() {
+    this.config = {
+      tuningSystems: null,
+    }
+  });
+  it('should add a Map to config', function () {
+    const tuningSys = createTuningSystems(this.config).tuningSystems;
+    expect(tuningSys instanceof Map).to.be.true;
+  });
+  it('should add a Map to config with key "eqTemp"', function () {
+    expect(createTuningSystems(this.config).tuningSystems.has('eqTemp')).to.be.true;
+  });
+});
+
+describe('getVolForWaveType', function() {
+  it('should return a number even if no argument is passed', function() {
+    expect(getVolForWaveType()).to.be.a('number');
+  });
+  it('should return 0.08 if argument is sawtooth', function() {
+    expect(getVolForWaveType('sawtooth')).to.equal(0.08);
+  });
+});
 
 describe('change wave', function () {
   this.beforeEach(function () {
