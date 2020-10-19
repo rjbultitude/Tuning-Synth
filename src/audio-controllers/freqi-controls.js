@@ -1,4 +1,4 @@
-import { setTuningSysNotes } from './freqi-freqs';
+import { setTuningSysNotes } from '../freqi-freqs/freqi-freqs';
 
 export function setOscFreqToTuningSys(config, updateAudioOutput) {
   console.log('config', config);
@@ -25,11 +25,11 @@ export function applyTuningSystem(e, config, updateAudioOutput) {
   setOscFreqToTuningSys(config, updateAudioOutput);
 }
 
-export function addTuningSelectListner(select, config) {
+export function addTuningSelectListner(select, config, updateAudioOutput) {
   select.addEventListener(
     'input',
     (e) => {
-      applyTuningSystem(e, config);
+      applyTuningSystem(e, config, updateAudioOutput);
     },
     false
   );

@@ -1,5 +1,4 @@
-import { getDOMEls } from './dom-els';
-import { updateUI } from './utils';
+import { updateUI } from '../utils/utils';
 
 export function setUpGrainControl(config, grainControl) {
   grainControl.addEventListener(

@@ -1,6 +1,6 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import { getDOMEls } from './dom-els';
-import { updateUI } from './utils';
+import { getDOMEls } from '../utils/dom-els';
+import { updateUI } from '../utils/utils';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -81,19 +81,22 @@ export function getInitialWaveType(waveControl) {
 
 export function setupWaveControls(config, waveControl) {
   function waveControlHandler(event) {
-    console.log('event.target.value', event.target.value);
     changeWave(event.target.value, config);
   }
   waveControl.addEventListener('change', waveControlHandler);
   return waveControl;
 }
 
-export function setupPitchControls(config) {
-  const { pitchControl, rootNoteTextNode } = getDOMEls();
+export function setupPitchControls(
+  config,
+  pitchControl,
+  rootNoteTextNode,
+  updateAudioOutput
+) {
   pitchControl.addEventListener('change', (e) => {
     config.startFreq = parseInt(e.target.value);
     updateUI(config.startFreq, rootNoteTextNode);
     // read state and update Osc
-    setOscFreqToTuningSys(config);
+    setOscFreqToTuningSys(config, updateAudioOutput);
   });
 }

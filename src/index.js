@@ -1,7 +1,7 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import freqi from 'freqi';
-import { writeFreqiControls } from './freqi-controls';
+import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
 import {
   togglePlay,
@@ -9,21 +9,22 @@ import {
   setupWaveControls,
   createTuningSystems,
   setupPitchControls,
-} from './audio-controllers';
+} from './audio-controllers/audio-controllers';
 import {
   setUpGrainControl,
   drawFreqs,
   updateZoomUI,
   setSpectrum,
-} from './visual-controllers';
-import { createTuningSysNotes } from './freqi-freqs';
-import { setupSpectrumZoom } from './range-slider';
-import { getDOMEls } from './dom-els';
-import { updateAudioOutput } from './utils';
+} from './visual-controllers/visual-controllers';
+import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
+import { setupSpectrumZoom } from './visual-controllers/range-slider';
+import { getDOMEls } from './utils/dom-els';
+import { updateAudioOutput } from './utils/utils';
 const {
   grainControl,
   waveControl,
   pitchControl,
+  rootNoteTextNode,
   sliders,
   sliderTextNode,
 } = getDOMEls();
@@ -80,7 +81,12 @@ const sketchFn = (p5Sketch) => {
       togglePlay({ config, p5Sketch, updateAudioOutput });
     });
     setupWaveControls(config, waveControl);
-    setupPitchControls(config, pitchControl);
+    setupPitchControls(
+      config,
+      pitchControl,
+      rootNoteTextNode,
+      updateAudioOutput
+    );
     setUpGrainControl(config, grainControl);
     setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
   };

@@ -1,4 +1,4 @@
-import { getDOMEls } from './dom-els';
+import { getDOMEls } from '../utils/dom-els';
 
 export function getVals(sliders) {
   let sliderLow = parseFloat(sliders.spectrumControlLow.value);
