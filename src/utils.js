@@ -1,3 +1,5 @@
+import { getDOMEls } from './dom-els';
+
 export function updateUI(value, el) {
   if (typeof value === 'number') {
     const trimNumber = parseInt(value).toFixed();
@@ -9,4 +11,15 @@ export function updateUI(value, el) {
     return el;
   }
   return el;
+}
+
+export function updateAudioOutput(config) {
+  const { freqTextNode, statusTextNode } = getDOMEls();
+  if (config.playing !== true) {
+    updateUI('', freqTextNode);
+    updateUI('Stopped', statusTextNode);
+  } else {
+    updateUI(config.currentFreq, freqTextNode);
+    updateUI('Playing', statusTextNode);
+  }
 }

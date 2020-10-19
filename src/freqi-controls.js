@@ -1,7 +1,6 @@
-import { updateAudioOutput } from './audio-controllers';
 import { setTuningSysNotes } from './freqi-freqs';
 
-export function setOscFreqToTuningSys(config) {
+export function setOscFreqToTuningSys(config, updateAudioOutput) {
   console.log('config', config);
   // set and update state
   setTuningSysNotes(config);
@@ -17,13 +16,13 @@ export function setOscFreqToTuningSys(config) {
   return config;
 }
 
-export function applyTuningSystem(e, config) {
+export function applyTuningSystem(e, config, updateAudioOutput) {
   // get value
   const tuningSysKey = e.target.value;
   // set state
   config.selectedTuningSys = tuningSysKey;
   // update Oscillator
-  setOscFreqToTuningSys(config);
+  setOscFreqToTuningSys(config, updateAudioOutput);
 }
 
 export function addTuningSelectListner(select, config) {
@@ -38,7 +37,7 @@ export function addTuningSelectListner(select, config) {
 
 // Dynamically create the tuning systems
 // selectmenu from tuningSystems Map
-export function createTuningSelect(config) {
+export function createTuningSelect(config, updateAudioOutput) {
   const select = document.createElement('select');
   select.setAttribute('id', 'tuningSystem');
   let count = 0;
@@ -53,14 +52,14 @@ export function createTuningSelect(config) {
     }
     count += 1;
   });
-  addTuningSelectListner(select, config);
+  addTuningSelectListner(select, config, updateAudioOutput);
   return select;
 }
 
 // entry point
-export function writeFreqiControls(config) {
+export function writeFreqiControls(config, updateAudioOutput) {
   const container = document.getElementById('freqiControls');
-  const select = createTuningSelect(config);
+  const select = createTuningSelect(config, updateAudioOutput);
   container.insertBefore(select, null);
   const selectDOM = document.getElementById('tuningSystem');
   config.selectedTuningSys = selectDOM.options[selectDOM.selectedIndex].value;

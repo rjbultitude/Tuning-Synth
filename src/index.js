@@ -9,7 +9,6 @@ import {
   setupWaveControls,
   createTuningSystems,
   setupPitchControls,
-  updateAudioOutput,
 } from './audio-controllers';
 import {
   setUpGrainControl,
@@ -20,6 +19,7 @@ import {
 import { createTuningSysNotes } from './freqi-freqs';
 import { setupSpectrumZoom } from './range-slider';
 import { getDOMEls } from './dom-els';
+import { updateAudioOutput } from './utils';
 const {
   grainControl,
   waveControl,
@@ -67,7 +67,7 @@ const sketchFn = (p5Sketch) => {
     // Dynamic controls creation
     createTuningSysNotes(config, modes);
     createTuningSystems(config);
-    writeFreqiControls(config);
+    writeFreqiControls(config, updateAudioOutput);
   };
 
   p5Sketch.setup = function setup() {

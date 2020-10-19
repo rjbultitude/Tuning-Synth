@@ -57,17 +57,6 @@ export function constrainAndPlay(p5Sketch, config) {
   return config;
 }
 
-export function updateAudioOutput(config) {
-  const { freqTextNode, statusTextNode } = getDOMEls();
-  if (config.playing !== true) {
-    updateUI('', freqTextNode);
-    updateUI('Stopped', statusTextNode);
-  } else {
-    updateUI(config.currentFreq, freqTextNode);
-    updateUI('Playing', statusTextNode);
-  }
-}
-
 export function togglePlay({ config, p5Sketch, updateAudioOutput }) {
   if (config.playing) {
     config.osc.stop();
