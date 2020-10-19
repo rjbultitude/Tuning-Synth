@@ -1,7 +1,4 @@
-import chai, { expect } from 'chai';
-import sinon, { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
+import { expect } from 'chai';
 
 import {
   createTuningSysNotes,

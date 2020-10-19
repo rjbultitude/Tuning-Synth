@@ -75,7 +75,7 @@
   },
   "nyc": {
     "include": "src",
-    "exclude": "**/*.spec.js"
+    "exclude": ["**/*.spec.js"]
   },
   "husky": {
     "hooks": {

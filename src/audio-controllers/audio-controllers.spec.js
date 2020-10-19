@@ -1,5 +1,5 @@
 import chai, { expect } from 'chai';
-import sinon, { spy } from 'sinon';
+import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
