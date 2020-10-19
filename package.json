@@ -68,7 +68,6 @@
     "watch-files": [
       "**/*.spec.js"
     ],
-    "exclude": ["node_modules", "dist"],
     "require": [
       "@babel/register",
       "jsdom-global/register"
