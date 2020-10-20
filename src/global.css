@@ -29,12 +29,6 @@ h1 {
   color: white;
 }
 
-@media all and (max-width: 580px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-}
-
 h2 {
   font-size: 1.25rem;
   margin: 0 0 1rem;
@@ -110,15 +104,6 @@ p {
   z-index: 1;
 }
 
-@media all and (max-width: 540px) {
-  .visual-controls {
-    margin: var(--spacing) 0;
-    padding: var(--spacing);
-    position: static;
-    width: auto;
-  }
-}
-
 .form__heading {
   position: absolute;
   left: -999em;
@@ -152,12 +137,6 @@ p {
   flex-basis: 33%;
 }
 
-@media all and (max-width: 650px) {
-  .audio-controls .fieldset {
-    flex-basis: 100%;
-  }
-}
-
 .audio-controls .controls__label {
   flex-basis: 30%;
 }
@@ -166,13 +145,6 @@ p {
   display: flex;
   flex-basis: 100%;
   justify-content: space-between;
-}
-
-@media all and (max-width: 540px) {
-  .range-wrapper {
-    justify-content: start;
-    padding: var(--spacing) 0;
-  }
 }
 
 .range__input-wrapper {
@@ -301,9 +273,45 @@ input[type='range']::-webkit-slider-thumb {
   height: 80px;
 }
 
+@media all and (max-width: 650px) {
+  .audio-controls .fieldset {
+    flex-basis: 100%;
+  }
+}
+
+@media all and (max-width: 580px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
 @media all and (max-width: 540px) {
+  .keyboard button {
+    text-indent: -999em;
+  }
+
+  .visual-controls {
+    margin: var(--spacing) 0;
+    padding: var(--spacing);
+    position: static;
+    width: auto;
+  }
+
+  .range-wrapper {
+    justify-content: start;
+    padding: var(--spacing) 0;
+  }
+
   .range-wrapper .controls__label,
   .audio-controls .controls__label {
     flex-basis: var(--label-width);
+  }
+}
+
+@media all and (max-width: 400px) {
+  .keyboard button {
+    width: 7.6%;
+    border-top: 0 none;
+    text-indent: 0;
   }
 }
