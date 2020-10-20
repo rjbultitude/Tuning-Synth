@@ -2,6 +2,7 @@
 
 :root {
   --slider-height: 20px;
+  --label-width: 26%;
   --input-thumb-colour: #000;
   --spacing: 6px;
   --border-color: #ccc;
@@ -151,7 +152,7 @@ p {
   flex-basis: 33%;
 }
 
-@media all and (max-width: 540px) {
+@media all and (max-width: 650px) {
   .audio-controls .fieldset {
     flex-basis: 100%;
   }
@@ -169,6 +170,7 @@ p {
 
 @media all and (max-width: 540px) {
   .range-wrapper {
+    justify-content: start;
     padding: var(--spacing) 0;
   }
 }
@@ -176,6 +178,7 @@ p {
 .range__input-wrapper {
   flex-basis: 50%;
   position: relative;
+  margin-right: 6%;
 }
 
 .range-wrapper .controls__label {
@@ -296,4 +299,11 @@ input[type='range']::-webkit-slider-thumb {
   background-color: white;
   width: 4%;
   height: 80px;
+}
+
+@media all and (max-width: 540px) {
+  .range-wrapper .controls__label,
+  .audio-controls .controls__label {
+    flex-basis: var(--label-width);
+  }
 }
