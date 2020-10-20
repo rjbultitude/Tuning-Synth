@@ -23,8 +23,9 @@ export function setSpectrum(config) {
 export function updateZoomUI(config, sliderVals, sliderTextNode) {
   config.sliders.one = sliderVals.sliderLow;
   config.sliders.two = sliderVals.sliderHigh;
-  sliderTextNode.innerText = `${parseInt(config.sliders.one).toFixed()}
-    ${parseInt(config.sliders.two).toFixed()}`;
+  const sliderOneNum = parseInt(config.sliders.one).toFixed();
+  const sliderTwoNum = parseInt(config.sliders.two).toFixed();
+  sliderTextNode.innerText = `${sliderOneNum}\xa0${sliderTwoNum}`;
   return config;
 }
 

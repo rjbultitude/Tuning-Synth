@@ -21,6 +21,7 @@ import { setupSpectrumZoom } from './visual-controllers/range-slider';
 import { createKeyboard } from './keyboard/keyboard';
 import { getDOMEls } from './utils/dom-els';
 import { updateAudioOutput } from './utils/utils';
+import { ONESHOT } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
@@ -62,6 +63,7 @@ const sketchFn = (p5Sketch) => {
     tuningSystems: null,
     selectedTuningSys: '',
     tuningSysNotes: null,
+    playmode: ONESHOT,
   };
 
   p5Sketch.preload = function preload() {
