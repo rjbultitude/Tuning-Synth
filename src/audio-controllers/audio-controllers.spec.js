@@ -46,6 +46,9 @@ describe('createTuningSystems', function() {
   beforeEach(function() {
     this.config = {
       tuningSystems: null,
+      tuningSysNotes: {
+        'eqTemp': []
+      }
     }
   });
   it('should add a Map to config', function () {

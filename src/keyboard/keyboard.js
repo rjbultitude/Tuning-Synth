@@ -10,9 +10,26 @@ function stopCurrentNote(config) {
   config.osc.stop();
 }
 
+export function stopAndHideNote(config, updateAudioOutput) {
+  config.playing = false;
+  updateAudioOutput(config);
+  stopCurrentNote(config);
+}
+
+export function playAndShowNote(config, index, updateAudioOutput) {
+  const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
+  config.playing = true;
+  config.currentFreq = currFreq;
+  config.selectedInterval = index;
+  updateAudioOutput(config);
+  playCurrentNote(config, currFreq);
+  return config;
+}
+
 export function createKeyboard(config, updateAudioOutput) {
-  const keyboardWrapper = document.createElement('div');
+  const keyboardWrapper = document.createElement('section');
   keyboardWrapper.setAttribute('class', 'keyboard');
+  keyboardWrapper.setAttribute('tabindex', '0');
   const defaultIntervals = getDefaultIntervals(config);
   defaultIntervals.forEach((num, index) => {
     const keyButton = document.createElement('button');
@@ -20,12 +37,7 @@ export function createKeyboard(config, updateAudioOutput) {
     keyButton.addEventListener(
       'mousedown',
       (e) => {
-        const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
-        config.playing = true;
-        config.currentFreq = currFreq;
-        config.selectedInterval = index;
-        updateAudioOutput(config);
-        playCurrentNote(config, currFreq);
+        playAndShowNote(config, index, updateAudioOutput);
       },
       false
     );
@@ -34,9 +46,7 @@ export function createKeyboard(config, updateAudioOutput) {
       () => {
         console.log('config', config);
         if (config.playMode === ONESHOT) {
-          config.playing = false;
-          updateAudioOutput(config);
-          stopCurrentNote(config);
+          stopAndHideNote(config, updateAudioOutput);
         }
       },
       false
