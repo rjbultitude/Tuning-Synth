@@ -1,12 +1,5 @@
 import { getDefaultIntervals } from '../utils/utils';
-import { ONESHOT, SUSTAIN } from '../utils/constants';
-
-function setPlaymode(config) {
-  if (true) {
-    config.playMode = SUSTAIN;
-  }
-  config.playMode = ONESHOT;
-}
+import { ONESHOT } from '../utils/constants';
 
 function playCurrentNote(config, freq) {
   config.osc.freq(freq);
@@ -39,6 +32,7 @@ export function createKeyboard(config, updateAudioOutput) {
     keyButton.addEventListener(
       'mouseup',
       () => {
+        console.log('config', config);
         if (config.playMode === ONESHOT) {
           config.playing = false;
           updateAudioOutput(config);

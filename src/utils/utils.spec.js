@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 
-import { updateUI, getDefaultIntervals } from './utils';
+import { updateUI, getDefaultIntervals, getInitialSelectVal } from './utils';
 
 describe('updateUI', function () {
   beforeEach(function () {
@@ -40,5 +40,19 @@ describe('getDefaultIntervals', function () {
   });
   it('should return an array of length equal to all the integers between lower and upper vals', function () {
     expect(getDefaultIntervals(this.config)).to.have.length(5);
+  });
+});
+
+describe('getInitialSelectVal', function () {
+  this.beforeEach(function () {
+    this.el = {
+      value: 'sawtooth'
+    };
+  });
+  it('should return "sine" when default argument is "sine" but no el is passed', function () {
+    expect(getInitialSelectVal(null, 'sine')).to.equal('sine');
+  });
+  it('should return el.value when el argument is passed', function () {
+    expect(getInitialSelectVal(this.el)).to.equal('sawtooth');
   });
 });

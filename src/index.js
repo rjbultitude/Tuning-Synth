@@ -5,7 +5,7 @@ import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
 import {
   togglePlay,
-  getInitialWaveType,
+  setupPlayModeControls,
   setupWaveControls,
   createTuningSystems,
   setupPitchControls,
@@ -20,12 +20,13 @@ import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
 import { createKeyboard } from './keyboard/keyboard';
 import { getDOMEls } from './utils/dom-els';
-import { updateAudioOutput } from './utils/utils';
-import { ONESHOT } from './utils/constants';
+import { updateAudioOutput, getInitialSelectVal } from './utils/utils';
+import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
   grainControl,
+  playModeControl,
   waveControl,
   pitchControl,
   rootNoteTextNode,
@@ -63,11 +64,13 @@ const sketchFn = (p5Sketch) => {
     tuningSystems: null,
     selectedTuningSys: '',
     tuningSysNotes: null,
-    playmode: ONESHOT,
+    playMode: ONESHOT,
   };
 
   p5Sketch.preload = function preload() {
-    const initialWaveType = getInitialWaveType(waveControl);
+    const initialWaveType = getInitialSelectVal(waveControl, SINE);
+    const initialPlayModeType = getInitialSelectVal(playModeControl, SUSTAIN);
+    config.playMode = initialPlayModeType;
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
@@ -87,6 +90,7 @@ const sketchFn = (p5Sketch) => {
       togglePlay({ config, p5Sketch, updateAudioOutput });
     });
     setupWaveControls(config, waveControl);
+    setupPlayModeControls(config, playModeControl);
     setupPitchControls(
       config,
       pitchControl,

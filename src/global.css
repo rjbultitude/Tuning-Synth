@@ -134,7 +134,7 @@ p {
 }
 
 .audio-controls .fieldset {
-  flex-basis: 33%;
+  flex-basis: 25%;
 }
 
 .audio-controls .controls__label {

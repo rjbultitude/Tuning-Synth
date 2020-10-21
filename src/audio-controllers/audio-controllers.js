@@ -71,11 +71,17 @@ export function togglePlay({ config, p5Sketch, updateAudioOutput }) {
   return config;
 }
 
-export function getInitialWaveType(waveControl) {
-  if (waveControl && 'value' in waveControl) {
-    return waveControl.value;
-  }
-  return 'sine';
+export function setupPlayModeControls(config, playModeControl) {
+  playModeControl.addEventListener(
+    'change',
+    function () {
+      const playModeVal =
+        playModeControl.options[playModeControl.selectedIndex].value;
+      config.playMode = playModeVal;
+    },
+    false
+  );
+  return playModeControl;
 }
 
 export function setupWaveControls(config, waveControl) {

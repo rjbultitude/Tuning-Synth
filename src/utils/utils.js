@@ -34,3 +34,10 @@ export function getDefaultIntervals(config) {
   }
   return intervals;
 }
+
+export function getInitialSelectVal(el, defaultVal) {
+  if (el && 'value' in el) {
+    return el.value;
+  }
+  return defaultVal;
+}
