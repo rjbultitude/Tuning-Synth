@@ -16,10 +16,9 @@ html {
 }
 
 body {
-  font-family: 'Oswald', sans-serif;
-  font-display: swap;
-  font-size: 1.2rem;
-  line-height: 1.2;
+  font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 h1 {
@@ -36,6 +35,12 @@ h2 {
   margin: 0 0 1rem;
 }
 
+h1,
+h2 {
+  font-display: swap;
+  font-family: 'Oswald', sans-serif;
+}
+
 .article {
   border-top: 1px solid var(--border-color);
   padding: var(--spacing) 0;
@@ -48,7 +53,7 @@ h2 {
 }
 
 p {
-  font-variation-settings: 'wdth' 280, 'wght' 300;
+  font-variation-settings: 'wdth' 280, 'wght' 200;
 }
 
 .wrapper {
@@ -162,9 +167,11 @@ p {
 }
 
 .range-wrapper .controls__label {
-  flex-basis: 20%;
+  flex-basis: 22%;
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  font-weight: normal;
 }
 
 .range__value {
@@ -281,10 +288,6 @@ input[type='range']::-webkit-slider-thumb {
   height: 80px;
 }
 
-.keyboard button {
-  text-indent: -999em;
-}
-
 .keyboard button:hover,
 .keyboard button:focus {
   background-color: indianred;
@@ -297,6 +300,10 @@ input[type='range']::-webkit-slider-thumb {
 @media all and (max-width: 650px) {
   .audio-controls .fieldset {
     flex-basis: 100%;
+  }
+
+  .keyboard button {
+    text-indent: -999em;
   }
 }
 
@@ -332,6 +339,17 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 @media all and (max-width: 400px) {
+  .audio-output {
+    top: 12vw;
+    left: 0;
+    right: auto;
+  }
+
+  .page__heading {
+    color: black;
+    position: static;
+  }
+
   .keyboard button {
     width: 7.6%;
     border-top: 0 none;

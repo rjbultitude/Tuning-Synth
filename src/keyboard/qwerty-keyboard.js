@@ -1,4 +1,4 @@
-import { ONESHOT, QWERTY } from '../utils/constants';
+import { ONESHOT, SUSTAIN, QWERTY } from '../utils/constants';
 import { playAndShowNote, stopAndHideNote } from './keyboard';
 import { getDefaultIntervals } from '../utils/utils';
 
@@ -8,6 +8,9 @@ export function setQwertyEvents(config, updateAudioOutput) {
     document.addEventListener(
       'keydown',
       (e) => {
+        if (config.playing && config.playMode === ONESHOT) {
+          return;
+        }
         if (e.key === QWERTY[index]) {
           console.log('QWERTY[index]', QWERTY[index]);
           playAndShowNote(config, index, updateAudioOutput);

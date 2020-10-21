@@ -26,18 +26,28 @@ export function playAndShowNote(config, index, updateAudioOutput) {
   return config;
 }
 
-export function createKeyboard(config, updateAudioOutput) {
-  const keyboardWrapper = document.createElement('section');
-  keyboardWrapper.setAttribute('class', 'keyboard');
-  keyboardWrapper.setAttribute('tabindex', '0');
-  const defaultIntervals = getDefaultIntervals(config);
+export function createKeyboardButtons(
+  config,
+  keyboardWrapper,
+  defaultIntervals,
+  updateAudioOutput
+) {
   defaultIntervals.forEach((num, index) => {
     const keyButton = document.createElement('button');
     keyButton.innerText = `${num}`;
     keyButton.addEventListener(
       'mousedown',
-      (e) => {
+      () => {
         playAndShowNote(config, index, updateAudioOutput);
+      },
+      false
+    );
+    keyButton.addEventListener(
+      'mouseup',
+      () => {
+        if (config.playMode === ONESHOT) {
+          stopAndHideNote(config, updateAudioOutput);
+        }
       },
       false
     );
@@ -54,16 +64,35 @@ export function createKeyboard(config, updateAudioOutput) {
       },
       false
     );
-    keyButton.addEventListener(
-      'mouseup',
-      () => {
-        if (config.playMode === ONESHOT) {
-          stopAndHideNote(config, updateAudioOutput);
-        }
-      },
-      false
-    );
+    // keyButton.addEventListener(
+    //   'touchstart',
+    //   (e) => {
+    //     playAndShowNote(config, index, updateAudioOutput);
+    //   },
+    //   false
+    // );
+    // keyButton.addEventListener(
+    //   'touchend',
+    //   (e) => {
+    //     stopAndHideNote(config, updateAudioOutput);
+    //   },
+    //   false
+    // );
     keyboardWrapper.appendChild(keyButton);
   });
+  return keyboardWrapper;
+}
+
+export function createKeyboard(config, updateAudioOutput) {
+  const keyboardWrapper = document.createElement('section');
+  keyboardWrapper.setAttribute('class', 'keyboard');
+  keyboardWrapper.setAttribute('tabindex', '0');
+  const defaultIntervals = getDefaultIntervals(config);
+  createKeyboardButtons(
+    config,
+    keyboardWrapper,
+    defaultIntervals,
+    updateAudioOutput
+  );
   return keyboardWrapper;
 }
