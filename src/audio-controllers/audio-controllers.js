@@ -1,12 +1,12 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import { updateUI } from '../utils/utils';
+import { updateUI, spacesToCamelCaseStr } from '../utils/utils';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
-  tuningSystems.set('eqTemp', '12TET');
-  tuningSystems.set('truePythag', 'Just Intonation 5ths');
-  tuningSystems.set('pythagorean', 'Pythagorean');
-  tuningSystems.set('fiveLimit', 'Just Intonation five limit');
+  Object.keys(config.tuningSysNotes).forEach((tuningSysKey) => {
+    const tuninSysDisplayName = spacesToCamelCaseStr(tuningSysKey);
+    tuningSystems.set(tuningSysKey, tuninSysDisplayName);
+  });
   config.tuningSystems = tuningSystems;
   return config;
 }

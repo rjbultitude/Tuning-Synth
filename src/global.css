@@ -71,7 +71,7 @@ p {
   color: white;
   position: absolute;
   margin: var(--margin-y) var(--margin-x);
-  top: 30px;
+  top: 6vw;
   left: 0;
   z-index: 1;
 }

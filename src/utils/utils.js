@@ -41,3 +41,7 @@ export function getInitialSelectVal(el, defaultVal) {
   }
   return defaultVal;
 }
+
+export function spacesToCamelCaseStr(str) {
+  return str.replace(/[A-Z]/, (uppcaseChar) => ` ${uppcaseChar}`);
+}
