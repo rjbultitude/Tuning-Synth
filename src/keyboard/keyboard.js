@@ -42,9 +42,21 @@ export function createKeyboard(config, updateAudioOutput) {
       false
     );
     keyButton.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Enter') {
+          if (config.playing) {
+            stopAndHideNote(config, updateAudioOutput);
+            return;
+          }
+          playAndShowNote(config, index, updateAudioOutput);
+        }
+      },
+      false
+    );
+    keyButton.addEventListener(
       'mouseup',
       () => {
-        console.log('config', config);
         if (config.playMode === ONESHOT) {
           stopAndHideNote(config, updateAudioOutput);
         }
