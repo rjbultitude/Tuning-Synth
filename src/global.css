@@ -5,6 +5,8 @@
   --label-width: 26%;
   --input-thumb-colour: #000;
   --spacing: 6px;
+  --margin-x: 0.8rem;
+  --margin-y: 0.6rem;
   --border-color: #ccc;
   --border-size: 1px;
 }
@@ -23,7 +25,7 @@ body {
 h1 {
   font-variation-settings: 'wdth' 200, 'wght' 200;
   font-size: 4vw;
-  margin: 0.2rem 1rem;
+  margin: var(--margin-y) var(--margin-x);
   position: absolute;
   z-index: 2;
   color: white;
@@ -68,8 +70,9 @@ p {
 .audio-output {
   color: white;
   position: absolute;
-  margin: 1rem;
-  top: 50px;
+  margin: var(--margin-y) var(--margin-x);
+  top: 30px;
+  left: 0;
   z-index: 1;
 }
 
@@ -286,6 +289,12 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 @media all and (max-width: 540px) {
+  .audio-output {
+    left: auto;
+    right: 0;
+    top: 0;
+  }
+
   .keyboard button {
     text-indent: -999em;
   }

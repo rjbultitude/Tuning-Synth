@@ -11,8 +11,8 @@
     <div class="wrapper" id="pageWrapper">
       <h1 class="page__heading">Synesthesia</h1>
       <dl class="audio-output">
-        <dt>Frequency</dt><dd id="audioOutputFreq"></dd>
-        <dt>Status</dt><dd id="audioOutputStatus"></dd>
+        <dt>Frequency:</dt><dd id="audioOutputFreq"></dd>
+        <dt>Status:</dt><dd id="audioOutputStatus"></dd>
       </dl>
       <div id="wrapper" class="video-wrapper"></div>
       <form name="visualControls" id="visualControls" class="visual-controls">
@@ -63,8 +63,8 @@
       <form name="audioControls" class="audio-controls">
         <h2 class="form__heading">Audio controls</h2>
         <div class="fieldset">
-          <label>Play mode</label>
-          <select id="playMode">
+          <label class="controls__label" for="playMode">Play mode</label>
+          <select id="playMode" name="playMode">
             <option value="sustain" selected="selected">Sustain</option>
             <option value="oneShot">One shot</option>
           </select>
