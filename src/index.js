@@ -21,7 +21,11 @@ import { setupSpectrumZoom } from './visual-controllers/range-slider';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import { createKeyboard } from './keyboard/keyboard';
 import { getDOMEls } from './utils/dom-els';
-import { updateAudioOutput, getInitialSelectVal } from './utils/utils';
+import {
+  updateAudioOutput,
+  getInitialSelectVal,
+  updateBody,
+} from './utils/utils';
 import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
 const {
   pageWrapper,
@@ -103,6 +107,7 @@ const sketchFn = (p5Sketch) => {
     setQwertyEvents(config, updateAudioOutput);
     const keyboard = createKeyboard(config, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
+    updateBody(config.playing);
   };
 
   p5Sketch.draw = function draw() {

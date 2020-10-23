@@ -46,14 +46,33 @@ h2 {
   padding: var(--spacing) 0;
 }
 
+p {
+  font-variation-settings: 'wdth' 280, 'wght' 200;
+}
+
+.status-stopped .article--instructions {
+  left: 0;
+}
+
+.article--instructions {
+  color: white;
+  font-size: 2.5vw;
+  position: absolute;
+  left: -999em;
+  top: 20%;
+  text-align: center;
+  width: 100%;
+}
+
+.article--instructions .article__heading {
+  position: absolute;
+  left: -999em;
+}
+
 .controls_heading {
   font-size: 1.2rem;
   line-height: 1.2;
   margin: 0;
-}
-
-p {
-  font-variation-settings: 'wdth' 280, 'wght' 200;
 }
 
 .wrapper {
@@ -310,6 +329,10 @@ input[type='range']::-webkit-slider-thumb {
 @media all and (max-width: 580px) {
   h1 {
     font-size: 1.5rem;
+  }
+
+  .article--instructions {
+    top: 10%;
   }
 }
 

@@ -1,6 +1,7 @@
 // DOM elements
 export function getDOMEls() {
   return {
+    body: document.body,
     pageWrapper: document.getElementById('pageWrapper'),
     visualControls: document.getElementById('visualControls'),
     grainControl: document.getElementById('grainSize'),
