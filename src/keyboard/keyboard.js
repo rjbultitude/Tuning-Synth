@@ -64,20 +64,20 @@ export function createKeyboardButtons(
       },
       false
     );
-    // keyButton.addEventListener(
-    //   'touchstart',
-    //   (e) => {
-    //     playAndShowNote(config, index, updateAudioOutput);
-    //   },
-    //   false
-    // );
-    // keyButton.addEventListener(
-    //   'touchend',
-    //   (e) => {
-    //     stopAndHideNote(config, updateAudioOutput);
-    //   },
-    //   false
-    // );
+    keyButton.addEventListener(
+      'touchstart',
+      () => {
+        playAndShowNote(config, index, updateAudioOutput);
+      },
+      false
+    );
+    keyButton.addEventListener(
+      'touchend',
+      () => {
+        stopAndHideNote(config, updateAudioOutput);
+      },
+      false
+    );
     keyboardWrapper.appendChild(keyButton);
   });
   return keyboardWrapper;
