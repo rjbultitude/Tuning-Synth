@@ -1,6 +1,10 @@
 import { getDOMEls } from './dom-els';
 import { STATUS_STOPPED } from './constants';
 
+export function getFormInputVal(formEl) {
+  return formEl.value;
+}
+
 export function updateBody(playing) {
   const docBody = getDOMEls().body;
   if (playing === false) {

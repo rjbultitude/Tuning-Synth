@@ -1,11 +1,11 @@
 import { updateUI } from '../utils/utils';
 
-export function setUpGrainControl(config, grainControl) {
+export function setUpGrainControl(config, grainControl, grainTextNode) {
   grainControl.addEventListener(
     'change',
     function () {
       config.grainSize = this.value;
-      updateUI(config.grainSize, grainControl);
+      updateUI(config.grainSize, grainTextNode);
     },
     false
   );

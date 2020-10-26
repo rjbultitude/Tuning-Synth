@@ -25,12 +25,15 @@ import {
   updateAudioOutput,
   getInitialSelectVal,
   updateBody,
+  updateUI,
+  getFormInputVal,
 } from './utils/utils';
 import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
   grainControl,
+  grainTextNode,
   playModeControl,
   waveControl,
   pitchControl,
@@ -40,6 +43,12 @@ const {
 } = getDOMEls();
 
 const modes = freqi.getModes();
+const sliderVals = {
+  sliderLow: getFormInputVal(sliders.spectrumControlLow),
+  sliderHigh: getFormInputVal(sliders.spectrumControlHigh),
+};
+const grainSizeVal = getFormInputVal(grainControl);
+const rootNoteVal = getFormInputVal(pitchControl);
 
 const sketchFn = (p5Sketch) => {
   const fftResolution = 512;
@@ -54,7 +63,7 @@ const sketchFn = (p5Sketch) => {
       lower: -12,
       upper: 12,
     },
-    grainSize: 10,
+    grainSize: 0,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
     displaySize: {
@@ -96,14 +105,21 @@ const sketchFn = (p5Sketch) => {
     });
     setupWaveControls(config, waveControl);
     setupPlayModeControls(config, playModeControl);
+    // Pitch / Root note / start freq
     setupPitchControls(
       config,
       pitchControl,
       rootNoteTextNode,
       updateAudioOutput
     );
-    setUpGrainControl(config, grainControl);
+    updateUI(rootNoteVal, rootNoteTextNode);
+    // UI, Grain size
+    setUpGrainControl(config, grainControl, grainTextNode);
+    updateUI(grainSizeVal, grainTextNode);
+    // UI, Zoom
     setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
+    updateZoomUI(config, sliderVals, sliderTextNode);
+    // Keyboard
     setQwertyEvents(config, updateAudioOutput);
     const keyboard = createKeyboard(config, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
