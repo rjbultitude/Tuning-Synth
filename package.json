@@ -5,9 +5,9 @@
   "main": "./server/index.js",
   "scripts": {
     "start": "npm run build:devserver",
-    "build:dev": "webpack --env dev --mode=development",
     "build:devserver": "webpack-dev-server --open --config=webpack/webpack.dev.js",
-    "build:prod": "webpack --env prod --mode=production",
+    "build:dev": "webpack --env dev --mode=development",
+    "build": "webpack --env prod --mode=production",
     "test": "NODE_ENV=test nyc mocha --recursive src/**/*.spec.js",
     "lint:quality": "eslint .",
     "lint:css": "stylelint './src/**/*.css'",
