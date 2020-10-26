@@ -51,7 +51,7 @@ const grainSizeVal = getFormInputVal(grainControl);
 const rootNoteVal = getFormInputVal(pitchControl);
 
 const sketchFn = (p5Sketch) => {
-  const fftResolution = 512;
+  const fftResolution = 1024;
   const config = {
     playing: false,
     fft: null,
@@ -63,7 +63,7 @@ const sketchFn = (p5Sketch) => {
       lower: -12,
       upper: 12,
     },
-    grainSize: 0,
+    grainSize: grainSizeVal,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
     displaySize: {
