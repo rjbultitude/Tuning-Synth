@@ -48,6 +48,7 @@ h2 {
 
 p {
   font-variation-settings: 'wdth' 280, 'wght' 200;
+  line-height: 1.2rem;
 }
 
 .status-stopped .article--instructions {
@@ -333,6 +334,7 @@ p {
 @media all and (max-width: 580px) {
   h1 {
     font-size: 1.5rem;
+    margin: var(--margin-y) 0;
   }
 
   .article--instructions {
