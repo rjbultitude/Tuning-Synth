@@ -166,6 +166,10 @@ p {
   padding-top: var(--spacing);
 }
 
+.fieldset select {
+  min-width: 14vw;
+}
+
 .audio-controls .fieldset {
   flex-basis: 25%;
 }
@@ -315,6 +319,16 @@ p {
   background-color: gray;
 }
 
+@media all and (max-width: 960px) {
+  .audio-controls .fieldset {
+    flex-basis: 50%;
+  }
+
+  .fieldset select {
+    min-width: 22vw;
+  }
+}
+
 @media all and (min-width: 650px) {
   .article--instructions {
     font-size: 1.25rem;
@@ -322,6 +336,10 @@ p {
 }
 
 @media all and (max-width: 650px) {
+  .fieldset select {
+    min-width: 46vw;
+  }
+
   .audio-controls .fieldset {
     flex-basis: 100%;
   }
