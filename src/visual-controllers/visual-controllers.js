@@ -1,4 +1,5 @@
 import { updateUI } from '../utils/utils';
+import { THEME_RGB } from '../utils/constants';
 
 export function setUpGrainControl(config, grainControl, grainTextNode) {
   grainControl.addEventListener(
@@ -32,11 +33,29 @@ export function updateZoomUI(config, sliderVals, sliderTextNode) {
 export function drawFreqs(p5Sketch, config) {
   p5Sketch.noStroke();
   for (let i = 0; i < config.spectrum.length; i++) {
-    let r = p5Sketch.map(i, 0, config.spectrum.length, 50, 255);
-    let b = p5Sketch.map(i, 0, config.spectrum.length, 255, 50);
+    let r = p5Sketch.map(
+      i,
+      0,
+      config.spectrum.length,
+      THEME_RGB.low,
+      THEME_RGB.high
+    );
+    let b = p5Sketch.map(
+      i,
+      0,
+      config.spectrum.length,
+      THEME_RGB.high,
+      THEME_RGB.low
+    );
     let x = p5Sketch.map(i, 0, config.spectrum.length, p5Sketch.width, 0);
-    let y = p5Sketch.map(config.spectrum[i], 0, 255, p5Sketch.height, 0);
-    p5Sketch.fill(r, 80, b);
+    let y = p5Sketch.map(
+      config.spectrum[i],
+      0,
+      THEME_RGB.high,
+      p5Sketch.height,
+      0
+    );
+    p5Sketch.fill(r, THEME_RGB.mid, b);
     p5Sketch.ellipse(x, y, config.grainSize);
   }
   return p5Sketch;

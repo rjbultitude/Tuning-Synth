@@ -1,5 +1,5 @@
 import { getDOMEls } from './dom-els';
-import { STATUS_STOPPED } from './constants';
+import { FREQ_UNIT, STATUS_STOPPED, SUSTAIN } from './constants';
 
 export function getFormInputVal(formEl) {
   return formEl.value;
@@ -17,10 +17,10 @@ export function updateBody(playing) {
   }
 }
 
-export function updateUI(value, el) {
+export function updateUI(value, el, unit = '') {
   if (typeof value === 'number') {
     const trimNumber = parseInt(value).toFixed();
-    el.innerText = `${trimNumber}`;
+    el.innerText = `${trimNumber} ${unit}`;
     return el;
   }
   if (typeof value === 'string') {
@@ -35,11 +35,16 @@ export function updateAudioOutput(config) {
   if (config.playing === false) {
     updateUI('', freqTextNode);
     updateUI('Stopped', statusTextNode);
-    updateBody(config.playing);
+    if (config.playMode === SUSTAIN) {
+      updateBody(config.playing);
+    }
   } else {
-    updateUI(config.currentFreq, freqTextNode);
+    updateUI(config.currentFreq, freqTextNode, FREQ_UNIT);
     updateUI('Playing', statusTextNode);
     updateBody(config.playing);
+    if (config.playMode === SUSTAIN) {
+      updateBody(config.playing);
+    }
   }
 }
 

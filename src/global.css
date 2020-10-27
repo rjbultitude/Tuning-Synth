@@ -23,7 +23,7 @@ body {
   font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
   font-size: 1rem;
   line-height: 1;
-  margin: 0 8px;
+  margin: 0 calc(var(--spacing) * 2);
 }
 
 h1 {
@@ -47,13 +47,21 @@ h2 {
 }
 
 .article {
-  /* border-top: 1px solid var(--border-color); */
   padding: calc(var(--spacing) * 2) 0;
+}
+
+.article__body {
+  columns: 24em;
 }
 
 p {
   font-variation-settings: 'wdth' 280, 'wght' 200;
-  line-height: 1.2rem;
+  line-height: 1.35rem;
+  margin: 0;
+}
+
+p + p {
+  margin-top: var(--spacing);
 }
 
 .bar {
@@ -317,19 +325,21 @@ p {
   ); /* W3C */
 }
 
-.keyboard button {
+.keyboard__button {
   border: rgba(0, 0, 0, 1) solid 1px;
   background-color: white;
+  color: white;
   width: 4%;
   height: 80px;
 }
 
-.keyboard button:hover,
-.keyboard button:focus {
-  background-color: indianred;
+.keyboard__button:hover,
+.keyboard__button:focus {
+  background-image: linear-gradient(var(--colour-blue), white 25%);
+  color: black;
 }
 
-.keyboard button:active {
+.keyboard__button:active {
   background-color: gray;
 }
 
@@ -343,13 +353,11 @@ p {
   }
 }
 
-@media all and (min-width: 650px) {
-  .article--instructions {
-    font-size: 1.25rem;
-  }
-}
-
 @media all and (max-width: 650px) {
+  .article--instructions {
+    font-size: 0.75rem;
+  }
+
   .fieldset select {
     min-width: 46vw;
   }
@@ -419,6 +427,7 @@ p {
     top: 54px;
     left: 0;
     right: auto;
+    text-align: left;
   }
 
   .page__heading {

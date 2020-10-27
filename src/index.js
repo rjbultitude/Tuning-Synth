@@ -28,7 +28,7 @@ import {
   updateUI,
   getFormInputVal,
 } from './utils/utils';
-import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
+import { ONESHOT, SUSTAIN, SINE, FREQ_UNIT } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
@@ -121,7 +121,7 @@ const sketchFn = (p5Sketch) => {
     updateZoomUI(config, sliderVals, sliderTextNode);
     // Keyboard
     setQwertyEvents(config, updateAudioOutput);
-    const keyboard = createKeyboard(config, updateAudioOutput);
+    const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
     updateBody(config.playing);
   };

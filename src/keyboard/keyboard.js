@@ -1,5 +1,5 @@
 import { getDefaultIntervals } from '../utils/utils';
-import { ONESHOT } from '../utils/constants';
+import { ONESHOT, THEME_RGB } from '../utils/constants';
 
 function playCurrentNote(config, freq) {
   config.osc.freq(freq);
@@ -30,10 +30,27 @@ export function createKeyboardButtons(
   config,
   keyboardWrapper,
   defaultIntervals,
+  p5Sketch,
   updateAudioOutput
 ) {
   defaultIntervals.forEach((num, index) => {
     const keyButton = document.createElement('button');
+    const r = p5Sketch.map(
+      index,
+      0,
+      defaultIntervals.length,
+      THEME_RGB.low,
+      THEME_RGB.high
+    );
+    const b = p5Sketch.map(
+      index,
+      0,
+      defaultIntervals.length,
+      THEME_RGB.high,
+      THEME_RGB.low
+    );
+    keyButton.setAttribute('class', 'keyboard__button');
+    keyButton.style.cssText = `background-color: rgba(${r},${THEME_RGB.mid},${b}`;
     keyButton.innerText = `${num}`;
     keyButton.addEventListener(
       'mousedown',
@@ -83,7 +100,7 @@ export function createKeyboardButtons(
   return keyboardWrapper;
 }
 
-export function createKeyboard(config, updateAudioOutput) {
+export function createKeyboard(config, p5Sketch, updateAudioOutput) {
   const keyboardWrapper = document.createElement('section');
   keyboardWrapper.setAttribute('class', 'keyboard');
   keyboardWrapper.setAttribute('tabindex', '0');
@@ -92,6 +109,7 @@ export function createKeyboard(config, updateAudioOutput) {
     config,
     keyboardWrapper,
     defaultIntervals,
+    p5Sketch,
     updateAudioOutput
   );
   return keyboardWrapper;
