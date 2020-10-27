@@ -17,7 +17,9 @@ export function setSpectrum(config) {
   config.spectrum = config.fft
     .analyze()
     .slice(config.sliders.one, config.sliders.two);
-  // config.spectrum = config.fft.analyze();
+  // if (config.playing) {
+  //   console.log('config.spectrum', config.spectrum);
+  // }
   return config;
 }
 
@@ -47,7 +49,7 @@ export function drawFreqs(p5Sketch, config) {
       THEME_RGB.high,
       THEME_RGB.low
     );
-    let x = p5Sketch.map(i, 0, config.spectrum.length, p5Sketch.width, 0);
+    let x = p5Sketch.map(i, 0, config.spectrum.length, 0, p5Sketch.width);
     let y = p5Sketch.map(
       config.spectrum[i],
       0,
