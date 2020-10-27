@@ -5,10 +5,13 @@
   --label-width: 26%;
   --input-thumb-colour: #000;
   --spacing: 6px;
+  --triple-space: calc(var(--spacing) * 3);
   --margin-x: 0.8rem;
   --margin-y: 0.6rem;
   --border-color: #ccc;
   --border-size: 1px;
+  --colour-blue: rgba(50, 80, 255, 1);
+  --colour-red: rgba(255, 80, 50, 1);
 }
 
 html {
@@ -16,9 +19,11 @@ html {
 }
 
 body {
+  background-color: #edeef0;
   font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
   font-size: 1rem;
   line-height: 1;
+  margin: 0 8px;
 }
 
 h1 {
@@ -42,13 +47,22 @@ h2 {
 }
 
 .article {
-  border-top: 1px solid var(--border-color);
-  padding: var(--spacing) 0;
+  /* border-top: 1px solid var(--border-color); */
+  padding: calc(var(--spacing) * 2) 0;
 }
 
 p {
   font-variation-settings: 'wdth' 280, 'wght' 200;
   line-height: 1.2rem;
+}
+
+.bar {
+  background-image: linear-gradient(
+    to right,
+    var(--colour-red),
+    var(--colour-blue)
+  );
+  height: 10px;
 }
 
 .status-stopped .article--instructions {
@@ -131,7 +145,7 @@ p {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 0 var(--spacing);
   position: absolute;
-  top: calc(var(--spacing) * 2);
+  top: var(--triple-space);
   right: calc(var(--spacing) * 2);
   width: 360px;
   z-index: 1;
@@ -143,8 +157,8 @@ p {
 }
 
 .audio-controls {
-  padding: var(--spacing) 0;
-  margin-top: var(--spacing);
+  padding: calc(var(--spacing) * 2) 0;
+  margin-top: calc(var(--spacing) * 2);
   border-top: var(--border-size) solid var(--border-color);
 }
 
@@ -350,26 +364,41 @@ p {
 }
 
 @media all and (max-width: 580px) {
-  h1 {
-    font-size: 1.5rem;
-    margin: var(--margin-y) 0;
-  }
-
   .article--instructions {
     top: 10%;
   }
 }
 
 @media all and (max-width: 540px) {
+  .page__heading {
+    font-size: 1.5rem;
+  }
+
   .audio-output {
     left: auto;
     right: 0;
-    top: 0;
+    overflow: hidden;
+    top: var(--triple-space);
+    text-align: right;
+  }
+
+  .audio-output dt {
+    position: absolute;
+    right: -999em;
+  }
+
+  .audio-output dd {
+    float: right;
+  }
+
+  .audio-output dd:last-of-type {
+    clear: right;
   }
 
   .visual-controls {
-    margin: var(--spacing) 0;
-    padding: var(--spacing);
+    background-color: transparent;
+    margin: calc(var(--spacing) * 2) 0;
+    padding: calc(var(--spacing) * 2) 0;
     position: static;
     width: auto;
   }
@@ -387,7 +416,7 @@ p {
 
 @media all and (max-width: 400px) {
   .audio-output {
-    top: 12vw;
+    top: 54px;
     left: 0;
     right: auto;
   }
@@ -395,6 +424,7 @@ p {
   .page__heading {
     color: black;
     position: static;
+    margin: var(--margin-y) 0;
   }
 
   .keyboard button {
