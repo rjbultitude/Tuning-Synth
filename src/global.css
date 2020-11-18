@@ -435,9 +435,16 @@ p {
     top: 10%;
   }
 
+  .keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   .keyboard button {
     width: 7.6%;
     border-top: 0 none;
+    margin-bottom: 2px;
     text-indent: 0;
   }
 }
