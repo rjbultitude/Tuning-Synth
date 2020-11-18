@@ -372,8 +372,7 @@ p {
 
 .keyboard__button:hover,
 .keyboard__button:focus {
-  /* background-image: linear-gradient(var(--colour-blue), white 25%); */
-  background-color: black;
+  background-image: linear-gradient(black, white 5%);
   color: black;
 }
 
