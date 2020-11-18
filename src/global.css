@@ -172,7 +172,7 @@ p {
 }
 
 .visualiser__y-axis {
-  height: 54vw;
+  height: 100%;
   position: absolute;
   left: -15px;
   top: var(--axis-size);
@@ -226,7 +226,7 @@ p {
 }
 
 .fieldset select {
-  min-width: 14vw;
+  min-width: 11.5vw;
 }
 
 .audio-controls .fieldset {
@@ -372,7 +372,8 @@ p {
 
 .keyboard__button:hover,
 .keyboard__button:focus {
-  background-image: linear-gradient(var(--colour-blue), white 25%);
+  /* background-image: linear-gradient(var(--colour-blue), white 25%); */
+  background-color: black;
   color: black;
 }
 
@@ -397,6 +398,14 @@ p {
 
   .article--instructions {
     font-size: 0.75rem;
+  }
+
+  .visual-controls {
+    background-color: transparent;
+    margin: calc(var(--spacing) * 2) 0;
+    padding: calc(var(--spacing) * 2) 0;
+    position: static;
+    width: auto;
   }
 
   .fieldset select {
@@ -447,14 +456,6 @@ p {
 
   .audio-output dd:last-of-type {
     clear: right;
-  }
-
-  .visual-controls {
-    background-color: transparent;
-    margin: calc(var(--spacing) * 2) 0;
-    padding: calc(var(--spacing) * 2) 0;
-    position: static;
-    width: auto;
   }
 
   .range-wrapper {
