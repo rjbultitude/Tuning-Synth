@@ -80,17 +80,22 @@ p {
 
 .article--instructions {
   color: white;
-  font-size: 2.5vw;
   position: absolute;
   left: -999em;
-  top: 20%;
+  top: 35%;
   text-align: center;
   width: 100%;
+  z-index: 3;
 }
 
 .article--instructions .article__heading {
   position: absolute;
   left: -999em;
+}
+
+.article--instructions p {
+  font-size: 2vw;
+  line-height: 2rem;
 }
 
 .controls_heading {
@@ -429,6 +434,12 @@ p {
   .article--instructions {
     top: 10%;
   }
+
+  .keyboard button {
+    width: 7.6%;
+    border-top: 0 none;
+    text-indent: 0;
+  }
 }
 
 @media all and (max-width: 540px) {
@@ -480,11 +491,5 @@ p {
     color: black;
     position: static;
     margin: var(--margin-y) 0;
-  }
-
-  .keyboard button {
-    width: 7.6%;
-    border-top: 0 none;
-    text-indent: 0;
   }
 }

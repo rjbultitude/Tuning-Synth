@@ -5,6 +5,7 @@ export function getDOMEls() {
     pageWrapper: document.getElementById('pageWrapper'),
     visualControls: document.getElementById('visualControls'),
     grainControl: document.getElementById('grainSize'),
+    gridControl: document.getElementById('showGrid'),
     waveControl: document.getElementById('waveType'),
     playModeControl: document.getElementById('playMode'),
     pitchControl: document.getElementById('freqPitch'),

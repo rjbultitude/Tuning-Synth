@@ -18,6 +18,7 @@ import {
 } from './visual-controllers/visual-controllers';
 import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
+import { drawGrid, setupGridControl } from './visual-controllers/grid';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import { createKeyboard } from './keyboard/keyboard';
 import { getDOMEls } from './utils/dom-els';
@@ -27,11 +28,13 @@ import {
   updateBody,
   updateUI,
   getFormInputVal,
+  getGridLinesPosArr,
 } from './utils/utils';
 import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
+  gridControl,
   grainControl,
   grainTextNode,
   playModeControl,
@@ -79,6 +82,9 @@ const sketchFn = (p5Sketch) => {
     selectedTuningSys: '',
     tuningSysNotes: null,
     playMode: ONESHOT,
+    gridVisible: false,
+    gridResolution: 20,
+    gridLinesPosArr: null,
   };
 
   p5Sketch.preload = function preload() {
@@ -124,6 +130,8 @@ const sketchFn = (p5Sketch) => {
     const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
     updateBody(config.playing);
+    getGridLinesPosArr(config);
+    setupGridControl(config, gridControl);
   };
 
   p5Sketch.draw = function draw() {
@@ -131,6 +139,8 @@ const sketchFn = (p5Sketch) => {
     // constrainAndPlay(p5Sketch, config);
     setSpectrum(config);
     drawFreqs(p5Sketch, config);
+    p5Sketch.stroke(255);
+    drawGrid(config, p5Sketch);
   };
 };
 

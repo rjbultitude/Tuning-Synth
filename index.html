@@ -16,6 +16,11 @@
         <dt>Status:</dt><dd id="audioOutputStatus"></dd>
       </dl>
       <div id="wrapper" class="video-wrapper">
+        <article class="article--instructions">
+          <h2 class="article__heading">Instructions</h2>
+          <p>Tap the visualiser to start/stop</p>
+          <p>Use the in-page keyboard to play a note or your QWERTY one</p>
+        </article>
         <div class="visualiser__y-axis">
           <p class="visualiser__y-axis__start-val">0</p>
           <p class="visualiser__y-axis__label">Amplitude</p>
@@ -25,7 +30,7 @@
       <div class="visualiser__x-axis">
         <p class="visualiser__x-axis__start-val">20Hz</p>
         <p class="visualiser__x-axis__label">Frequency</p>
-        <p class="visualiser__x-axis__end-val">20KHz</p>
+        <p class="visualiser__x-axis__end-val">15KHz</p>
       </div>
       <form name="visualControls" id="visualControls" class="visual-controls">
         <h2 class="form__heading">Visualiser controls</h2>
@@ -72,6 +77,10 @@
           <p class="range__value" id="rangeValueText">0</p>
           <label for="freqRangeHigh" class="controls__label">Range High</label>
         </div>
+        <div class="range-wrapper">
+          <label for="showGrid">Show grid</label>
+          <input type="checkbox" name="showGrid" id="showGrid" />
+        </div>
       </form>
       <form name="audioControls" class="audio-controls">
         <h2 class="form__heading">Audio controls</h2>
@@ -110,11 +119,6 @@
           <p class="range__value" id="rootNoteText"></p>
         </div>
       </form>
-      <article class="article--instructions">
-        <h2 class="article__heading">Instructions</h2>
-        <p>Tap the visualiser to start/stop</p>
-        <p>Use the in-page keyboard to play a note or your QWERTY one</p>
-      </article>
       <article class="article">
         <h2 class="article__heading">About this project</h2>
         <div class="article__body">

@@ -69,3 +69,13 @@ export function getInitialSelectVal(el, defaultVal) {
 export function spacesToCamelCaseStr(str) {
   return str.replace(/[A-Z]/, (uppcaseChar) => ` ${uppcaseChar}`);
 }
+
+export function getGridLinesPosArr(config) {
+  const gridLinesPosArr = [];
+  for (let index = 0; index < config.gridResolution; index++) {
+    let pos = index * (config.displaySize.width / config.gridResolution);
+    gridLinesPosArr.push(pos);
+  }
+  config.gridLinesPosArr = gridLinesPosArr;
+  return gridLinesPosArr;
+}
