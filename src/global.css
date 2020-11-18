@@ -12,6 +12,7 @@
   --border-size: 1px;
   --colour-blue: rgba(50, 80, 255, 1);
   --colour-red: rgba(255, 80, 50, 1);
+  --axis-size: 10px;
 }
 
 html {
@@ -23,7 +24,7 @@ body {
   font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
   font-size: 1rem;
   line-height: 1;
-  margin: 0 calc(var(--spacing) * 2);
+  margin: 0 calc(var(--spacing) * 3);
 }
 
 h1 {
@@ -60,7 +61,7 @@ p {
   margin: 0;
 }
 
-p + p {
+.article p + p {
   margin-top: var(--spacing);
 }
 
@@ -162,6 +163,42 @@ p + p {
 .form__heading {
   position: absolute;
   left: -999em;
+}
+
+.visualiser__y-axis,
+.visualiser__x-axis {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.visualiser__y-axis {
+  height: 54vw;
+  position: absolute;
+  left: -15px;
+  top: var(--axis-size);
+}
+
+.visualiser__x-axis {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.visualiser__y-axis__label,
+.visualiser__y-axis__start-val,
+.visualiser__y-axis__end-val {
+  position: absolute;
+  transform: rotate(-90deg);
+  width: var(--axis-size);
+}
+
+.visualiser__y-axis__label {
+  padding: 0;
+  top: 50%;
+}
+
+.visualiser__y-axis__start-val {
+  bottom: 0;
 }
 
 .audio-controls {
@@ -354,6 +391,10 @@ p + p {
 }
 
 @media all and (max-width: 650px) {
+  body {
+    margin: 0 calc(var(--spacing) * 2);
+  }
+
   .article--instructions {
     font-size: 0.75rem;
   }
@@ -364,6 +405,11 @@ p + p {
 
   .audio-controls .fieldset {
     flex-basis: 100%;
+  }
+
+  .visualiser__x-axis,
+  .visualiser__y-axis {
+    display: none;
   }
 
   .keyboard button {

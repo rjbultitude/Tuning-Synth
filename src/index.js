@@ -28,7 +28,7 @@ import {
   updateUI,
   getFormInputVal,
 } from './utils/utils';
-import { ONESHOT, SUSTAIN, SINE, FREQ_UNIT } from './utils/constants';
+import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
