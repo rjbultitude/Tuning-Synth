@@ -400,7 +400,7 @@ p {
     margin: 0 calc(var(--spacing) * 2);
   }
 
-  .article--instructions {
+  .article--instructions p {
     font-size: 0.75rem;
   }
 
@@ -431,10 +431,6 @@ p {
 }
 
 @media all and (max-width: 580px) {
-  .article--instructions {
-    top: 10%;
-  }
-
   .keyboard {
     display: flex;
     flex-wrap: wrap;
