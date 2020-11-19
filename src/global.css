@@ -2,6 +2,7 @@
 
 :root {
   --slider-height: 20px;
+  --toggle-label-width: 60px;
   --label-width: 26%;
   --input-thumb-colour: #000;
   --spacing: 6px;
@@ -245,7 +246,7 @@ p {
 .range-wrapper {
   display: flex;
   flex-basis: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .range__input-wrapper {
@@ -289,6 +290,69 @@ p {
 .range__input:focus {
   outline: 1px dotted #212121;
   outline: 5px auto -webkit-focus-ring-color;
+}
+
+.controls__toggle-wrapper {
+  background-color: #363434;
+  border-radius: 3px;
+  width: var(--toggle-label-width);
+  height: calc(var(--slider-height) + 2px);
+  position: relative;
+}
+
+.controls__toggle-input {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 17px;
+  width: calc(var(--toggle-label-width) - 3px);
+  -webkit-appearance: none;
+}
+
+.controls__toggle-label {
+  position: relative;
+  color: white;
+  display: flex;
+  letter-spacing: 1px;
+}
+
+.controls__toggle-label .label__text {
+  position: absolute;
+  left: -999em;
+}
+
+.controls__toggle-label:before {
+  background: var(--colour-red);
+  border: solid 1px #000;
+  border-radius: 3px;
+  content: ' ';
+  position: absolute;
+  height: var(--slider-height);
+  width: calc(var(--toggle-label-width) / 2);
+  z-index: 2;
+}
+
+.controls__toggle-label:after {
+  content: 'Off  On';
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  height: var(--slider-height);
+  width: var(--toggle-label-width);
+  z-index: 3;
+}
+
+.controls__toggle-label:before,
+.controls__toggle-label:after {
+  pointer-events: none;
+}
+
+.controls__toggle-input + .controls__toggle-label:before {
+  left: 0;
+}
+
+.controls__toggle-input:checked + .controls__toggle-label:before {
+  left: calc(var(--toggle-label-width) / 2);
 }
 
 .duel-range-slider {
