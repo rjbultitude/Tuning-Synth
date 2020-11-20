@@ -46,6 +46,7 @@ const {
 } = getDOMEls();
 
 const modes = freqi.getModes();
+const tuningSysMeta = freqi.getMetaData();
 const sliderVals = {
   sliderLow: getFormInputVal(sliders.spectrumControlLow),
   sliderHigh: getFormInputVal(sliders.spectrumControlHigh),
@@ -96,7 +97,7 @@ const sketchFn = (p5Sketch) => {
     config.fft = new p5.FFT(0, config.numFreqBands);
     // Dynamic controls creation
     createTuningSysNotes(config, modes);
-    createTuningSystems(config);
+    createTuningSystems(config, tuningSysMeta);
     writeFreqiControls(config, updateAudioOutput);
   };
 
