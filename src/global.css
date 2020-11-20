@@ -310,10 +310,11 @@ p {
 }
 
 .controls__toggle-label {
-  position: relative;
   color: white;
   display: flex;
+  font-size: 0.85rem;
   letter-spacing: 1px;
+  position: relative;
 }
 
 .controls__toggle-label .label__text {
@@ -333,9 +334,9 @@ p {
 }
 
 .controls__toggle-label:after {
-  content: 'Off  On';
+  content: 'Off\00a0\00a0On';
   position: absolute;
-  top: 3px;
+  top: 5px;
   left: 5px;
   height: var(--slider-height);
   width: var(--toggle-label-width);
