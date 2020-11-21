@@ -1,5 +1,5 @@
 {
-  "name": "Tuning-sys-vis",
+  "name": "tuning-sys-vis",
   "version": "1.0.0",
   "description": "",
   "main": "./server/index.js",
