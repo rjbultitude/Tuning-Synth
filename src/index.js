@@ -45,8 +45,8 @@ const {
   sliderTextNode,
 } = getDOMEls();
 
-const modes = freqi.getModes();
-const tuningSysMeta = freqi.getMetaData();
+const modes = freqi.freqiModes;
+const tuningSysMeta = freqi.tuningSystemsData;
 const sliderVals = {
   sliderLow: getFormInputVal(sliders.spectrumControlLow),
   sliderHigh: getFormInputVal(sliders.spectrumControlHigh),

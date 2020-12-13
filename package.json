@@ -18,7 +18,7 @@
   "author": "Richard Bultitude",
   "license": "ISC",
   "dependencies": {
-    "freqi": "^1.5.3",
+    "freqi": "^1.6.1",
     "p5": "^0.10.2"
   },
   "devDependencies": {
