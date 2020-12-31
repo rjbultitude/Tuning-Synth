@@ -9,7 +9,6 @@ export function getDOMEls() {
     waveControl: document.getElementById('waveType'),
     playModeControl: document.getElementById('playMode'),
     pitchControl: document.getElementById('freqPitch'),
-    rootNoteTextNode: document.getElementById('rootNoteText'),
     sliders: {
       spectrumControlLow: document.getElementById('freqRangeLow'),
       spectrumControlHigh: document.getElementById('freqRangeHigh'),

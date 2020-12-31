@@ -93,15 +93,9 @@ export function setupWaveControls(config, waveControl) {
   return waveControl;
 }
 
-export function setupPitchControls(
-  config,
-  pitchControl,
-  rootNoteTextNode,
-  updateAudioOutput
-) {
+export function setupPitchControls(config, pitchControl, updateAudioOutput) {
   pitchControl.addEventListener('change', (e) => {
     config.startFreq = parseInt(e.target.value);
-    updateUI(config.startFreq, rootNoteTextNode);
     // read state and update Osc
     setOscFreqToTuningSys(config, updateAudioOutput);
   });

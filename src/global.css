@@ -231,7 +231,7 @@ p {
 }
 
 .audio-controls .fieldset {
-  flex-basis: 100%;
+  flex-basis: 50%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -243,16 +243,12 @@ p {
   padding-top: var(--spacing);
 }
 
-.audio-controls .fieldset {
-  flex-basis: 25%;
-}
-
 .audio-controls .controls__label {
   flex-basis: 30%;
 }
 
 .audio-controls .controls__input {
-  min-width: 11.5vw;
+  flex-basis: 60%;
 }
 
 .range-wrapper {
@@ -469,16 +465,6 @@ p {
   background-color: gray;
 }
 
-@media all and (max-width: 960px) {
-  .audio-controls .fieldset {
-    flex-basis: 50%;
-  }
-
-  .audio-controls .controls__input {
-    min-width: 22vw;
-  }
-}
-
 @media all and (max-width: 650px) {
   body {
     margin: 0 calc(var(--spacing) * 2);
@@ -494,10 +480,6 @@ p {
     padding: calc(var(--spacing) * 2) 0;
     position: static;
     width: auto;
-  }
-
-  .audio-controls .controls__input {
-    min-width: 46vw;
   }
 
   .audio-controls .fieldset {

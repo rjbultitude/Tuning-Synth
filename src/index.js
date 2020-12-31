@@ -43,7 +43,6 @@ const {
   playModeControl,
   waveControl,
   pitchControl,
-  rootNoteTextNode,
   sliders,
   sliderTextNode,
 } = getDOMEls();
@@ -113,13 +112,7 @@ const sketchFn = (p5Sketch) => {
     setupWaveControls(config, waveControl);
     setupPlayModeControls(config, playModeControl);
     // Pitch / Root note / start freq
-    setupPitchControls(
-      config,
-      pitchControl,
-      rootNoteTextNode,
-      updateAudioOutput
-    );
-    updateUI(rootNoteVal, rootNoteTextNode);
+    setupPitchControls(config, pitchControl, updateAudioOutput);
     // UI, Grain size
     setUpGrainControl(config, grainControl, grainTextNode);
     updateUI(grainSizeVal, grainTextNode);
