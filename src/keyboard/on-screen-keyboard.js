@@ -19,7 +19,7 @@ export function highlightOctaves(config) {
     const keyIDNum = parseInt(keyID);
     const keyIDAbs = Math.abs(keyIDNum);
     if (keyIDAbs === octave) {
-      item.style.boxShadow = 'inset 0 0 2px #fff';
+      item.style.boxShadow = 'inset 0 0 4px #fff';
     } else {
       item.style.boxShadow = 'none';
     }
