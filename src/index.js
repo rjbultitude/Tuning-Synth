@@ -80,6 +80,7 @@ const sketchFn = (p5Sketch) => {
       one: 0,
       two: fftResolution,
     },
+    keyboardButtons: null,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,
@@ -98,10 +99,6 @@ const sketchFn = (p5Sketch) => {
     config.osc = new p5.Oscillator(initialWaveType);
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
-    // Dynamic controls creation
-    createTuningSysNotes(config);
-    createTuningSystems(config);
-    writeFreqiControls(config, updateAudioOutput);
   };
 
   p5Sketch.setup = function setup() {
@@ -129,13 +126,17 @@ const sketchFn = (p5Sketch) => {
     // UI, Zoom
     setupSpectrumZoom(config, sliders, sliderTextNode, updateZoomUI);
     updateZoomUI(config, sliderVals, sliderTextNode);
-    // Keyboard
+    // Tuning System controls. Dynamic creation
+    createTuningSysNotes(config);
+    createTuningSystems(config);
+    writeFreqiControls(config, updateAudioOutput);
+    // Keyboard. Dynamic creation
     setQwertyEvents(config, updateAudioOutput);
     const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
-    const keyboardButtons = document.querySelectorAll('.keyboard__button');
-    highlightOctaves(config, keyboardButtons);
-    // TBC
+    config.keyboardButtons = document.querySelectorAll('.keyboard__button');
+    highlightOctaves(config);
+    // Global status
     updateBody(config.playing);
     // Grid
     getGridLinesPosArr(config);

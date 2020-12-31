@@ -10,16 +10,18 @@ function stopCurrentNote(config) {
   config.osc.stop();
 }
 
-export function highlightOctaves(config, keyboardButtons) {
+export function highlightOctaves(config) {
   const selectedTuningSysMeta =
     config.freqiTuningSysMeta[config.selectedTuningSys];
   const octave = selectedTuningSysMeta.intervalsInOctave;
-  keyboardButtons.forEach((item) => {
+  config.keyboardButtons.forEach((item) => {
     const keyID = item.id.split('_')[1];
     const keyIDNum = parseInt(keyID);
     const keyIDAbs = Math.abs(keyIDNum);
     if (keyIDAbs === octave) {
       item.style.boxShadow = 'inset 0 0 2px #fff';
+    } else {
+      item.style.boxShadow = 'none';
     }
   });
 }
