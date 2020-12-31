@@ -16,6 +16,16 @@
   --axis-size: 10px;
 }
 
+main,
+article,
+span,
+div,
+input,
+select,
+button {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 1em;
 }
@@ -233,16 +243,16 @@ p {
   padding-top: var(--spacing);
 }
 
-.fieldset select {
-  min-width: 11.5vw;
-}
-
 .audio-controls .fieldset {
   flex-basis: 25%;
 }
 
 .audio-controls .controls__label {
   flex-basis: 30%;
+}
+
+.audio-controls .input {
+  min-width: 11.5vw;
 }
 
 .range-wrapper {
@@ -267,7 +277,7 @@ p {
 
 .range__value {
   margin: 0;
-  flex-basis: 18%;
+  flex-basis: 14%;
 }
 
 .radio-wrapper {
@@ -451,7 +461,7 @@ p {
 
 .keyboard__button:hover,
 .keyboard__button:focus {
-  background-image: linear-gradient(black, white 5%);
+  background-image: linear-gradient(grey, white 5%);
   color: black;
 }
 
@@ -464,7 +474,7 @@ p {
     flex-basis: 50%;
   }
 
-  .fieldset select {
+  .audio-controls .controls__input {
     min-width: 22vw;
   }
 }
@@ -486,7 +496,7 @@ p {
     width: auto;
   }
 
-  .fieldset select {
+  .audio-controls .controls__input {
     min-width: 46vw;
   }
 

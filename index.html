@@ -87,18 +87,18 @@
           </div>
         </div>
       </form>
-      <form name="audioControls" class="audio-controls">
+      <form name="audioControls" class="audio-controls" onsubmit="event.preventDefault();">
         <h2 class="form__heading">Audio controls</h2>
         <div class="fieldset">
           <label class="controls__label" for="playMode">Play mode</label>
-          <select id="playMode" name="playMode">
+          <select class="controls__input" id="playMode" name="playMode">
             <option value="sustain" selected="selected">Sustain</option>
             <option value="oneShot">One shot</option>
           </select>
         </div>
         <div class="fieldset">
           <label for="waveType" class="controls__label">Wave Type</label>
-          <select name="waveType" id="waveType">
+          <select class="controls__input" name="waveType" id="waveType">
             <option value="sine">Sine</option>
             <option value="square">Square</option>
             <option value="triangle">Triangle</option>
@@ -112,13 +112,14 @@
           <label for="freqPitch" class="controls__label">Root note</label>
           <div class="range__input-wrapper">
             <input
-              class="range__input"
-              type="range"
+              class="controls__input"
+              type="number"
               id="freqPitch"
               name="freqPitch"
               min="55"
               max="3520"
               value="440"
+              step="1"
             />
           </div>
           <p class="range__value" id="rootNoteText"></p>
@@ -139,7 +140,7 @@
           <p>There are 25 notes available, 12 either side of the starting note, which is set to
           440Hz (commonly 'A' in western music) by default, but can be changed via the Root Note input.</p>
           <p>There are two input methods for playing these notes: The on-screen keyboard and your QWERTY keyboard should you have one. When using a
-            QWERTY keyboard, the notes are assigned to the letter range between Q and B.</p>
+            QWERTY keyboard, the notes are assigned to the letter range between Q and N.</p>
           <p>There are two play modes: One-shot and Sustain. When playing a note in sustain mode, you can stop it by tapping the visualiser
             or pressing the Escape key on your QWERTY keyboard.</p>
           <p>As different tuning systems contain different numbers of intervals per octave, octaves are highlighted in the on-screen keyboard.</p>

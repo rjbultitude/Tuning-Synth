@@ -44,6 +44,7 @@ export function addTuningSelectListner(select, config, updateAudioOutput) {
 export function createTuningSelect(config, updateAudioOutput) {
   const select = document.createElement('select');
   select.setAttribute('id', 'tuningSystem');
+  select.setAttribute('class', 'controls__input');
   let count = 0;
   config.tuningSystems.forEach((tuningSysVal, tuningSysKey) => {
     const newOption = document.createElement('option');
