@@ -1,6 +1,11 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
 import { playAndShowNote, stopAndHideNote } from './keyboard';
-import { getDefaultIntervals } from '../utils/utils';
+
+function isEsc(key) {
+  if (key === 'Escape' || key === 'Esc' || key === 27) {
+    return true;
+  }
+}
 
 export function setQwertyEvents(config, updateAudioOutput) {
   document.addEventListener(
@@ -17,7 +22,10 @@ export function setQwertyEvents(config, updateAudioOutput) {
     false
   );
   document.addEventListener('keyup', (e) => {
-    if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {
+    if (
+      (QWERTY.includes(e.key) && config.playMode === ONESHOT) ||
+      isEsc(e.key)
+    ) {
       stopAndHideNote(config, updateAudioOutput);
     }
   });
