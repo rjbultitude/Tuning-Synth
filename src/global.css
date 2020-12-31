@@ -251,7 +251,7 @@ p {
   flex-basis: 30%;
 }
 
-.audio-controls .input {
+.audio-controls .controls__input {
   min-width: 11.5vw;
 }
 
