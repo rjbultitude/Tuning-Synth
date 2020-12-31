@@ -20,7 +20,7 @@ import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
 import { drawGrid, setupGridControl } from './visual-controllers/grid';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
-import { createKeyboard } from './keyboard/keyboard';
+import { createKeyboard } from './keyboard/on-screen-keyboard';
 import { getDOMEls } from './utils/dom-els';
 import {
   updateAudioOutput,

@@ -1,5 +1,5 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
-import { playAndShowNote, stopAndHideNote } from './keyboard';
+import { playAndShowNote, stopAndHideNote } from './on-screen-keyboard';
 
 function isEsc(key) {
   if (key === 'Escape' || key === 'Esc' || key === 27) {
