@@ -10,6 +10,20 @@ function stopCurrentNote(config) {
   config.osc.stop();
 }
 
+export function highlightOctaves(config, keyboardButtons) {
+  const selectedTuningSysMeta =
+    config.freqiTuningSysMeta[config.selectedTuningSys];
+  const octave = selectedTuningSysMeta.intervalsInOctave;
+  keyboardButtons.forEach((item) => {
+    const keyID = item.id.split('_')[1];
+    const keyIDNum = parseInt(keyID);
+    const keyIDAbs = Math.abs(keyIDNum);
+    if (keyIDAbs === octave) {
+      item.style.boxShadow = 'inset 0 0 2px #fff';
+    }
+  });
+}
+
 export function stopAndHideNote(config, updateAudioOutput) {
   config.playing = false;
   updateAudioOutput(config);
@@ -51,6 +65,7 @@ export function createKeyboardButtons(
     );
     keyButton.setAttribute('class', 'keyboard__button');
     keyButton.style.cssText = `background-color: rgba(${r},${THEME_RGB.mid},${b}`;
+    keyButton.setAttribute('id', `key_${num}`);
     keyButton.innerText = `${num}`;
     keyButton.addEventListener(
       'mousedown',

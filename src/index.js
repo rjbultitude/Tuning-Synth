@@ -20,7 +20,10 @@ import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
 import { drawGrid, setupGridControl } from './visual-controllers/grid';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
-import { createKeyboard } from './keyboard/on-screen-keyboard';
+import {
+  createKeyboard,
+  highlightOctaves,
+} from './keyboard/on-screen-keyboard';
 import { getDOMEls } from './utils/dom-els';
 import {
   updateAudioOutput,
@@ -45,8 +48,6 @@ const {
   sliderTextNode,
 } = getDOMEls();
 
-const modes = freqi.freqiModes;
-const tuningSysMeta = freqi.tuningSystemsData;
 const sliderVals = {
   sliderLow: getFormInputVal(sliders.spectrumControlLow),
   sliderHigh: getFormInputVal(sliders.spectrumControlHigh),
@@ -80,6 +81,8 @@ const sketchFn = (p5Sketch) => {
       two: fftResolution,
     },
     tuningSystems: null,
+    freqiTuningSysMeta: freqi.tuningSystemsData,
+    freqiModes: freqi.freqiModes,
     selectedTuningSys: '',
     tuningSysNotes: null,
     playMode: ONESHOT,
@@ -96,8 +99,8 @@ const sketchFn = (p5Sketch) => {
     config.osc.amp(0.2);
     config.fft = new p5.FFT(0, config.numFreqBands);
     // Dynamic controls creation
-    createTuningSysNotes(config, modes);
-    createTuningSystems(config, tuningSysMeta);
+    createTuningSysNotes(config);
+    createTuningSystems(config);
     writeFreqiControls(config, updateAudioOutput);
   };
 
@@ -130,7 +133,11 @@ const sketchFn = (p5Sketch) => {
     setQwertyEvents(config, updateAudioOutput);
     const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
+    const keyboardButtons = document.querySelectorAll('.keyboard__button');
+    highlightOctaves(config, keyboardButtons);
+    // TBC
     updateBody(config.playing);
+    // Grid
     getGridLinesPosArr(config);
     setupGridControl(config, gridControl);
   };

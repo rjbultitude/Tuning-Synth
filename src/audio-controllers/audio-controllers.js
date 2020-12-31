@@ -1,10 +1,11 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
 import { updateUI } from '../utils/utils';
 
-export function createTuningSystems(config, tuningSysMeta) {
+export function createTuningSystems(config) {
   const tuningSystems = new Map();
   Object.keys(config.tuningSysNotes).forEach((tuningSysKey) => {
-    const tuninSysDisplayName = tuningSysMeta[tuningSysKey].shortName;
+    const tuninSysDisplayName =
+      config.freqiTuningSysMeta[tuningSysKey].shortName;
     tuningSystems.set(tuningSysKey, tuninSysDisplayName);
   });
   config.tuningSystems = tuningSystems;

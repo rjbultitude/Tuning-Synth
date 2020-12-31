@@ -1,10 +1,10 @@
 import freqi from 'freqi';
 import { getDefaultIntervals } from '../utils/utils';
 
-export function createTuningSysNotes(config, modes) {
+export function createTuningSysNotes(config) {
   const tuningSysNotes = {};
-  for (let index = 0; index < modes.length; index++) {
-    const currentMode = modes[index];
+  for (let index = 0; index < config.freqiModes.length; index++) {
+    const currentMode = config.freqiModes[index];
     const notesArray = freqi.getFreqs({
       startFreq: config.startFreq,
       intervals: getDefaultIntervals(config),

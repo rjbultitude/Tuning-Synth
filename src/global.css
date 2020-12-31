@@ -435,11 +435,18 @@ p {
 }
 
 .keyboard__button {
-  border: rgba(0, 0, 0, 1) solid 1px;
+  border-top: rgba(0, 0, 0, 1) solid 1px;
+  border-bottom: rgba(0, 0, 0, 1) solid 1px;
+  border-left: rgba(0, 0, 0, 1) solid 1px;
+  border-right: 0 none;
   background-color: white;
   color: white;
   width: 4%;
   height: 80px;
+}
+
+.keyboard__button:last-of-type {
+  border-right: rgba(0, 0, 0, 1) solid 1px;
 }
 
 .keyboard__button:hover,
