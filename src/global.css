@@ -56,7 +56,7 @@ h2 {
 .article {
   padding: calc(var(--spacing) * 2) 0;
   margin-top: calc(var(--spacing) * 2);
-  border-top: 1px solid grey;
+  border-top: 1px solid var(--border-color);
 }
 
 .article__heading {
@@ -88,6 +88,7 @@ p {
 }
 
 .status-stopped .article--instructions {
+  padding: calc(var(--spacing) * 2);
   left: 0;
 }
 
@@ -170,7 +171,7 @@ p {
 
 .visual-controls {
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 0 var(--spacing);
+  padding: var(--spacing);
   position: absolute;
   top: var(--triple-space);
   right: calc(var(--spacing) * 2);
@@ -222,7 +223,6 @@ p {
 .audio-controls {
   padding: calc(var(--spacing) * 2) 0;
   margin-top: calc(var(--spacing) * 2);
-  border-top: var(--border-size) solid var(--border-color);
 }
 
 .audio-controls .form__heading,
@@ -249,6 +249,7 @@ p {
 
 .audio-controls .controls__input {
   flex-basis: 60%;
+  padding: 3px;
 }
 
 .range-wrapper {
@@ -480,9 +481,13 @@ p {
     font-size: 0.75rem;
   }
 
+  .audio-controls {
+    border-top: var(--border-size) solid var(--border-color);
+    margin-top: 0;
+  }
+
   .visual-controls {
     background-color: transparent;
-    margin: calc(var(--spacing) * 2) 0;
     padding: calc(var(--spacing) * 2) 0;
     position: static;
     width: auto;
@@ -499,6 +504,15 @@ p {
 
   .keyboard__button {
     text-indent: -999em;
+  }
+
+  .range-wrapper {
+    padding: var(--spacing) 0;
+  }
+
+  .range-wrapper .controls__label,
+  .audio-controls .controls__label {
+    flex-basis: var(--label-width);
   }
 }
 
@@ -553,11 +567,6 @@ p {
     justify-content: start;
     padding: var(--spacing) 0;
   }
-
-  .range-wrapper .controls__label,
-  .audio-controls .controls__label {
-    flex-basis: var(--label-width);
-  }
 }
 
 @media all and (max-width: 400px) {
@@ -572,5 +581,13 @@ p {
     color: black;
     position: static;
     margin: var(--margin-y) 0;
+  }
+
+  .article--instructions {
+    top: 25%;
+  }
+
+  .audio-controls .controls__input {
+    flex-basis: 70%;
   }
 }
