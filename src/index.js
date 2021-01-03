@@ -18,7 +18,11 @@ import {
 } from './visual-controllers/visual-controllers';
 import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
-import { drawGrid, setupGridControl } from './visual-controllers/grid';
+import {
+  drawGrid,
+  setupGridControl,
+  setGridMediaListener,
+} from './visual-controllers/grid';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import {
   createKeyboard,
@@ -134,6 +138,7 @@ const sketchFn = (p5Sketch) => {
     // Grid
     getGridLinesPosArr(config);
     setupGridControl(config, gridControl);
+    setGridMediaListener(config, gridControl);
   };
 
   p5Sketch.draw = function draw() {
