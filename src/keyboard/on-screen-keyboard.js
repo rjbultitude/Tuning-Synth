@@ -1,12 +1,12 @@
 import { getDefaultIntervals } from '../utils/utils';
 import { ONESHOT, THEME_RGB } from '../utils/constants';
 
-function playCurrentNote(config, freq) {
+export function playCurrentNote(config, freq) {
   config.osc.freq(freq);
   config.osc.start();
 }
 
-function stopCurrentNote(config) {
+export function stopCurrentNote(config) {
   config.osc.stop();
 }
 

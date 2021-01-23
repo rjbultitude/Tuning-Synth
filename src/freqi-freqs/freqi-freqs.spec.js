@@ -15,10 +15,6 @@ describe('createTuningSysNotes', function() {
       },
       freqiModes: ['eqTemp']
     };
-    this.modes = ['eqTemp'];
-    this.output = {
-      eqTemp: []
-    }
   });
   it('should create an object with one key', function() {
     expect(Object.keys(createTuningSysNotes(this.config).tuningSysNotes)).to.have.length(1);
