@@ -18,8 +18,12 @@ describe('updateUI', function () {
     const updatedEl = updateUI(10, this.el);
     expect(updatedEl.innerText).to.be.a('string');
   });
+  it('should append unit arg to string when value arg is a number', function () {
+    const unit = 'Hz';
+    expect(updateUI(10, this.el, unit).innerText).to.equal(`10 ${unit}`);
+  });
   it('should remove decimals from a number', function () {
-    expect(updateUI(10.001, this.el).innerText).to.equal('10');
+    expect(updateUI(10.001, this.el, 'Hz').innerText).to.equal('10 Hz');
   });
   it('should return original element if value is neither string or number', function () {
     expect(updateUI([], this.el).innerText).to.equal('');

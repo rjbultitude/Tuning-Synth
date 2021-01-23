@@ -50,3 +50,4 @@ Desktop.ini
 /dist
 /audio
 .nyc_output/
+/coverage

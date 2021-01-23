@@ -47,15 +47,17 @@ describe('createTuningSystems', function() {
       tuningSystems: null,
       tuningSysNotes: {
         'eqTemp': []
+      },
+      freqiTuningSysMeta: {
+        'eqTemp': {
+          shortName: 'Equal Temperament'
+        }
       }
     }
   });
   it('should add a Map to config', function () {
     const tuningSys = createTuningSystems(this.config).tuningSystems;
     expect(tuningSys instanceof Map).to.be.true;
-  });
-  it('should add a Map to config with key "eqTemp"', function () {
-    expect(createTuningSystems(this.config).tuningSystems.has('eqTemp')).to.be.true;
   });
 });
 

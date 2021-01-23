@@ -9,6 +9,7 @@
     "build:dev": "webpack --env dev --mode=development",
     "build": "webpack --env prod --mode=production",
     "test": "NODE_ENV=test nyc mocha --recursive src/**/*.spec.js",
+    "test:coverage": "nyc npm run test",
     "lint:quality": "eslint .",
     "lint:css": "stylelint './src/**/*.css'",
     "lint:format-js": "prettier --write ./src/**/*.js",
@@ -82,7 +83,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern **/*.js && npm run lint:format-css",
-      "pre-push": "npm run lint:quality"
+      "pre-push": "npm run lint:quality && npm test"
     }
   }
 }

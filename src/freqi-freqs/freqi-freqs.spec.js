@@ -12,7 +12,8 @@ describe('createTuningSysNotes', function() {
       intervalsRange: {
         lower: -2,
         upper: 2,
-      }
+      },
+      freqiModes: ['eqTemp']
     };
     this.modes = ['eqTemp'];
     this.output = {
@@ -20,6 +21,6 @@ describe('createTuningSysNotes', function() {
     }
   });
   it('should create an object with one key', function() {
-    expect(Object.keys(createTuningSysNotes(this.config, this.modes).tuningSysNotes)).to.have.length(1);
+    expect(Object.keys(createTuningSysNotes(this.config).tuningSysNotes)).to.have.length(1);
   });
 });
