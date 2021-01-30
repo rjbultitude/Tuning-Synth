@@ -1,5 +1,6 @@
 import { setTuningSysNotes } from '../freqi-freqs/freqi-freqs';
 import { highlightOctaves } from '../keyboard/on-screen-keyboard';
+import { KEYBOARD_OCT_STYLE } from '../utils/constants';
 
 export function setOscFreqToTuningSys(config, updateAudioOutput) {
   // set and update state
@@ -26,7 +27,7 @@ export function applyTuningSystem(e, config, updateAudioOutput) {
   // update Oscillator
   setOscFreqToTuningSys(config, updateAudioOutput);
   // Update highlighted octave
-  highlightOctaves(config);
+  highlightOctaves({ config, KEYBOARD_OCT_STYLE });
 }
 
 export function addTuningSelectListner(select, config, updateAudioOutput) {

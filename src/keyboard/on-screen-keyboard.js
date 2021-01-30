@@ -1,7 +1,7 @@
 import { getDefaultIntervals } from '../utils/utils';
 import { ONESHOT, THEME_RGB } from '../utils/constants';
 
-export function playCurrentNote(config, freq) {
+export function playCurrentNote({ config, freq }) {
   config.osc.freq(freq);
   config.osc.start();
 }
@@ -10,7 +10,7 @@ export function stopCurrentNote(config) {
   config.osc.stop();
 }
 
-export function highlightOctaves(config) {
+export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   const selectedTuningSysMeta =
     config.freqiTuningSysMeta[config.selectedTuningSys];
   const octave = selectedTuningSysMeta.intervalsInOctave;
@@ -19,7 +19,7 @@ export function highlightOctaves(config) {
     const keyIDNum = parseInt(keyID);
     const keyIDAbs = Math.abs(keyIDNum);
     if (keyIDAbs === octave) {
-      item.style.boxShadow = 'inset 0 0 4px #fff';
+      item.style.boxShadow = KEYBOARD_OCT_STYLE;
     } else {
       item.style.boxShadow = 'none';
     }
@@ -38,7 +38,7 @@ export function playAndShowNote(config, index, updateAudioOutput) {
   config.currentFreq = currFreq;
   config.selectedInterval = index;
   updateAudioOutput(config);
-  playCurrentNote(config, currFreq);
+  playCurrentNote({ config, currFreq });
   return config;
 }
 

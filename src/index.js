@@ -37,7 +37,7 @@ import {
   getFormInputVal,
   getGridLinesPosArr,
 } from './utils/utils';
-import { ONESHOT, SUSTAIN, SINE } from './utils/constants';
+import { ONESHOT, SUSTAIN, SINE, KEYBOARD_OCT_STYLE } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
@@ -56,6 +56,7 @@ const sliderVals = {
   sliderHigh: getFormInputVal(sliders.spectrumControlHigh),
 };
 const grainSizeVal = getFormInputVal(grainControl);
+// TODO why is this declared?
 const rootNoteVal = getFormInputVal(pitchControl);
 
 const sketchFn = (p5Sketch) => {
@@ -132,7 +133,7 @@ const sketchFn = (p5Sketch) => {
     const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
-    highlightOctaves(config);
+    highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
     updateBody(config.playing);
     // Grid
