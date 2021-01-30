@@ -26,7 +26,7 @@ export function setQwertyEvents(config, updateAudioOutput) {
       (QWERTY.includes(e.key) && config.playMode === ONESHOT) ||
       isEsc(e.key)
     ) {
-      stopAndHideNote(config, updateAudioOutput);
+      stopAndHideNote({ config, updateAudioOutput });
     }
   });
 }

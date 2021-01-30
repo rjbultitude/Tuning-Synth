@@ -26,7 +26,7 @@ export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   });
 }
 
-export function stopAndHideNote(config, updateAudioOutput) {
+export function stopAndHideNote({ config, updateAudioOutput }) {
   config.playing = false;
   updateAudioOutput(config);
   stopCurrentNote(config);
@@ -38,7 +38,7 @@ export function playAndShowNote(config, index, updateAudioOutput) {
   config.currentFreq = currFreq;
   config.selectedInterval = index;
   updateAudioOutput(config);
-  playCurrentNote({ config, currFreq });
+  playCurrentNote({ config, freq: currFreq });
   return config;
 }
 
@@ -80,7 +80,7 @@ export function createKeyboardButtons(
       'mouseup',
       () => {
         if (config.playMode === ONESHOT) {
-          stopAndHideNote(config, updateAudioOutput);
+          stopAndHideNote({ config, updateAudioOutput });
         }
       },
       false
@@ -108,7 +108,7 @@ export function createKeyboardButtons(
     keyButton.addEventListener(
       'touchend',
       () => {
-        stopAndHideNote(config, updateAudioOutput);
+        stopAndHideNote({ config, updateAudioOutput });
       },
       false
     );

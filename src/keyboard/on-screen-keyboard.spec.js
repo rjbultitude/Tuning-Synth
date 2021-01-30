@@ -91,11 +91,11 @@ describe('stopAndHideNote', function() {
     this.cb = sinon.spy();
   });
   it('should call cb', function() {
-    stopAndHideNote(this.config, this.cb);
+    stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
     expect(this.cb).to.have.been.called;
   });
   it('should set config playing to false', function() {
-    stopAndHideNote(this.config, this.cb);
+    stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
     expect(this.config.playing).to.be.false;
   });
 });
