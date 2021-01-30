@@ -99,3 +99,31 @@ describe('stopAndHideNote', function() {
     expect(this.config.playing).to.be.false;
   });
 });
+
+describe('playAndShowNote', function() {
+  beforeEach(function() {
+    this.config = {
+      osc: {
+        freq: sinon.spy(),
+        start: sinon.spy(),
+      },
+      currentFreq: 440,
+      selectedInterval: 0,
+      selectedTuningSys: 'eqTemp',
+      tuningSysNotes: {
+        eqTemp: [200, 400]
+      },
+      playing: false
+    };
+    this.index = 1;
+    this.cb = sinon.spy();
+  });
+  it('should set config playing to true', function() {
+    playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.cb });
+    expect(this.config.playing).to.be.true;
+  });
+  it('should call the updateAudioOutput callback', function() {
+    playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.cb });
+    expect(this.cb).to.have.been.called;
+  });
+});

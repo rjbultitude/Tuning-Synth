@@ -16,7 +16,7 @@ export function setQwertyEvents(config, updateAudioOutput) {
       }
       if (QWERTY.includes(e.key)) {
         const currentKeyindex = QWERTY.indexOf(e.key);
-        playAndShowNote(config, currentKeyindex, updateAudioOutput);
+        playAndShowNote({ config, index: currentKeyindex, updateAudioOutput });
       }
     },
     false
