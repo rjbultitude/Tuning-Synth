@@ -5,14 +5,14 @@ export function getFormInputVal(formEl) {
   return formEl.value;
 }
 
-export function updateBody(playing) {
+export function updateBody(playing, className) {
   const docBody = getDOMEls().body;
   if (playing === false) {
-    docBody.classList.add(STATUS_STOPPED);
-    return STATUS_STOPPED;
+    docBody.classList.add(className);
+    return className;
   }
   if (playing) {
-    docBody.classList.remove(STATUS_STOPPED);
+    docBody.classList.remove(className);
     return '';
   }
 }
@@ -36,14 +36,14 @@ export function updateAudioOutput(config) {
     updateUI('', freqTextNode);
     updateUI('Stopped', statusTextNode);
     if (config.playMode === SUSTAIN) {
-      updateBody(config.playing);
+      updateBody(config.playing, STATUS_STOPPED);
     }
   } else {
     updateUI(config.currentFreq, freqTextNode, FREQ_UNIT);
     updateUI('Playing', statusTextNode);
     updateBody(config.playing);
     if (config.playMode === SUSTAIN) {
-      updateBody(config.playing);
+      updateBody(config.playing, STATUS_STOPPED);
     }
   }
 }
@@ -64,10 +64,6 @@ export function getInitialSelectVal(el, defaultVal) {
     return el.value;
   }
   return defaultVal;
-}
-
-export function spacesToCamelCaseStr(str) {
-  return str.replace(/[A-Z]/, (uppcaseChar) => ` ${uppcaseChar}`);
 }
 
 export function getGridLinesPosArr(config) {

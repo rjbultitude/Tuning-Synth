@@ -37,7 +37,13 @@ import {
   getFormInputVal,
   getGridLinesPosArr,
 } from './utils/utils';
-import { ONESHOT, SUSTAIN, SINE, KEYBOARD_OCT_STYLE } from './utils/constants';
+import {
+  ONESHOT,
+  SUSTAIN,
+  SINE,
+  KEYBOARD_OCT_STYLE,
+  STATUS_STOPPED,
+} from './utils/constants';
 const {
   pageWrapper,
   visualControls,
@@ -135,7 +141,7 @@ const sketchFn = (p5Sketch) => {
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
-    updateBody(config.playing);
+    updateBody(config.playing, STATUS_STOPPED);
     // Grid
     getGridLinesPosArr(config);
     setupGridControl(config, gridControl);

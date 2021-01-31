@@ -1,5 +1,4 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
-import { updateUI } from '../utils/utils';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -57,7 +56,7 @@ export function constrainAndPlay(p5Sketch, config) {
   return config;
 }
 
-export function togglePlay({ config, p5Sketch, updateAudioOutput }) {
+export function togglePlay({ config, updateAudioOutput }) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
