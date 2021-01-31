@@ -3,14 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import {
-  playCurrentNote,
-  stopCurrentNote,
-  highlightOctaves,
-  stopAndHideNote,
-  playAndShowNote,
-  createKeyboard
-} from './on-screen-keyboard';
+import * as onScreenKB from './on-screen-keyboard';
 
 describe('playCurrentNote', function() {
   beforeEach(function() {
@@ -23,7 +16,7 @@ describe('playCurrentNote', function() {
     this.freq = 440;
   });
   it('should call osc freq with freq arg val', function() {
-    playCurrentNote({ config: this.config, freq: this.freq });
+    onScreenKB.playCurrentNote({ config: this.config, freq: this.freq });
     expect(this.config.osc.freq).to.have.been.calledWith(this.freq);
   });
 });
@@ -37,7 +30,7 @@ describe('stopCurrentNote', function() {
     };
   });
   it('should call osc stop', function() {
-    stopCurrentNote(this.config);
+    onScreenKB.stopCurrentNote(this.config);
     expect(this.config.osc.stop).to.have.been.called;
   });
 });
@@ -70,11 +63,11 @@ describe('highlightOctaves', function() {
     this.KEYBOARD_OCT_STYLE = 'inset 0 0 4px #fff';
   });
   it('should set box shadow to none', function() {
-    highlightOctaves({ config: this.config, KEYBOARD_OCT_STYLE: this.KEYBOARD_OCT_STYLE });
+    onScreenKB.highlightOctaves({ config: this.config, KEYBOARD_OCT_STYLE: this.KEYBOARD_OCT_STYLE });
     expect(this.config.keyboardButtons[0].style.boxShadow).to.equal('none');
   });
   it('should style element when item is octave', function() {
-    highlightOctaves({ config: this.config, KEYBOARD_OCT_STYLE: this.KEYBOARD_OCT_STYLE });
+    onScreenKB.highlightOctaves({ config: this.config, KEYBOARD_OCT_STYLE: this.KEYBOARD_OCT_STYLE });
     expect(this.config.keyboardButtons[1].style.boxShadow).to.equal(this.KEYBOARD_OCT_STYLE);
   });
 });
@@ -91,11 +84,11 @@ describe('stopAndHideNote', function() {
     this.cb = sinon.spy();
   });
   it('should call cb', function() {
-    stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
+    onScreenKB.stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
     expect(this.cb).to.have.been.called;
   });
   it('should set config playing to false', function() {
-    stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
+    onScreenKB.stopAndHideNote({ config: this.config, updateAudioOutput: this.cb });
     expect(this.config.playing).to.be.false;
   });
 });
@@ -116,14 +109,27 @@ describe('playAndShowNote', function() {
       playing: false
     };
     this.index = 1;
-    this.cb = sinon.spy();
+    this.updateCB = sinon.spy();
+    this.playCB = sinon.spy();
   });
+  // afterEach(function() {
+  //   this.updateCB.restore();
+  //   this.playCB.restore();
+  // });
   it('should set config playing to true', function() {
-    playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.cb });
+    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
     expect(this.config.playing).to.be.true;
   });
   it('should call the updateAudioOutput callback', function() {
-    playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.cb });
-    expect(this.cb).to.have.been.called;
+    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    expect(this.updateCB).to.have.been.called;
+  });
+  it('should set config selectedInterval to index', function() {
+    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    expect(this.config.selectedInterval).to.equal(this.index);
+  });
+  it('should have called playCurrentNote', function() {
+    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    expect(this.playCB).to.have.been.called;
   });
 });

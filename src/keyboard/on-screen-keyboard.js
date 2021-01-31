@@ -32,7 +32,12 @@ export function stopAndHideNote({ config, updateAudioOutput }) {
   stopCurrentNote(config);
 }
 
-export function playAndShowNote({ config, index, updateAudioOutput }) {
+export function playAndShowNote({
+  config,
+  index,
+  updateAudioOutput,
+  playCurrentNote,
+}) {
   const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
   config.playing = true;
   config.currentFreq = currFreq;
@@ -72,7 +77,7 @@ export function createKeyboardButtons(
     keyButton.addEventListener(
       'mousedown',
       () => {
-        playAndShowNote({ config, index, updateAudioOutput });
+        playAndShowNote({ config, index, updateAudioOutput, playCurrentNote });
       },
       false
     );
@@ -93,7 +98,12 @@ export function createKeyboardButtons(
             stopAndHideNote(config, updateAudioOutput);
             return;
           }
-          playAndShowNote({ config, index, updateAudioOutput });
+          playAndShowNote({
+            config,
+            index,
+            updateAudioOutput,
+            playCurrentNote,
+          });
         }
       },
       false
@@ -101,7 +111,12 @@ export function createKeyboardButtons(
     keyButton.addEventListener(
       'touchstart',
       () => {
-        playAndShowNote({ config, index, updateAudioOutput });
+        playAndShowNote({
+          config,
+          index,
+          updateAudioOutput,
+          playCurrentNote,
+        });
       },
       false
     );

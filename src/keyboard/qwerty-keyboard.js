@@ -1,5 +1,9 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
-import { playAndShowNote, stopAndHideNote } from './on-screen-keyboard';
+import {
+  playCurrentNote,
+  playAndShowNote,
+  stopAndHideNote,
+} from './on-screen-keyboard';
 
 function isEsc(key) {
   if (key === 'Escape' || key === 'Esc' || key === 27) {
@@ -16,7 +20,12 @@ export function setQwertyEvents(config, updateAudioOutput) {
       }
       if (QWERTY.includes(e.key)) {
         const currentKeyindex = QWERTY.indexOf(e.key);
-        playAndShowNote({ config, index: currentKeyindex, updateAudioOutput });
+        playAndShowNote({
+          config,
+          index: currentKeyindex,
+          updateAudioOutput,
+          playCurrentNote,
+        });
       }
     },
     false
