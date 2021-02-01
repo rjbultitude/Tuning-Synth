@@ -3,15 +3,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import {
-  createTuningSystems,
-  getVolForWaveType,
-  changeWave,
-  togglePlay,
-  constrainAndPlay,
-  getInitialWaveType,
-  setupWaveControls,
-} from './audio-controllers.js';
+import * as audioControls from './audio-controllers.js';
 
 const document = {
   visualControls: {
@@ -56,21 +48,30 @@ describe('createTuningSystems', function() {
     }
   });
   it('should add a Map to config', function () {
-    const tuningSys = createTuningSystems(this.config).tuningSystems;
+    const tuningSys = audioControls.createTuningSystems(this.config).tuningSystems;
     expect(tuningSys instanceof Map).to.be.true;
   });
 });
 
 describe('getVolForWaveType', function() {
   it('should return a number even if no argument is passed', function() {
-    expect(getVolForWaveType()).to.be.a('number');
+    expect(audioControls.getVolForWaveType()).to.be.a('number');
   });
   it('should return 0.08 if argument is sawtooth', function() {
-    expect(getVolForWaveType('sawtooth')).to.equal(0.08);
+    expect(audioControls.getVolForWaveType('sawtooth')).to.equal(0.08);
+  });
+  it('should return 0.75 if argument is sine', function() {
+    expect(audioControls.getVolForWaveType('sine')).to.equal(0.75);
+  });
+  it('should return 0.35 if argument is triangle', function() {
+    expect(audioControls.getVolForWaveType('triangle')).to.equal(0.35);
+  });
+  it('should return 0.03 if argument is square', function() {
+    expect(audioControls.getVolForWaveType('square')).to.equal(0.03);
   });
 });
 
-describe('change wave', function () {
+describe('changeWave', function () {
   this.beforeEach(function () {
     this.config = {
       playing: false,
@@ -79,22 +80,31 @@ describe('change wave', function () {
         setType: function (waveType) {
           return waveType;
         },
+        amp: function(volume) {
+          return volume;
+        },
+        started: true,
       },
       grainSize: 10,
       mouseInCanvas: false,
     };
     this.setTypeSpy = sinon.spy(this.config.osc, 'setType');
+    this.ampSpy = sinon.spy(this.config.osc, 'amp');
   });
   it('should return the first argument', function () {
-    expect(changeWave('sawtooth', this.config)).to.equal('sawtooth');
+    expect(audioControls.changeWave('sawtooth', this.config)).to.equal('sawtooth');
   });
   it('should call the setType method', function () {
-    changeWave('sawtooth', this.config);
+    audioControls.changeWave('sawtooth', this.config);
     expect(this.setTypeSpy).calledOnce;
+  });
+  it('should call the amp method when osc started is true', function () {
+    audioControls.changeWave('sawtooth', this.config);
+    expect(this.ampSpy).calledOnce;
   });
 });
 
-describe('toggle play', function () {
+describe('togglePlay', function () {
   this.beforeEach(function () {
     this.configPlaying = {
       playing: true,
@@ -118,84 +128,67 @@ describe('toggle play', function () {
     sinon.restore();
   });
   it('should set playing to false if playing is true', function () {
-    expect(togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput }).playing).to.be.false;
+    expect(audioControls.togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput }).playing).to.be.false;
   });
   it('should set playing to true if playing is false', function () {
-    expect(togglePlay({ config: this.configStopped, updateAudioOutput: this.updateAudioOutput }).playing).to.be.true;
+    expect(audioControls.togglePlay({ config: this.configStopped, updateAudioOutput: this.updateAudioOutput }).playing).to.be.true;
   });
   it('should call play method if playing is false', function () {
-    togglePlay({config: this.configStopped, updateAudioOutput: this.updateAudioOutput });
+    audioControls.togglePlay({config: this.configStopped, updateAudioOutput: this.updateAudioOutput });
     expect(this.startSpy).calledOnce;
   });
   it('should call stop method if playing is true', function () {
-    togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput });
+    audioControls.togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput });
     expect(this.stopSpy).calledOnce;
   });
 });
 
-describe('constrain And Play', function () {
+describe('setupPlayModeControls', function () {
   this.beforeEach(function () {
-    this.p5SketchInRange = {
-      mouseY: 100,
-      mouseX: 200,
-      height: 600,
-      width: 1200,
-      constrain: function () {
-        return 440;
-      },
-      map: function () {
-        return true;
-      },
+    this.config = {
+      playMode: '',
     };
-    this.p5SketchOutOfRange = {
-      mouseY: -100,
-      mouseX: 200,
-      height: 600,
-      width: 1200,
-      constrain: function () {
-        return 440;
-      },
-      map: function () {
-        return true;
-      },
+    this.DomNode = function DomNode() {
+      this.addEventListener = function () {
+        return this;
+      };
+      this.options = {
+        one: 'oneShot'
+      };
     };
-    this.configPlaying = {
-      osc: {
-        freq: function (freq) {
-          return freq;
-        },
-        frequency: null,
-      },
-      playing: true,
-    };
-    this.configStopped = {
-      osc: {
-        freq: function (freq) {},
-      },
-      playing: false,
-    };
-    this.freqSpyPlaying = sinon.spy(this.configPlaying.osc, 'freq');
-    this.freqSpyStopped = sinon.spy(this.configStopped.osc, 'freq');
+    this.playModeControl = new this.DomNode();
+    this.addEventSpy = sinon.spy(this.playModeControl, 'addEventListener');
   });
-  it('should call osc.freq if playing and mouse is in canvas', function () {
-    constrainAndPlay(this.p5SketchInRange, this.configPlaying);
-    expect(this.freqSpyPlaying).calledOnce;
+  this.afterEach(function () {
+    sinon.restore();
   });
-  it('should not call osc.freq if playing is true but mouse is not in canvas', function () {
-    constrainAndPlay(this.p5SketchOutOfRange, this.configPlaying);
-    expect(this.freqSpyStopped).to.not.have.been.called;
-  });
-  it('should not call osc.freq if playing is false and mouse is in canvas', function () {
-    constrainAndPlay(this.p5SketchInRange, this.configStopped);
-    expect(this.freqSpyStopped).to.not.have.been.called;
-  });
-  it('should return osc.freq argument if playing is true and mouse is in canvas', function () {
-    constrainAndPlay(this.p5SketchInRange, this.configPlaying);
-    expect(this.freqSpyPlaying).to.have.been.calledWith(440);
+  it('should add an event listener to the arg playModeControl', function () {
+    audioControls.setupWaveControls(this.config, this.playModeControl);
+    expect(this.addEventSpy).calledOnce;
   });
 });
 
-describe('setup Wave Controls', function () {
+describe('playModeCallBack', function() {
+  beforeEach(function() {
+    this.config = {
+      playMode: ''
+    };
+    this.playModeCrlEvent = {
+      target: {
+        options: [{
+          value: 'oneShot'
+        }],
+        selectedIndex: 0,
+      }
+    }
+  });
+  it('should set config playMode to selected value', function () {
+    audioControls.playModeCallBack(this.playModeCrlEvent, this.config);
+    expect(this.config.playMode).to.equal(this.playModeCrlEvent.target.options[0].value);
+  });
+});
+
+describe('setupWaveControls', function () {
   this.beforeEach(function () {
     this.config = {};
     this.DomNode = function DomNode() {
@@ -211,7 +204,7 @@ describe('setup Wave Controls', function () {
     sinon.restore();
   });
   it('should called changeWave when changed', function () {
-    setupWaveControls(this.config, this.waveControl);
+    audioControls.setupWaveControls(this.config, this.waveControl);
     expect(this.addEventSpy).calledOnce;
   });
 });

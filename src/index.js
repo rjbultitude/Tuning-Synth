@@ -150,7 +150,6 @@ const sketchFn = (p5Sketch) => {
 
   p5Sketch.draw = function draw() {
     p5Sketch.background(0, 0, 0);
-    // constrainAndPlay(p5Sketch, config);
     setSpectrum(config);
     drawFreqs(p5Sketch, config);
     p5Sketch.stroke(255);

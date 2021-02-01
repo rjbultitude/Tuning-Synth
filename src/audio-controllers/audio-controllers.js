@@ -1,3 +1,4 @@
+import { config } from 'chai';
 import { setOscFreqToTuningSys } from './freqi-controls';
 
 export function createTuningSystems(config) {
@@ -35,27 +36,6 @@ export function changeWave(waveTypeStr, config) {
   return waveTypeStr;
 }
 
-export function isMouseInCanvas(p5Sketch) {
-  if (p5Sketch.mouseY < p5Sketch.height && p5Sketch.mouseY > 0) {
-    return true;
-  }
-  return false;
-}
-
-export function constrainAndPlay(p5Sketch, config) {
-  // Constrain playback to canvas
-  const freq = p5Sketch.constrain(
-    p5Sketch.map(p5Sketch.mouseX, 0, p5Sketch.width, 10, 2024),
-    10,
-    2024
-  );
-  const mouseInCanvas = isMouseInCanvas(p5Sketch);
-  if (config.playing && mouseInCanvas) {
-    config.osc.freq(freq);
-  }
-  return config;
-}
-
 export function togglePlay({ config, updateAudioOutput }) {
   if (config.playing) {
     config.osc.stop();
@@ -71,13 +51,17 @@ export function togglePlay({ config, updateAudioOutput }) {
   return config;
 }
 
+export function playModeCallBack(e, config) {
+  const playModeVal = e.target.options[e.target.selectedIndex].value;
+  config.playMode = playModeVal;
+  return config;
+}
+
 export function setupPlayModeControls(config, playModeControl) {
   playModeControl.addEventListener(
     'change',
-    function () {
-      const playModeVal =
-        playModeControl.options[playModeControl.selectedIndex].value;
-      config.playMode = playModeVal;
+    function (e) {
+      playModeCallBack(e, config);
     },
     false
   );
