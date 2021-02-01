@@ -47,6 +47,115 @@ export function playAndShowNote({
   return config;
 }
 
+export function getBtnColour(index, defaultIntervals, p5Sketch) {
+  const r = p5Sketch.map(
+    index,
+    0,
+    defaultIntervals.length,
+    THEME_RGB.low,
+    THEME_RGB.high
+  );
+  const b = p5Sketch.map(
+    index,
+    0,
+    defaultIntervals.length,
+    THEME_RGB.high,
+    THEME_RGB.low
+  );
+  const g = THEME_RGB.mid;
+  return {
+    r,
+    g,
+    b,
+  };
+}
+
+export function setBtnAttrs({ keyButton, num }) {
+  keyButton.setAttribute('class', 'keyboard__button');
+  keyButton.setAttribute('id', `key_${num}`);
+  keyButton.innerText = `${num}`;
+  return keyButton;
+}
+
+export function addBtnListeners({
+  keyButton,
+  config,
+  index,
+  updateAudioOutput,
+}) {
+  keyButton.addEventListener(
+    'mousedown',
+    () => {
+      playAndShowNote({ config, index, updateAudioOutput, playCurrentNote });
+    },
+    false
+  );
+  keyButton.addEventListener(
+    'mouseup',
+    () => {
+      if (config.playMode === ONESHOT) {
+        stopAndHideNote({ config, updateAudioOutput });
+      }
+    },
+    false
+  );
+  keyButton.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key === 'Enter') {
+        if (config.playing) {
+          stopAndHideNote(config, updateAudioOutput);
+          return;
+        }
+        playAndShowNote({
+          config,
+          index,
+          updateAudioOutput,
+          playCurrentNote,
+        });
+      }
+    },
+    false
+  );
+  keyButton.addEventListener(
+    'touchstart',
+    () => {
+      playAndShowNote({
+        config,
+        index,
+        updateAudioOutput,
+        playCurrentNote,
+      });
+    },
+    false
+  );
+  keyButton.addEventListener(
+    'touchend',
+    () => {
+      stopAndHideNote({ config, updateAudioOutput });
+    },
+    false
+  );
+  return keyButton;
+}
+
+export function createEachKbdBn({
+  num,
+  index,
+  config,
+  keyboardWrapper,
+  defaultIntervals,
+  p5Sketch,
+  updateAudioOutput,
+}) {
+  const keyButton = document.createElement('button');
+  const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
+  keyButton.style.cssText = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
+  setBtnAttrs({ keyButton, num });
+  addBtnListeners({ keyButton, config, index, updateAudioOutput });
+  keyboardWrapper.appendChild(keyButton);
+}
+
 export function createKeyboardButtons(
   config,
   keyboardWrapper,
@@ -55,79 +164,15 @@ export function createKeyboardButtons(
   updateAudioOutput
 ) {
   defaultIntervals.forEach((num, index) => {
-    const keyButton = document.createElement('button');
-    const r = p5Sketch.map(
+    createEachKbdBn({
+      num,
       index,
-      0,
-      defaultIntervals.length,
-      THEME_RGB.low,
-      THEME_RGB.high
-    );
-    const b = p5Sketch.map(
-      index,
-      0,
-      defaultIntervals.length,
-      THEME_RGB.high,
-      THEME_RGB.low
-    );
-    keyButton.setAttribute('class', 'keyboard__button');
-    keyButton.style.cssText = `background-color: rgba(${r},${THEME_RGB.mid},${b}`;
-    keyButton.setAttribute('id', `key_${num}`);
-    keyButton.innerText = `${num}`;
-    keyButton.addEventListener(
-      'mousedown',
-      () => {
-        playAndShowNote({ config, index, updateAudioOutput, playCurrentNote });
-      },
-      false
-    );
-    keyButton.addEventListener(
-      'mouseup',
-      () => {
-        if (config.playMode === ONESHOT) {
-          stopAndHideNote({ config, updateAudioOutput });
-        }
-      },
-      false
-    );
-    keyButton.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Enter') {
-          if (config.playing) {
-            stopAndHideNote(config, updateAudioOutput);
-            return;
-          }
-          playAndShowNote({
-            config,
-            index,
-            updateAudioOutput,
-            playCurrentNote,
-          });
-        }
-      },
-      false
-    );
-    keyButton.addEventListener(
-      'touchstart',
-      () => {
-        playAndShowNote({
-          config,
-          index,
-          updateAudioOutput,
-          playCurrentNote,
-        });
-      },
-      false
-    );
-    keyButton.addEventListener(
-      'touchend',
-      () => {
-        stopAndHideNote({ config, updateAudioOutput });
-      },
-      false
-    );
-    keyboardWrapper.appendChild(keyButton);
+      config,
+      keyboardWrapper,
+      defaultIntervals,
+      p5Sketch,
+      updateAudioOutput,
+    });
   });
   return keyboardWrapper;
 }
