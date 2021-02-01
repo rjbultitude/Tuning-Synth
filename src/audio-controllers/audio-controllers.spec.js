@@ -4,6 +4,7 @@ import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
 import * as audioControls from './audio-controllers.js';
+import * as freqiCtrls from './freqi-controls';
 
 const document = {
   visualControls: {
@@ -206,5 +207,71 @@ describe('setupWaveControls', function () {
   it('should called changeWave when changed', function () {
     audioControls.setupWaveControls(this.config, this.waveControl);
     expect(this.addEventSpy).calledOnce;
+  });
+});
+
+describe('setupPitchControls', function () {
+  this.beforeEach(function () {
+    this.config = {};
+    this.DomNode = function DomNode() {
+      this.addEventListener = function () {
+        return this;
+      };
+    };
+    this.pitchControl = new this.DomNode();
+    this.addEventSpy = sinon.spy(this.pitchControl, 'addEventListener');
+  });
+  this.afterEach(function () {
+    sinon.restore();
+  });
+  it('should set an event listener', function () {
+    audioControls.setupWaveControls(this.config, this.pitchControl);
+    expect(this.addEventSpy).calledOnce;
+  });
+});
+
+describe('pitchCrlCallBack', function() {
+  beforeEach(function() {
+    this.config = {
+      startFreq: null,
+      currentFreq: 0,
+      intervalsRange: {
+        lower: 1,
+        upper: 2
+      },
+      tuningSysNotes: {
+        eqTemp: [200],
+      },
+      selectedTuningSys: 'eqTemp',
+      selectedInterval: 0,
+      osc: {
+        started: false,
+        freq: () => {}
+      }
+    };
+    this.pitchCrlEvent = {
+      target: {
+        value: '400'
+      }
+    };
+    this.pitchCrlEventNumber = {
+      target: {
+        value: 400
+      }
+    };
+    this.fn = () => {};
+  });
+  it('should set config startFreq to selected value', function () {
+    audioControls.pitchCrlCallBack(this.pitchCrlEventNumber, this.config, this.fn);
+    expect(this.config.startFreq).to.equal(this.pitchCrlEventNumber.target.value);
+  });
+  it('should set config startFreq to a number when el value is a string', function () {
+    audioControls.pitchCrlCallBack(this.pitchCrlEvent, this.config, this.fn);
+    expect(this.config.startFreq).to.be.a('number');
+  });
+  it('should call setOscFreqToTuningSys', function () {
+    const spy = sinon.spy(freqiCtrls, 'setOscFreqToTuningSys');
+    audioControls.pitchCrlCallBack(this.pitchCrlEvent, this.config, this.fn);
+    expect(spy).calledOnce;
   });
 });

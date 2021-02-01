@@ -1,4 +1,3 @@
-import { config } from 'chai';
 import { setOscFreqToTuningSys } from './freqi-controls';
 
 export function createTuningSystems(config) {
@@ -60,7 +59,7 @@ export function playModeCallBack(e, config) {
 export function setupPlayModeControls(config, playModeControl) {
   playModeControl.addEventListener(
     'change',
-    function (e) {
+    (e) => {
       playModeCallBack(e, config);
     },
     false
@@ -76,10 +75,15 @@ export function setupWaveControls(config, waveControl) {
   return waveControl;
 }
 
+export function pitchCrlCallBack(e, config, updateAudioOutput) {
+  config.startFreq = parseInt(e.target.value);
+  // read state and update Osc
+  setOscFreqToTuningSys(config, updateAudioOutput);
+  return config;
+}
+
 export function setupPitchControls(config, pitchControl, updateAudioOutput) {
   pitchControl.addEventListener('change', (e) => {
-    config.startFreq = parseInt(e.target.value);
-    // read state and update Osc
-    setOscFreqToTuningSys(config, updateAudioOutput);
+    pitchCrlCallBack(e, config, updateAudioOutput);
   });
 }
