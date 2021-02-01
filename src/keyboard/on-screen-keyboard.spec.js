@@ -133,3 +133,37 @@ describe('playAndShowNote', function() {
     expect(this.playCB).to.have.been.called;
   });
 });
+
+describe('getBtnColour', function() {
+  beforeEach(function() {
+    this.index = 1;
+    this.defaultIntervals = [0, 1, 2];
+    this.p5Sketch = {
+      map: num => {},
+    }
+  });
+  it('should return an object with keys r, g, b', function() {
+    const obj = onScreenKB.getBtnColour(this.index, this.defaultIntervals, this.p5Sketch);
+    expect(obj).to.have.all.keys('r', 'g', 'b');
+  });
+});
+
+describe('setBtnAttrs', function() {
+  beforeEach(function() {
+    this.num = 1;
+    this.keyButton = {
+      innerText: '',
+      setAttribute: function(key, value) {
+        Object.defineProperty(this, key, { value })
+      }
+    };
+  });
+  it('should set innerText to num as string', function() {
+    const el = onScreenKB.setBtnAttrs({ num: this.num, keyButton: this.keyButton });
+    expect(el.innerText).to.equal(`${this.num}`);
+  });
+  it('should set attribute id to "key_[num]"', function() {
+    const el = onScreenKB.setBtnAttrs({ num: this.num, keyButton: this.keyButton });
+    expect(el.id).to.equal(`key_${this.num}`);
+  });
+});

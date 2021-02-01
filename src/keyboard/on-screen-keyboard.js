@@ -144,11 +144,11 @@ export function createEachKbdBn({
   index,
   config,
   keyboardWrapper,
+  keyButton,
   defaultIntervals,
   p5Sketch,
   updateAudioOutput,
 }) {
-  const keyButton = document.createElement('button');
   const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
   keyButton.style.cssText = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
   setBtnAttrs({ keyButton, num });
@@ -164,11 +164,13 @@ export function createKeyboardButtons(
   updateAudioOutput
 ) {
   defaultIntervals.forEach((num, index) => {
+    const keyButton = document.createElement('button');
     createEachKbdBn({
       num,
       index,
       config,
       keyboardWrapper,
+      keyButton,
       defaultIntervals,
       p5Sketch,
       updateAudioOutput,
