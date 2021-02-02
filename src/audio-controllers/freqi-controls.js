@@ -40,12 +40,7 @@ export function addTuningSelectListner(select, config, updateAudioOutput) {
   );
 }
 
-// Dynamically create the tuning systems
-// selectmenu from tuningSystems Map
-export function createTuningSelect(config, updateAudioOutput) {
-  const select = document.createElement('select');
-  select.setAttribute('id', 'tuningSystem');
-  select.setAttribute('class', 'controls__input');
+export function createTuningOptions(select, config) {
   let count = 0;
   config.tuningSystems.forEach((tuningSysVal, tuningSysKey) => {
     const newOption = document.createElement('option');
@@ -58,6 +53,16 @@ export function createTuningSelect(config, updateAudioOutput) {
     }
     count += 1;
   });
+  return select;
+}
+
+// Dynamically create the tuning systems
+// selectmenu from tuningSystems Map
+export function createTuningSelect(config, updateAudioOutput) {
+  const select = document.createElement('select');
+  select.setAttribute('id', 'tuningSystem');
+  select.setAttribute('class', 'controls__input');
+  createTuningOptions(select, config);
   addTuningSelectListner(select, config, updateAudioOutput);
   return select;
 }

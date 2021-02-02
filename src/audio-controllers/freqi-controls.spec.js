@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import 'jsdom-global/register'
 chai.use(sinonChai);
 
 import * as freqiFreqs from '../freqi-freqs/freqi-freqs';
@@ -127,5 +128,46 @@ describe('applyTuningSystem', function() {
   it('should call setOscFreqToTuningSys', function() {
     freqiCtrls.applyTuningSystem(this.event, this.config, this.fn);
     expect(this.highlightOctavesSpy).calledOnce;
+  });
+});
+
+describe('createTuningOptions', function() {
+  beforeEach(function() {
+    const tuningSysMap = new Map();
+    tuningSysMap.set('eqTemp','Equal Temperament');
+    tuningSysMap.set('pythagorean', 'pythagorean');
+    this.config = {
+      tuningSystems: tuningSysMap
+    };
+    this.el = {
+      setAttribute: function(key, value) {
+        Object.defineProperty(this, key, { value })
+      },
+      innerText: ''
+    }
+    this.creatElSpy = sinon.spy(document, 'createElement');
+    this.wrapper = document.createElement('select');
+    this.wrapperAppendSpy = sinon.spy(this.wrapper, 'appendChild');
+  });
+  afterEach(function() {
+    this.creatElSpy.restore();
+  });
+  it('should create an element for each tuningSystems item', function() {
+    // This call must be added to expected result
+    freqiCtrls.createTuningOptions(this.wrapper, this.config);
+    const numKeys = this.config.tuningSystems.size;
+    expect(this.creatElSpy.callCount).to.equal(numKeys + 1);
+  });
+  it('should call select appendChild', function() {
+    // This call must be added to expected result
+    freqiCtrls.createTuningOptions(this.wrapper, this.config);
+    const numKeys = this.config.tuningSystems.size;
+    expect(this.wrapperAppendSpy.callCount).to.equal(numKeys);
+  });
+  xit('should set first element\'s innertext to first item\'s value', function() {
+    freqiCtrls.createTuningOptions(this.wrapper, this.config);
+    const args = this.creatElSpy.getCall(0).args;
+    console.log('HEY args', args);
+    expect(args[0]).to.equal('eqTemp');
   });
 });
