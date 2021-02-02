@@ -67,6 +67,7 @@ const rootNoteVal = getFormInputVal(pitchControl);
 
 const sketchFn = (p5Sketch) => {
   const fftResolution = 1024;
+  // TODO Needs type definitions
   const config = {
     playing: false,
     fft: null,
