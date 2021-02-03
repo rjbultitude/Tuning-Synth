@@ -1,12 +1,19 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import 'jsdom-global/register'
 chai.use(sinonChai);
 
 import * as freqiFreqs from '../freqi-freqs/freqi-freqs';
 import * as onScreenKeyboard from '../keyboard/on-screen-keyboard';
 import * as freqiCtrls from './freqi-controls';
+
+const tuningSysMap = new Map();
+tuningSysMap.set('eqTemp','Equal Temperament');
+tuningSysMap.set('pythagorean', 'pythagorean');
+
+const selectValue = 'test';
+//Note: write can only be performed once
+document.write(`<select id="freqiControls"></select><select id="tuningSystem"><option value="${selectValue}" selected></select>`);
 
 describe('setOscFreqToTuningSys', function() {
   beforeEach(function() {
@@ -133,9 +140,6 @@ describe('applyTuningSystem', function() {
 
 describe('createTuningOptions', function() {
   beforeEach(function() {
-    const tuningSysMap = new Map();
-    tuningSysMap.set('eqTemp','Equal Temperament');
-    tuningSysMap.set('pythagorean', 'pythagorean');
     this.config = {
       tuningSystems: tuningSysMap
     };
@@ -145,18 +149,18 @@ describe('createTuningOptions', function() {
       },
       innerText: ''
     }
-    this.creatElSpy = sinon.spy(document, 'createElement');
+    this.createElSpy = sinon.spy(document, 'createElement');
     this.wrapper = document.createElement('select');
     this.wrapperAppendSpy = sinon.spy(this.wrapper, 'appendChild');
   });
   afterEach(function() {
-    this.creatElSpy.restore();
+    this.createElSpy.restore();
   });
   it('should create an element for each tuningSystems item', function() {
     // This call must be added to expected result
     freqiCtrls.createTuningOptions(this.wrapper, this.config);
     const numKeys = this.config.tuningSystems.size;
-    expect(this.creatElSpy.callCount).to.equal(numKeys + 1);
+    expect(this.createElSpy.callCount).to.equal(numKeys + 1);
   });
   it('should call select appendChild', function() {
     // This call must be added to expected result
@@ -166,8 +170,61 @@ describe('createTuningOptions', function() {
   });
   xit('should set first element\'s innertext to first item\'s value', function() {
     freqiCtrls.createTuningOptions(this.wrapper, this.config);
-    const args = this.creatElSpy.getCall(0).args;
+    const args = this.createElSpy.getCall(0).args;
     console.log('HEY args', args);
     expect(args[0]).to.equal('eqTemp');
+  });
+});
+
+describe('createTuningSelect', function() {
+  beforeEach(function() {
+    this.config = {
+      selectedTuningSys: 'eqTemp',
+      tuningSystems: tuningSysMap
+    };
+    this.cb = () => {};
+    this.createElSpy = sinon.spy(document, 'createElement');
+    this.tSlctLSpy = sinon.spy(freqiCtrls, 'addTuningSelectListner');
+  });
+  afterEach(function() {
+    this.createElSpy.restore();
+    this.tSlctLSpy.restore();
+  });
+  it('should call createElement', function() {
+    freqiCtrls.createTuningSelect(this.config, this.cb);
+    expect(this.createElSpy).calledThrice;
+  });
+  it('should call addTuningSelectListner', function() {
+    const select = freqiCtrls.createTuningSelect(this.config, this.cb);
+    freqiCtrls.addTuningSelectListner(select, this.config, this.cb);
+    expect(this.tSlctLSpy).calledOnce;
+  });
+})
+
+describe('writeFreqiControls', function() {
+  beforeEach(function() {
+    this.config = {
+      selectedTuningSys: 'eqTemp',
+      tuningSystems: tuningSysMap
+    };
+    this.cb = () => {};
+    this.getElByIdSpy = sinon.spy(document, 'getElementById');
+    this.tuningSelectSpy = sinon.spy(freqiCtrls, 'createTuningSelect');
+  });
+  afterEach(function() {
+    this.getElByIdSpy.restore();
+    this.tuningSelectSpy.restore();
+  });
+  it('should call getElementById', function() {
+    freqiCtrls.writeFreqiControls(this.config, this.cb);
+    expect(this.getElByIdSpy).calledTwice;
+  });
+  xit('should call createTuningSelect', function() {
+    freqiCtrls.writeFreqiControls(this.config, this.cb);
+    expect(this.tuningSelectSpy).calledWith(this.config, this.cb);
+  });
+  it('should set selectedTuningSys to value of tuningSys Select', function() {
+    freqiCtrls.writeFreqiControls(this.config, this.cb);
+    expect(this.config.selectedTuningSys).to.equal(selectValue);
   });
 });

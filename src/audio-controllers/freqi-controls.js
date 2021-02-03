@@ -15,7 +15,6 @@ export function setOscFreqToTuningSys(config, updateAudioOutput) {
     config.osc.freq(freq);
   }
   updateAudioOutput(config);
-  console.log('config', config);
   return config;
 }
 
