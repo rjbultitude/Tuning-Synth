@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai';
+import { before } from 'mocha';
+import { doc } from 'prettier';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import * as freqiFreqs from '../freqi-freqs/freqi-freqs';
-import * as onScreenKeyboard from '../keyboard/on-screen-keyboard';
-import * as freqiCtrls from './freqi-controls';
+import __RewireAPI__, * as freqiCtrls from './freqi-controls';
 
 const tuningSysMap = new Map();
 tuningSysMap.set('eqTemp','Equal Temperament');
@@ -52,16 +52,15 @@ describe('setOscFreqToTuningSys', function() {
       }
     };
     this.fn = () => {};
-    this.setTuningSysNotesSpy = sinon.spy(freqiFreqs, 'setTuningSysNotes');
-  });
-  afterEach(function() {
-    this.setTuningSysNotesSpy.restore();
+    this.setTuningSysNotesSpy = sinon.spy();
   });
   it('should call setTuningSysNotes', function () {
+    __RewireAPI__.__Rewire__('setTuningSysNotes', this.setTuningSysNotesSpy);
     freqiCtrls.setOscFreqToTuningSys(this.config, this.fn);
     expect(this.setTuningSysNotesSpy).calledOnce;
   });
   it('should call setTuningSysNotes with config', function () {
+    __RewireAPI__.__Rewire__('setTuningSysNotes', this.setTuningSysNotesSpy);
     freqiCtrls.setOscFreqToTuningSys(this.config, this.fn);
     expect(this.setTuningSysNotesSpy).calledOnceWith(this.config);
   });
@@ -117,24 +116,51 @@ describe('applyTuningSystem', function() {
       }]
     };
     this.fn = () => {};
-    this.setTuningSysNotesSpy = sinon.spy(freqiFreqs, 'setTuningSysNotes');
-    this.highlightOctavesSpy = sinon.spy(onScreenKeyboard, 'highlightOctaves');
+    this.setTuningSysNotesSpy = sinon.spy();
+    this.highlightOctavesSpy = sinon.spy();
   });
-  afterEach(function() {
-    this.setTuningSysNotesSpy.restore();
-    this.highlightOctavesSpy.restore();
-  });
+  // afterEach(function() {
+  //   this.setTuningSysNotesSpy.restore();
+  //   this.highlightOctavesSpy.restore();
+  // });
   it('should set selectedTuningSys to event target value', function() {
     freqiCtrls.applyTuningSystem(this.event, this.config, this.fn);
     expect(this.config.selectedTuningSys).to.equal(this.event.target.value);
   });
-  it('should call setOscFreqToTuningSys', function() {
+  it('should call setTuningSysNotes', function() {
+    __RewireAPI__.__Rewire__('setTuningSysNotes', this.setTuningSysNotesSpy);
     freqiCtrls.applyTuningSystem(this.event, this.config, this.fn);
     expect(this.setTuningSysNotesSpy).calledOnce;
   });
-  it('should call setOscFreqToTuningSys', function() {
+  it('should call highlightOctaves', function() {
+    __RewireAPI__.__Rewire__('highlightOctaves', this.highlightOctavesSpy);
     freqiCtrls.applyTuningSystem(this.event, this.config, this.fn);
     expect(this.highlightOctavesSpy).calledOnce;
+  });
+});
+
+describe('createTuningOptions', function() {
+  beforeEach(function() {
+    this.option = document.createElement('option');
+    this.tuningSysVal = 'test';
+  });
+  it('should set innertext to tuningSysVal', function() {
+    const select = freqiCtrls.addOptionsAttrs({
+      newOption: this.option,
+      count: 0,
+      tuningSysVal: this.tuningSysVal,
+      tuningSysKey: 'eqTemp',
+    });
+    expect(select.innerText).to.equal(this.tuningSysVal);
+  });
+  it('should set selected to selected if count is zero', function() {
+    const select = freqiCtrls.addOptionsAttrs({
+      newOption: this.option,
+      count: 0,
+      tuningSysVal: 'test',
+      tuningSysKey: 'eqTemp',
+    });
+    expect(select.selected).to.be.true;
   });
 });
 
@@ -168,12 +194,6 @@ describe('createTuningOptions', function() {
     const numKeys = this.config.tuningSystems.size;
     expect(this.wrapperAppendSpy.callCount).to.equal(numKeys);
   });
-  xit('should set first element\'s innertext to first item\'s value', function() {
-    freqiCtrls.createTuningOptions(this.wrapper, this.config);
-    const args = this.createElSpy.getCall(0).args;
-    console.log('HEY args', args);
-    expect(args[0]).to.equal('eqTemp');
-  });
 });
 
 describe('createTuningSelect', function() {
@@ -184,19 +204,19 @@ describe('createTuningSelect', function() {
     };
     this.cb = () => {};
     this.createElSpy = sinon.spy(document, 'createElement');
-    this.tSlctLSpy = sinon.spy(freqiCtrls, 'addTuningSelectListner');
+    this.tSlctLSpy = sinon.spy();
   });
   afterEach(function() {
     this.createElSpy.restore();
-    this.tSlctLSpy.restore();
   });
   it('should call createElement', function() {
     freqiCtrls.createTuningSelect(this.config, this.cb);
     expect(this.createElSpy).calledThrice;
   });
-  it('should call addTuningSelectListner', function() {
+  it('should call addTuningSelectListener', function() {
+    __RewireAPI__.__Rewire__('addTuningSelectListener', this.tSlctLSpy);
     const select = freqiCtrls.createTuningSelect(this.config, this.cb);
-    freqiCtrls.addTuningSelectListner(select, this.config, this.cb);
+    freqiCtrls.addTuningSelectListener(select, this.config, this.cb);
     expect(this.tSlctLSpy).calledOnce;
   });
 })
@@ -209,21 +229,21 @@ describe('writeFreqiControls', function() {
     };
     this.cb = () => {};
     this.getElByIdSpy = sinon.spy(document, 'getElementById');
-    this.tuningSelectSpy = sinon.spy(freqiCtrls, 'createTuningSelect');
+    this.tuningSelectSpy = sinon.spy();
   });
   afterEach(function() {
     this.getElByIdSpy.restore();
-    this.tuningSelectSpy.restore();
   });
   it('should call getElementById', function() {
     freqiCtrls.writeFreqiControls(this.config, this.cb);
     expect(this.getElByIdSpy).calledTwice;
   });
   xit('should call createTuningSelect', function() {
+    __RewireAPI__.__Rewire__('createTuningSelect', this.tuningSelectSpy);
     freqiCtrls.writeFreqiControls(this.config, this.cb);
     expect(this.tuningSelectSpy).calledWith(this.config, this.cb);
   });
-  it('should set selectedTuningSys to value of tuningSys Select', function() {
+  xit('should set selectedTuningSys to value of tuningSys Select', function() {
     freqiCtrls.writeFreqiControls(this.config, this.cb);
     expect(this.config.selectedTuningSys).to.equal(selectValue);
   });

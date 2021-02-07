@@ -29,7 +29,7 @@ export function applyTuningSystem(e, config, updateAudioOutput) {
   highlightOctaves({ config, KEYBOARD_OCT_STYLE });
 }
 
-export function addTuningSelectListner(select, config, updateAudioOutput) {
+export function addTuningSelectListener(select, config, updateAudioOutput) {
   select.addEventListener(
     'input',
     (e) => {
@@ -39,18 +39,28 @@ export function addTuningSelectListner(select, config, updateAudioOutput) {
   );
 }
 
+export function addOptionsAttrs({
+  newOption,
+  count,
+  tuningSysVal,
+  tuningSysKey,
+}) {
+  newOption.setAttribute('id', tuningSysKey);
+  newOption.setAttribute('value', tuningSysKey);
+  newOption.innerText = tuningSysVal;
+  if (count === 0) {
+    newOption.setAttribute('selected', 'selected');
+  }
+  count += 1;
+  return newOption;
+}
+
 export function createTuningOptions(select, config) {
   let count = 0;
   config.tuningSystems.forEach((tuningSysVal, tuningSysKey) => {
     const newOption = document.createElement('option');
-    newOption.setAttribute('id', tuningSysKey);
-    newOption.setAttribute('value', tuningSysKey);
-    newOption.innerText = tuningSysVal;
+    addOptionsAttrs({ newOption, count, tuningSysVal, tuningSysKey });
     select.appendChild(newOption);
-    if (count === 0) {
-      newOption.setAttribute('selected', 'selected');
-    }
-    count += 1;
   });
   return select;
 }
@@ -62,7 +72,7 @@ export function createTuningSelect(config, updateAudioOutput) {
   select.setAttribute('id', 'tuningSystem');
   select.setAttribute('class', 'controls__input');
   createTuningOptions(select, config);
-  addTuningSelectListner(select, config, updateAudioOutput);
+  addTuningSelectListener(select, config, updateAudioOutput);
   return select;
 }
 

@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import { SUSTAIN } from './constants';
 chai.use(sinonChai);
 
-import * as utils from './utils';
+import __RewireAPI__, * as utils from './utils';
 
 describe('getFormInputVal', function() {
   it('should return value prop of el passed in', function() {
@@ -61,11 +61,12 @@ describe('updateAudioOutput', function() {
     this.el = {
       innerText: '',
     };
+    this.updateUISpy = sinon.spy();
   });
-  xit('should call updateUI when playing is false', function() {
-    const spy = sinon.spy(utils, 'updateUI');
+  it('should call updateUI when playing is false', function() {
+    __RewireAPI__.__Rewire__('updateUI', this.updateUISpy);
     utils.updateAudioOutput(this.config);
-    expect(spy).to.have.been.called;
+    expect(this.updateUISpy).to.have.been.called;
   });
 });
 

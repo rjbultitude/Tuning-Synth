@@ -67,11 +67,14 @@ export function setupPlayModeControls(config, playModeControl) {
   return playModeControl;
 }
 
+export function waveControlHandler(event, config) {
+  changeWave(event.target.value, config);
+}
+
 export function setupWaveControls(config, waveControl) {
-  function waveControlHandler(event) {
-    changeWave(event.target.value, config);
-  }
-  waveControl.addEventListener('change', waveControlHandler);
+  waveControl.addEventListener('change', (event) => {
+    waveControlHandler(event, config);
+  });
   return waveControl;
 }
 
