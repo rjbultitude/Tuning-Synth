@@ -228,6 +228,8 @@ describe('writeFreqiControls', function() {
     this.cb = () => {};
     this.getElByIdSpy = sinon.spy(document, 'getElementById');
     this.tuningSelectSpy = sinon.spy();
+    this.select = document.createElement('select');
+    this.tuningSelectStub = sinon.stub(freqiCtrls, 'createTuningSelect').returns(this.select);
   });
   afterEach(function() {
     this.getElByIdSpy.restore();
@@ -236,12 +238,12 @@ describe('writeFreqiControls', function() {
     freqiCtrls.writeFreqiControls(this.config, this.cb);
     expect(this.getElByIdSpy).calledTwice;
   });
-  xit('should call createTuningSelect', function() {
-    __RewireAPI__.__Rewire__('createTuningSelect', this.tuningSelectSpy);
+  it('should call createTuningSelect', function() {
+    __RewireAPI__.__Rewire__('createTuningSelect', this.tuningSelectStub);
     freqiCtrls.writeFreqiControls(this.config, this.cb);
-    expect(this.tuningSelectSpy).calledWith(this.config, this.cb);
+    expect(this.tuningSelectStub).called;
   });
-  xit('should set selectedTuningSys to value of tuningSys Select', function() {
+  it('should set selectedTuningSys to value of tuningSys Select', function() {
     freqiCtrls.writeFreqiControls(this.config, this.cb);
     expect(this.config.selectedTuningSys).to.equal(selectValue);
   });
