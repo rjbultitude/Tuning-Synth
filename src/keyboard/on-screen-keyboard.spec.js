@@ -167,3 +167,23 @@ describe('setBtnAttrs', function() {
     expect(el.id).to.equal(`key_${this.num}`);
   });
 });
+
+describe('addBtnListeners', function() {
+  beforeEach(function() {
+    const button = document.createElement('button');
+    this.args = {
+      keyButton: button,
+      config: {},
+      index: 0,
+      updateAudioOutput: () => {},
+    };
+    this.addListenerSpy = sinon.spy(button, 'addEventListener');
+  });
+  afterEach(function() {
+    this.addListenerSpy.restore();
+  });
+  it('should call addEventListener on keyButton arg', function() {
+    onScreenKB.addBtnListeners(this.args);
+    expect(this.addListenerSpy).to.have.been.called;
+  });
+});
