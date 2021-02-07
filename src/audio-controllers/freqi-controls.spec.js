@@ -1,6 +1,4 @@
 import chai, { expect } from 'chai';
-import { before } from 'mocha';
-import { doc } from 'prettier';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
