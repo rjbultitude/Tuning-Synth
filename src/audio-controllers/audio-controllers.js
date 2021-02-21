@@ -1,4 +1,5 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
+import { WAVE_TYPE_VOLS } from '../utils/constants';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -28,7 +29,7 @@ export function getVolForWaveType(waveTypeStr) {
 
 export function changeWave(waveTypeStr, config) {
   if (config.osc.started) {
-    const oscVolume = getVolForWaveType(waveTypeStr);
+    const oscVolume = WAVE_TYPE_VOLS.get(waveTypeStr);
     config.osc.amp(oscVolume);
   }
   config.osc.setType(waveTypeStr);
@@ -67,8 +68,8 @@ export function setupPlayModeControls(config, playModeControl) {
   return playModeControl;
 }
 
-export function waveControlHandler(event, config) {
-  changeWave(event.target.value, config);
+export function waveControlHandler(event, config, _changeWave = changeWave) {
+  _changeWave(event.target.value, config);
 }
 
 export function setupWaveControls(config, waveControl) {

@@ -1,10 +1,11 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { SUSTAIN } from './constants';
 chai.use(sinonChai);
 
-import __RewireAPI__, * as utils from './utils';
+import { SUSTAIN } from './constants';
+import { utils } from './utils';
+import { SINE, SAWTOOTH } from './constants';
 
 describe('getFormInputVal', function() {
   it('should return value prop of el passed in', function() {
@@ -61,10 +62,9 @@ describe('updateAudioOutput', function() {
     this.el = {
       innerText: '',
     };
-    this.updateUISpy = sinon.spy();
+    this.updateUISpy = sinon.stub(utils, 'updateUI');
   });
   it('should call updateUI when playing is false', function() {
-    __RewireAPI__.__Rewire__('updateUI', this.updateUISpy);
     utils.updateAudioOutput(this.config);
     expect(this.updateUISpy).to.have.been.called;
   });
@@ -90,14 +90,14 @@ describe('getDefaultIntervals', function () {
 describe('getInitialSelectVal', function () {
   this.beforeEach(function () {
     this.el = {
-      value: 'sawtooth'
+      value: SAWTOOTH
     };
   });
   it('should return "sine" when default argument is "sine" but no el is passed', function () {
-    expect(utils.getInitialSelectVal(null, 'sine')).to.equal('sine');
+    expect(utils.getInitialSelectVal(null, SINE)).to.equal(SINE);
   });
   it('should return el.value when el argument is passed', function () {
-    expect(utils.getInitialSelectVal(this.el)).to.equal('sawtooth');
+    expect(utils.getInitialSelectVal(this.el)).to.equal(SAWTOOTH);
   });
 });
 

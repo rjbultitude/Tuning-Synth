@@ -1,7 +1,7 @@
 {
   "name": "tuning-sys-vis",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tuning systems visualizer",
   "main": "./server/index.js",
   "scripts": {
     "start": "npm run build:devserver",
@@ -28,7 +28,6 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/register": "^7.9.0",
     "babel-eslint": "^10.0.3",
-    "babel-plugin-rewire": "^1.2.0",
     "browserslist": "^4.12.0",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",

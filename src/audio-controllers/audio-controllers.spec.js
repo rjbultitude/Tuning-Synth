@@ -3,8 +3,9 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import __RewireAPI__, * as audioControls from './audio-controllers.js';
+import * as audioControls from './audio-controllers.js';
 import * as freqiCtrls from './freqi-controls';
+import { SINE } from '../utils/constants';
 
 describe('createTuningSystems', function() {
   beforeEach(function() {
@@ -29,24 +30,6 @@ describe('createTuningSystems', function() {
   });
 });
 
-describe('getVolForWaveType', function() {
-  it('should return a number even if no argument is passed', function() {
-    expect(audioControls.getVolForWaveType()).to.be.a('number');
-  });
-  it('should return 0.08 if argument is sawtooth', function() {
-    expect(audioControls.getVolForWaveType('sawtooth')).to.equal(0.08);
-  });
-  it('should return 0.75 if argument is sine', function() {
-    expect(audioControls.getVolForWaveType('sine')).to.equal(0.75);
-  });
-  it('should return 0.35 if argument is triangle', function() {
-    expect(audioControls.getVolForWaveType('triangle')).to.equal(0.35);
-  });
-  it('should return 0.03 if argument is square', function() {
-    expect(audioControls.getVolForWaveType('square')).to.equal(0.03);
-  });
-});
-
 describe('changeWave', function () {
   this.beforeEach(function () {
     this.config = {
@@ -66,7 +49,6 @@ describe('changeWave', function () {
     };
     this.setTypeSpy = sinon.spy(this.config.osc, 'setType');
     this.ampSpy = sinon.spy(this.config.osc, 'amp');
-    this.getVolForWaveTypeSpy = sinon.spy();
   });
   afterEach(function() {
     this.setTypeSpy.restore();
@@ -82,11 +64,6 @@ describe('changeWave', function () {
   it('should call the amp method when osc started is true', function () {
     audioControls.changeWave('sawtooth', this.config);
     expect(this.ampSpy).calledOnce;
-  });
-  it('should call getVolForWaveType', function() {
-    __RewireAPI__.__Rewire__('getVolForWaveType', this.getVolForWaveTypeSpy);
-    audioControls.changeWave('sawtooth', this.config);
-    expect(this.getVolForWaveTypeSpy).calledOnce;
   });
 });
 
@@ -210,14 +187,13 @@ describe('waveControlHandler', function() {
     };
     this.waveControlEvent = {
       target: {
-        value: 'sine'
+        value: SINE
       }
     };
-    this.changeWaveSpy = sinon.spy();
+    this.changeWaveSpy = sinon.spy(audioControls, 'changeWave');
   });
   it('should call changeWave', function() {
-    __RewireAPI__.__Rewire__('changeWave', this.changeWaveSpy);
-    audioControls.waveControlHandler(this.waveControlEvent, this.config);
+    audioControls.waveControlHandler(this.waveControlEvent, this.config, this.changeWaveSpy);
     expect(this.changeWaveSpy).calledOnce;
   });
 });
@@ -267,7 +243,10 @@ describe('pitchCrlCallBack', function() {
       }
     };
     this.fn = () => {};
-    this.setOscFreqToTuningSysSpy = sinon.spy();
+    this.setOscFreqToTuningSysSpy = sinon.spy(freqiCtrls, 'setOscFreqToTuningSys');
+  });
+  afterEach(function() {
+    this.setOscFreqToTuningSysSpy.restore();
   });
   it('should set config startFreq to selected value', function () {
     audioControls.pitchCrlCallBack(this.pitchCrlEventNumber, this.config, this.fn);
@@ -278,7 +257,6 @@ describe('pitchCrlCallBack', function() {
     expect(this.config.startFreq).to.be.a('number');
   });
   it('should call setOscFreqToTuningSys', function () {
-    __RewireAPI__.__Rewire__('setOscFreqToTuningSys', this.setOscFreqToTuningSysSpy);
     audioControls.pitchCrlCallBack(this.pitchCrlEvent, this.config, this.fn);
     expect(this.setOscFreqToTuningSysSpy).calledOnce;
   });

@@ -7,6 +7,11 @@ export const TRIANGLE = 'triangle';
 export const STATUS_STOPPED = 'status-stopped';
 export const FREQ_UNIT = 'Hz';
 export const KEYBOARD_OCT_STYLE = 'inset 0 0 4px #fff';
+export const WAVE_TYPE_VOLS = new Map();
+WAVE_TYPE_VOLS.set(SINE, 0.75);
+WAVE_TYPE_VOLS.set(SAWTOOTH, 0.08);
+WAVE_TYPE_VOLS.set(SQUARE, 0.03);
+WAVE_TYPE_VOLS.set(TRIANGLE, 0.35);
 export const THEME_RGB = {
   low: 50,
   mid: 80,

@@ -77,11 +77,13 @@ export function createTuningSelect(config, updateAudioOutput) {
 }
 
 // entry point
-export function writeFreqiControls(config, updateAudioOutput) {
+export function writeFreqiControls(
+  config,
+  updateAudioOutput,
+  _createTuningSelect = createTuningSelect
+) {
   const container = document.getElementById('freqiControls');
-  const select = createTuningSelect(config, updateAudioOutput);
-  console.log('select', select);
-  console.log('typeof select', typeof select);
+  const select = _createTuningSelect(config, updateAudioOutput);
   container.insertBefore(select, null);
   const selectDOM = document.getElementById('tuningSystem');
   config.selectedTuningSys = selectDOM.options[selectDOM.selectedIndex].value;

@@ -110,18 +110,27 @@ describe('playAndShowNote', function() {
     };
     this.index = 1;
     this.updateCB = sinon.spy();
-    this.playCB = sinon.spy();
+    this.playCB = sinon.stub();
   });
-  // afterEach(function() {
-  //   this.updateCB.restore();
-  //   this.playCB.restore();
-  // });
+  afterEach(function() {
+    // this.playCB.restore();
+  });
   it('should set config playing to true', function() {
-    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    onScreenKB.playAndShowNote({
+      config: this.config,
+      index: this.index,
+      updateAudioOutput: this.updateCB,
+      playCurrentNote: this.playCB
+    });
     expect(this.config.playing).to.be.true;
   });
   it('should call the updateAudioOutput callback', function() {
-    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    onScreenKB.playAndShowNote({
+      config: this.config,
+      index: this.index,
+      updateAudioOutput: this.updateCB,
+      playCurrentNote: this.playCB
+    });
     expect(this.updateCB).to.have.been.called;
   });
   it('should set config selectedInterval to index', function() {
@@ -129,7 +138,12 @@ describe('playAndShowNote', function() {
     expect(this.config.selectedInterval).to.equal(this.index);
   });
   it('should have called playCurrentNote', function() {
-    onScreenKB.playAndShowNote({ config: this.config, index: this.index, updateAudioOutput: this.updateCB, playCurrentNote: this.playCB });
+    onScreenKB.playAndShowNote({
+      config: this.config,
+      index: this.index,
+      updateAudioOutput: this.updateCB,
+      playCurrentNote: this.playCB
+    });
     expect(this.playCB).to.have.been.called;
   });
 });
