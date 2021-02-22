@@ -12,21 +12,6 @@ export function createTuningSystems(config) {
   return config;
 }
 
-export function getVolForWaveType(waveTypeStr) {
-  switch (waveTypeStr) {
-    case 'sawtooth':
-      return 0.08;
-    case 'sine':
-      return 0.75;
-    case 'triangle':
-      return 0.35;
-    case 'square':
-      return 0.03;
-    default:
-      return 0.5;
-  }
-}
-
 export function changeWave(waveTypeStr, config) {
   if (config.osc.started) {
     const oscVolume = WAVE_TYPE_VOLS.get(waveTypeStr);
