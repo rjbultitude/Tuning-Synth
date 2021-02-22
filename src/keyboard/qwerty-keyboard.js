@@ -22,7 +22,7 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
   }
 }
 
-export function qwertyKeyupCB({ e, config }) {
+export function qwertyKeyupCB({ e, config, updateAudioOutput }) {
   if ((QWERTY.includes(e.key) && config.playMode === ONESHOT) || isEsc(e.key)) {
     stopAndHideNote({ config, updateAudioOutput });
   }
@@ -37,6 +37,6 @@ export function setQwertyEvents(config, updateAudioOutput) {
     false
   );
   document.addEventListener('keyup', (e) => {
-    qwertyKeyupCB({ e, config });
+    qwertyKeyupCB({ e, config, updateAudioOutput });
   });
 }

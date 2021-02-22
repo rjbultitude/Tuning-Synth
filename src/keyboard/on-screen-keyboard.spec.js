@@ -112,15 +112,11 @@ describe('playAndShowNote', function() {
     this.updateCB = sinon.spy();
     this.playCB = sinon.stub();
   });
-  afterEach(function() {
-    // this.playCB.restore();
-  });
   it('should set config playing to true', function() {
     onScreenKB.playAndShowNote({
       config: this.config,
       index: this.index,
-      updateAudioOutput: this.updateCB,
-      playCurrentNote: this.playCB
+      updateAudioOutput: this.updateCB
     });
     expect(this.config.playing).to.be.true;
   });
@@ -128,8 +124,7 @@ describe('playAndShowNote', function() {
     onScreenKB.playAndShowNote({
       config: this.config,
       index: this.index,
-      updateAudioOutput: this.updateCB,
-      playCurrentNote: this.playCB
+      updateAudioOutput: this.updateCB
     });
     expect(this.updateCB).to.have.been.called;
   });
@@ -139,11 +134,12 @@ describe('playAndShowNote', function() {
   });
   it('should have called playCurrentNote', function() {
     onScreenKB.playAndShowNote({
-      config: this.config,
-      index: this.index,
-      updateAudioOutput: this.updateCB,
-      playCurrentNote: this.playCB
-    });
+        config: this.config,
+        index: this.index,
+        updateAudioOutput: this.updateCB
+      },
+      this.playCB
+    );
     expect(this.playCB).to.have.been.called;
   });
 });

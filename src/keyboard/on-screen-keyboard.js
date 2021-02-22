@@ -32,18 +32,16 @@ export function stopAndHideNote({ config, updateAudioOutput }) {
   stopCurrentNote(config);
 }
 
-export function playAndShowNote({
-  config,
-  index,
-  updateAudioOutput,
-  playCurrentNote,
-}) {
+export function playAndShowNote(
+  { config, index, updateAudioOutput },
+  _playCurrentNote = playCurrentNote
+) {
   const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
   config.playing = true;
   config.currentFreq = currFreq;
   config.selectedInterval = index;
   updateAudioOutput(config);
-  playCurrentNote({ config, freq: currFreq });
+  _playCurrentNote({ config, freq: currFreq });
   return config;
 }
 
