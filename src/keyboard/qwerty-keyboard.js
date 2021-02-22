@@ -7,16 +7,13 @@ export function isEsc(key) {
   }
 }
 
-export function qwertyKeydownCB(
-  { e, config, updateAudioOutput },
-  _playAndShowNote = playAndShowNote
-) {
+export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
   if (config.playing && config.playMode === ONESHOT) {
     return false;
   }
   if (QWERTY.includes(e.key)) {
     const currentKeyindex = QWERTY.indexOf(e.key);
-    _playAndShowNote({
+    playAndShowNote({
       config,
       index: currentKeyindex,
       updateAudioOutput,
