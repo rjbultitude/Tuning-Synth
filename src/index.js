@@ -11,6 +11,7 @@ import {
   setupPitchControls,
 } from './audio-controllers/audio-controllers';
 import {
+  setupShapeControls,
   setUpGrainControl,
   drawFreqs,
   updateZoomUI,
@@ -43,11 +44,13 @@ import {
   SINE,
   KEYBOARD_OCT_STYLE,
   STATUS_STOPPED,
+  SHAPES,
 } from './utils/constants';
 const {
   pageWrapper,
   visualControls,
   gridControl,
+  shapeControl,
   grainControl,
   grainTextNode,
   playModeControl,
@@ -80,6 +83,7 @@ const sketchFn = (p5Sketch) => {
       upper: 12,
     },
     grainSize: grainSizeVal,
+    shape: SHAPES.RECT,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
     displaySize: {
@@ -143,6 +147,8 @@ const sketchFn = (p5Sketch) => {
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
     updateBody(config.playing, STATUS_STOPPED);
+    // Shape
+    setupShapeControls(config, shapeControl);
     // Grid
     getGridLinesPosArr(config);
     setupGridControl(config, gridControl);

@@ -1,5 +1,16 @@
 import { updateUI } from '../utils/utils';
-import { THEME_RGB } from '../utils/constants';
+import { THEME_RGB, SHAPES } from '../utils/constants';
+
+export function setupShapeControls(config, shapeControl) {
+  shapeControl.addEventListener(
+    'change',
+    function () {
+      config.shape = this.value;
+    },
+    false
+  );
+  return shapeControl;
+}
 
 export function setUpGrainControl(config, grainControl, grainTextNode) {
   grainControl.addEventListener(
@@ -32,6 +43,20 @@ export function updateZoomUI(config, sliderVals, sliderTextNode) {
   return config;
 }
 
+export function drawShape({ p5Sketch, config, x, y }) {
+  const w = p5Sketch.width / (config.numFreqBands / 4);
+  switch (config.shape) {
+    case SHAPES.ELLIPSE:
+      p5Sketch.ellipse(x, y, config.grainSize);
+      break;
+    case SHAPES.RECT:
+      p5Sketch.rect(x, y, config.grainSize, 6);
+      break;
+    default:
+      p5Sketch.ellipse(x, y, config.grainSize);
+  }
+}
+
 export function drawFreqs(p5Sketch, config) {
   p5Sketch.noStroke();
   for (let i = 0; i < config.spectrum.length; i++) {
@@ -58,7 +83,7 @@ export function drawFreqs(p5Sketch, config) {
       0
     );
     p5Sketch.fill(r, THEME_RGB.mid, b);
-    p5Sketch.ellipse(x, y, config.grainSize);
+    drawShape({ p5Sketch, config, x, y });
   }
   return p5Sketch;
 }

@@ -170,7 +170,8 @@ p {
 }
 
 .visual-controls {
-  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #4f4f4f;
+  color: white;
   padding: var(--spacing);
   position: absolute;
   top: var(--triple-space);
@@ -301,12 +302,17 @@ p {
   outline: 5px auto -webkit-focus-ring-color;
 }
 
+.range__input-wrapper .controls__select-wrapper,
+.range__input-wrapper .controls__toggle-wrapper {
+  flex-basis: 50%;
+}
+
 .controls__toggle-wrapper {
   background-color: #363434;
   border-radius: 3px;
-  width: var(--toggle-label-width);
   height: calc(var(--slider-height) + 2px);
   position: relative;
+  width: var(--toggle-label-width);
 }
 
 .controls__toggle-input {

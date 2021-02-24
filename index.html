@@ -77,13 +77,17 @@
           <p class="range__value" id="rangeValueText">0</p>
           <label for="freqRangeHigh" class="controls__label">Range High</label>
         </div>
-        <div class="range-wrapper grid__controls">
-          <h3 for="showGrid" class="controls__label">Grid</h3>
-          <div class="range__input-wrapper">
-            <div class="controls__toggle-wrapper">
-              <input type="checkbox" class="controls__toggle-input" name="showGrid" id="showGrid" />
-              <label for="showGrid" class="controls__toggle-label"><span class="label__text">Show grid</span></label>
-            </div>
+        <div class="range-wrapper">
+          <div class="controls__select-wrapper">
+            <label for="shapeType" class="controls__label">Shape</label>
+            <select class="controls__input" name="shapeType" id="shapeType">
+              <option value="ellipse" selected>Circle</option>
+              <option value="rect" selected>Rectange</option>
+            </select>
+          </div>
+          <div class="controls__toggle-wrapper grid__controls">
+            <input type="checkbox" class="controls__toggle-input" name="showGrid" id="showGrid" />
+            <label for="showGrid" class="controls__toggle-label"><span class="label__text">Show grid</span></label>
           </div>
         </div>
       </form>
