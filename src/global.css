@@ -14,6 +14,7 @@
   --colour-blue: rgba(50, 80, 255, 1);
   --colour-red: rgba(255, 80, 50, 1);
   --axis-size: 10px;
+  --article-inst-width: 18rem;
 }
 
 main,
@@ -89,17 +90,25 @@ p {
 
 .status-stopped .article--instructions {
   padding: calc(var(--spacing) * 2);
-  left: 0;
+  left: calc(50% - (var(--article-inst-width) / 2));
 }
 
 .article--instructions {
+  align-items: center;
+  background-color: black;
+  border: 1px white solid;
+  border-radius: 50%;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
   left: -999em;
-  top: 35%;
+  top: calc(50% - (var(--article-inst-width) / 2));
   text-align: center;
-  width: 100%;
-  z-index: 3;
+  width: var(--article-inst-width);
+  height: var(--article-inst-width);
+  z-index: 1;
 }
 
 .article--instructions .article__heading {
@@ -172,12 +181,18 @@ p {
 .visual-controls {
   border: 1px solid #4f4f4f;
   color: white;
-  padding: var(--spacing);
+  padding: 0 var(--spacing);
   position: absolute;
   top: var(--triple-space);
   right: calc(var(--spacing) * 2);
   width: 360px;
   z-index: 1;
+}
+
+.visual-controls .controls__select-input {
+  background-color: black;
+  color: white;
+  flex-basis: 50%;
 }
 
 .form__heading {
@@ -257,6 +272,7 @@ p {
   display: flex;
   flex-basis: 100%;
   justify-content: flex-start;
+  padding: 0.2rem 0;
 }
 
 .range__input-wrapper {
@@ -494,9 +510,16 @@ p {
 
   .visual-controls {
     background-color: transparent;
+    border: 0 none;
+    color: black;
     padding: calc(var(--spacing) * 2) 0;
     position: static;
     width: auto;
+  }
+
+  .visual-controls .controls__select-input {
+    background-color: white;
+    color: currentcolor;
   }
 
   .audio-controls .fieldset {

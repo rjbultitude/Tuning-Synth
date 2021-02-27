@@ -18,8 +18,8 @@
       <div id="wrapper" class="video-wrapper">
         <article class="article--instructions">
           <h2 class="article__heading">Instructions</h2>
-          <p>Tap this visualiser to start/stop</p>
-          <p>Use the in-page keyboard to play a note or your QWERTY one</p>
+          <p>Tap here to start/stop</p>
+          <p>Use the keyboard below to play a note or your QWERTY one</p>
         </article>
         <div class="visualiser__y-axis">
           <p class="visualiser__y-axis__start-val">0</p>
@@ -78,13 +78,14 @@
           <label for="freqRangeHigh" class="controls__label">Range High</label>
         </div>
         <div class="range-wrapper">
-          <div class="controls__select-wrapper">
-            <label for="shapeType" class="controls__label">Shape</label>
-            <select class="controls__input" name="shapeType" id="shapeType">
-              <option value="ellipse" selected>Circle</option>
-              <option value="rect" selected>Rectange</option>
-            </select>
-          </div>
+          <label for="shapeType" class="controls__label">Shape</label>
+          <select class="controls__select-input" name="shapeType" id="shapeType">
+            <option value="ellipse" selected>Circle</option>
+            <option value="rect" selected>Rectange</option>
+          </select>
+        </div>
+        <div class="range-wrapper">
+          <h3 class="controls__label">Show grid</h3>
           <div class="controls__toggle-wrapper grid__controls">
             <input type="checkbox" class="controls__toggle-input" name="showGrid" id="showGrid" />
             <label for="showGrid" class="controls__toggle-label"><span class="label__text">Show grid</span></label>
