@@ -11,9 +11,11 @@ import {
   setupPitchControls,
 } from './audio-controllers/audio-controllers';
 import {
+  createIdleStateArr,
   setupShapeControls,
   setUpGrainControl,
   drawFreqs,
+  drawIdleState,
   updateZoomUI,
   setSpectrum,
 } from './visual-controllers/visual-controllers';
@@ -91,6 +93,7 @@ const sketchFn = (p5Sketch) => {
       height: 1080,
     },
     spectrum: [],
+    idleStateArr: [],
     sliders: {
       one: 0,
       two: fftResolution,
@@ -125,6 +128,7 @@ const sketchFn = (p5Sketch) => {
     cnv.mouseClicked(function () {
       togglePlay({ config, p5Sketch, updateAudioOutput });
     });
+    createIdleStateArr(config);
     setupWaveControls(config, waveControl);
     setupPlayModeControls(config, playModeControl);
     // Pitch / Root note / start freq
@@ -157,8 +161,12 @@ const sketchFn = (p5Sketch) => {
 
   p5Sketch.draw = function draw() {
     p5Sketch.background(0, 0, 0);
-    setSpectrum(config);
-    drawFreqs(p5Sketch, config);
+    if (config.playing) {
+      setSpectrum(config);
+      drawFreqs(p5Sketch, config);
+    } else {
+      drawIdleState(p5Sketch, config);
+    }
     p5Sketch.stroke(255);
     drawGrid(config, p5Sketch);
   };
