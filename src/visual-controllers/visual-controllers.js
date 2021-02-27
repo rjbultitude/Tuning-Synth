@@ -86,7 +86,7 @@ export function getYPos(p5Sketch, spectrum, i) {
 }
 
 export function getIdleStateYPos(p5Sketch, spectrum, i) {
-  return p5Sketch.map(spectrum[i], 0, 1000, p5Sketch.height, 0);
+  return p5Sketch.map(spectrum[i], 0, 800, p5Sketch.height / 2, 0);
 }
 
 export function updateIdleYPos(p5Sketch, config, inc, i) {
@@ -97,8 +97,9 @@ export function updateIdleYPos(p5Sketch, config, inc, i) {
 
 export function drawIdleState(p5Sketch, config) {
   p5Sketch.noStroke();
-  let inc = p5Sketch.frameCount / 30;
+  let inc = 0.2;
   for (let i = 0; i < config.idleStateArr.length; i++) {
+    inc += p5Sketch.frameCount / 100;
     let r = getRed(p5Sketch, config.idleStateArr, i);
     let b = getBlue(p5Sketch, config.idleStateArr, i);
     let x = getXPos(p5Sketch, config.idleStateArr, i);
