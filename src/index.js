@@ -101,6 +101,8 @@ const sketchFn = (p5Sketch) => {
     },
     keyboardButtons: null,
     keyBoardButtonStyles: [],
+    currKeyboardButton: null,
+    prevKeyboardButton: null,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,

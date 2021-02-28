@@ -29,8 +29,6 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
 
 export function qwertyKeyupCB({ e, config, updateAudioOutput }) {
   const currentKeyindex = QWERTY.indexOf(e.key);
-  // if (QWERTY.includes(e.key)) {
-  // }
   if ((QWERTY.includes(e.key) && config.playMode === ONESHOT) || isEsc(e.key)) {
     highlightNote(config, currentKeyindex, true);
     stopAndHideNote({ config, updateAudioOutput });

@@ -45,11 +45,16 @@ export function highlightNote(config, currentKeyindex, noteOff) {
   config.keyboardButtons.forEach((item) => {
     const keyID = getKeyIDNum(item);
     const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
+    if (keyID === config.prevKeyboardButton) {
+      item.style.cssText = keyStyle;
+    }
     if (keyID === currKeyIndexOffset) {
       if (noteOff) {
         item.style.cssText = keyStyle;
       } else {
         item.style.backgroundColor = 'white';
+        config.currKeyboardButton = keyID;
+        config.prevKeyboardButton = config.currKeyboardButton;
       }
     }
   });
