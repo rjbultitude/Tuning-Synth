@@ -100,6 +100,7 @@ const sketchFn = (p5Sketch) => {
       two: fftResolution,
     },
     keyboardButtons: null,
+    keyBoardButtonStyles: [],
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,

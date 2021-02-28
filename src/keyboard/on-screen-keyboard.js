@@ -40,16 +40,17 @@ export function getCurrKeyIndexOffset(config, currentKeyindex) {
   return currentKeyindex + config.intervalsRange.lower;
 }
 
-export function highlightNote(config, currentKeyindex) {
+export function highlightNote(config, currentKeyindex, noteOff) {
   const currKeyIndexOffset = getCurrKeyIndexOffset(config, currentKeyindex);
   config.keyboardButtons.forEach((item) => {
     const keyID = getKeyIDNum(item);
+    const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
     if (keyID === currKeyIndexOffset) {
-      item.style.backgroundColor = 'white';
-    } else {
-      // TODO
-      // Get correct style from an array
-      item.style.backgroundColor = 'black';
+      if (noteOff) {
+        item.style.cssText = keyStyle;
+      } else {
+        item.style.backgroundColor = 'white';
+      }
     }
   });
 }
@@ -165,6 +166,20 @@ export function addBtnListeners({
   return keyButton;
 }
 
+export function setKbdBtnStyles({
+  p5Sketch,
+  config,
+  keyButton,
+  defaultIntervals,
+  index,
+}) {
+  const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
+  const btnStyle = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
+  config.keyBoardButtonStyles[index] = btnStyle;
+  keyButton.style.cssText = btnStyle;
+  return keyButton;
+}
+
 export function createEachKbdBn({
   num,
   index,
@@ -175,8 +190,7 @@ export function createEachKbdBn({
   p5Sketch,
   updateAudioOutput,
 }) {
-  const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
-  keyButton.style.cssText = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
+  setKbdBtnStyles({ p5Sketch, config, keyButton, defaultIntervals, index });
   setBtnAttrs({ keyButton, num });
   addBtnListeners({ keyButton, config, index, updateAudioOutput });
   keyboardWrapper.appendChild(keyButton);
