@@ -36,25 +36,34 @@ export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   });
 }
 
-export function getCurrKeyIndexOffset(config, currentKeyindex) {
-  return currentKeyindex + config.intervalsRange.lower;
+export function getKeyIDFromIndex(config, index) {
+  return index + config.intervalsRange.lower;
+}
+
+export function getIndexFromKeyID(config, keyID) {
+  return keyID + Math.abs(config.intervalsRange.lower);
 }
 
 export function highlightNote(config, currentKeyindex, noteOff) {
-  const currKeyIndexOffset = getCurrKeyIndexOffset(config, currentKeyindex);
+  const currKeyID = getKeyIDFromIndex(config, currentKeyindex);
   config.keyboardButtons.forEach((item) => {
     const keyID = getKeyIDNum(item);
+    const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
     const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
-    if (keyID === config.prevKeyboardButton) {
-      item.style.cssText = keyStyle;
+    const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
+    if (keyID === config.prevKbdBtnID) {
+      console.log('Change this keyID back', keyID);
+      item.style.cssText = prevKeyStyle;
     }
-    if (keyID === currKeyIndexOffset) {
+    if (keyID === currKeyID) {
       if (noteOff) {
         item.style.cssText = keyStyle;
       } else {
         item.style.backgroundColor = 'white';
-        config.currKeyboardButton = keyID;
-        config.prevKeyboardButton = config.currKeyboardButton;
+        config.prevKbdBtnID = config.currKbdBtnID || keyID;
+        config.currKbdBtnID = keyID;
+        console.log('currKbdBtnID', config.currKbdBtnID);
+        console.log('prevKbdBtnID', config.prevKbdBtnID);
       }
     }
   });
