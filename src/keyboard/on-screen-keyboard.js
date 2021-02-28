@@ -60,7 +60,8 @@ export function highlightNote(config, currentKeyindex, noteOff) {
         item.style.cssText = keyStyle;
       } else {
         item.style.backgroundColor = 'white';
-        config.prevKbdBtnID = config.currKbdBtnID || keyID;
+        config.prevKbdBtnID =
+          config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
         config.currKbdBtnID = keyID;
         console.log('currKbdBtnID', config.currKbdBtnID);
         console.log('prevKbdBtnID', config.prevKbdBtnID);
