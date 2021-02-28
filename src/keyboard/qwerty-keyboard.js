@@ -1,5 +1,9 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
-import { playAndShowNote, stopAndHideNote } from './on-screen-keyboard';
+import {
+  playAndShowNote,
+  stopAndHideNote,
+  highlightNote,
+} from './on-screen-keyboard';
 
 export function isEsc(key) {
   if (key === 'Escape' || key === 'Esc' || key === 27) {
@@ -18,6 +22,7 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
       index: currentKeyindex,
       updateAudioOutput,
     });
+    highlightNote(config, currentKeyindex);
     return true;
   }
 }

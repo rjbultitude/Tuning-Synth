@@ -10,18 +10,46 @@ export function stopCurrentNote(config) {
   config.osc.stop();
 }
 
+export function getKeyIDNum(item) {
+  const keyID = item.id.split('_')[1];
+  const keyIDNum = parseInt(keyID);
+  return keyIDNum;
+}
+
+export function getKeyIDNumAbs(item) {
+  const keyIDNum = getKeyIDNum(item);
+  const keyIDAbs = Math.abs(keyIDNum);
+  return keyIDAbs;
+}
+
 export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   const selectedTuningSysMeta =
     config.freqiTuningSysMeta[config.selectedTuningSys];
   const octave = selectedTuningSysMeta.intervalsInOctave;
   config.keyboardButtons.forEach((item) => {
-    const keyID = item.id.split('_')[1];
-    const keyIDNum = parseInt(keyID);
-    const keyIDAbs = Math.abs(keyIDNum);
+    const keyIDAbs = getKeyIDNumAbs(item);
     if (keyIDAbs === octave) {
       item.style.boxShadow = KEYBOARD_OCT_STYLE;
     } else {
       item.style.boxShadow = 'none';
+    }
+  });
+}
+
+export function getCurrKeyIndexOffset(config, currentKeyindex) {
+  return currentKeyindex + config.intervalsRange.lower;
+}
+
+export function highlightNote(config, currentKeyindex) {
+  const currKeyIndexOffset = getCurrKeyIndexOffset(config, currentKeyindex);
+  config.keyboardButtons.forEach((item) => {
+    const keyID = getKeyIDNum(item);
+    if (keyID === currKeyIndexOffset) {
+      item.style.backgroundColor = 'white';
+    } else {
+      // TODO
+      // Get correct style from an array
+      item.style.backgroundColor = 'black';
     }
   });
 }
