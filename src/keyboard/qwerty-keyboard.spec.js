@@ -44,6 +44,11 @@ describe('qwertyKeydownCB', function() {
       config: {
         playing: false,
         playMode: ONESHOT,
+        intervalsRange: {
+          lower: -12,
+          upper: 12,
+        },
+        keyboardButtons: [],
         tuningSysNotes: {
           'eqTemp': [220]
         },
