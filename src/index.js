@@ -12,6 +12,7 @@ import {
 } from './audio-controllers/audio-controllers';
 import {
   createIdleStateArr,
+  resetIdleStateArray,
   setupShapeControls,
   setUpGrainControl,
   drawFreqs,
@@ -67,14 +68,13 @@ const sliderVals = {
   sliderHigh: getFormInputVal(sliders.spectrumControlHigh),
 };
 const grainSizeVal = getFormInputVal(grainControl);
-// TODO why is this declared?
-const rootNoteVal = getFormInputVal(pitchControl);
 
 const sketchFn = (p5Sketch) => {
   const fftResolution = 1024;
   // TODO Needs type definitions
   const config = {
     playing: false,
+    counter: 0,
     fft: null,
     osc: null,
     startFreq: 440,
@@ -85,7 +85,8 @@ const sketchFn = (p5Sketch) => {
       upper: 12,
     },
     grainSize: grainSizeVal,
-    shape: SHAPES.RECT,
+    radian: 0.2,
+    shape: SHAPES.ELLIPSE,
     numFreqBands: fftResolution,
     mouseInCanvas: false,
     displaySize: {
@@ -120,6 +121,7 @@ const sketchFn = (p5Sketch) => {
   };
 
   p5Sketch.setup = function setup() {
+    // p5Sketch.frameRate(1);
     const cnv = p5Sketch.createCanvas(
       config.displaySize.width,
       config.displaySize.height
@@ -164,8 +166,12 @@ const sketchFn = (p5Sketch) => {
     if (config.playing) {
       setSpectrum(config);
       drawFreqs(p5Sketch, config);
+      // Reset the Idlestate
+      resetIdleStateArray(config);
+      config.counter = 0;
     } else {
       drawIdleState(p5Sketch, config);
+      config.counter += 1;
     }
     p5Sketch.stroke(255);
     drawGrid(config, p5Sketch);

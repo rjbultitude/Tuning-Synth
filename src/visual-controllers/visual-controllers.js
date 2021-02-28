@@ -34,6 +34,13 @@ export function createIdleStateArr(config) {
   return config;
 }
 
+export function resetIdleStateArray(config) {
+  for (let i = 0; i < config.idleStateArr.length; i++) {
+    config.idleStateArr[i] = i;
+  }
+  return config;
+}
+
 export function setSpectrum(config) {
   config.spectrum = config.fft
     .analyze()
@@ -97,15 +104,16 @@ export function updateIdleYPos(p5Sketch, config, inc, i) {
 
 export function drawIdleState(p5Sketch, config) {
   p5Sketch.noStroke();
-  let inc = 0.2;
+  let inc = config.radian;
   for (let i = 0; i < config.idleStateArr.length; i++) {
-    inc += p5Sketch.frameCount / 100;
     let r = getRed(p5Sketch, config.idleStateArr, i);
     let b = getBlue(p5Sketch, config.idleStateArr, i);
     let x = getXPos(p5Sketch, config.idleStateArr, i);
     let y = getIdleStateYPos(p5Sketch, config.idleStateArr, i);
     p5Sketch.fill(r, THEME_RGB.mid, b);
     drawShape({ p5Sketch, config, x, y });
+    // Update
+    inc += config.counter / 100;
     updateIdleYPos(p5Sketch, config, inc, i);
   }
 }
