@@ -1,5 +1,5 @@
 import { getDefaultIntervals } from '../utils/utils';
-import { ONESHOT, THEME_RGB } from '../utils/constants';
+import { ONESHOT, SUSTAIN, THEME_RGB } from '../utils/constants';
 
 export function playCurrentNote({ config, freq }) {
   config.osc.freq(freq);
@@ -55,8 +55,6 @@ export function highlightNote(config, currentKeyindex, noteOff) {
       // Handle One Shot mode
       if (noteOff) {
         item.style.cssText = keyStyle;
-        // Might need to reset here
-        // firstTime = false;
       } else {
         item.style.backgroundColor = 'white';
         config.prevKbdBtnID =
@@ -66,14 +64,17 @@ export function highlightNote(config, currentKeyindex, noteOff) {
     }
   });
   // Set previous UI key state
-  config.keyboardButtons.forEach((item) => {
-    const keyID = getKeyIDNum(item);
-    const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
-    const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
-    if (keyID === config.prevKbdBtnID && firstTime === false) {
-      item.style.cssText = prevKeyStyle;
-    }
-  });
+  // For Sustain mode only
+  if (config.playMode === SUSTAIN) {
+    config.keyboardButtons.forEach((item) => {
+      const keyID = getKeyIDNum(item);
+      const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
+      const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
+      if (keyID === config.prevKbdBtnID && firstTime === false) {
+        item.style.cssText = prevKeyStyle;
+      }
+    });
+  }
 }
 
 export function stopAndHideNote({ config, updateAudioOutput }) {
