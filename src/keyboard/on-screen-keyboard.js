@@ -46,26 +46,32 @@ export function getIndexFromKeyID(config, keyID) {
 
 export function highlightNote(config, currentKeyindex, noteOff) {
   const currKeyID = getKeyIDFromIndex(config, currentKeyindex);
+  let firstTime = config.currKbdBtnID === null ? true : false;
+  // Set current UI key state
   config.keyboardButtons.forEach((item) => {
     const keyID = getKeyIDNum(item);
-    const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
     const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
-    const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
-    if (keyID === config.prevKbdBtnID) {
-      console.log('Change this keyID back', keyID);
-      item.style.cssText = prevKeyStyle;
-    }
     if (keyID === currKeyID) {
+      // Handle One Shot mode
       if (noteOff) {
         item.style.cssText = keyStyle;
+        // Might need to reset here
+        // firstTime = false;
       } else {
         item.style.backgroundColor = 'white';
         config.prevKbdBtnID =
           config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
         config.currKbdBtnID = keyID;
-        console.log('currKbdBtnID', config.currKbdBtnID);
-        console.log('prevKbdBtnID', config.prevKbdBtnID);
       }
+    }
+  });
+  // Set previous UI key state
+  config.keyboardButtons.forEach((item) => {
+    const keyID = getKeyIDNum(item);
+    const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
+    const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
+    if (keyID === config.prevKbdBtnID && firstTime === false) {
+      item.style.cssText = prevKeyStyle;
     }
   });
 }
