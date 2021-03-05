@@ -36,12 +36,12 @@ export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   });
 }
 
-export function getKeyIDFromIndex(config, index) {
-  return index + config.intervalsRange.lower;
+export function getKeyIDFromIndex(numNegativeKeys, index) {
+  return index + numNegativeKeys;
 }
 
-export function getIndexFromKeyID(config, keyID) {
-  return keyID + Math.abs(config.intervalsRange.lower);
+export function getIndexFromKeyID(numNegativeKeys, keyID) {
+  return keyID + Math.abs(numNegativeKeys);
 }
 
 export function highlightCurrKeyCB({
@@ -68,7 +68,10 @@ export function highlightCurrKeyCB({
 
 export function unhighlightPrevKeyCB({ config, keyboardBtn, firstTime }) {
   const keyID = getKeyIDNum(keyboardBtn);
-  const prevKeyIndex = getIndexFromKeyID(config, config.prevKbdBtnID);
+  const prevKeyIndex = getIndexFromKeyID(
+    config.intervalsRange.lower,
+    config.prevKbdBtnID
+  );
   const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
   if (keyID === config.prevKbdBtnID && firstTime === false) {
     keyboardBtn.style.cssText = prevKeyStyle;
@@ -76,7 +79,10 @@ export function unhighlightPrevKeyCB({ config, keyboardBtn, firstTime }) {
 }
 
 export function highlightNote(config, currentKeyindex, noteOff) {
-  const currKeyID = getKeyIDFromIndex(config, currentKeyindex);
+  const currKeyID = getKeyIDFromIndex(
+    config.intervalsRange.lower,
+    currentKeyindex
+  );
   let firstTime = config.currKbdBtnID === null ? true : false;
   // Set current UI key state
   config.keyboardButtons.forEach((keyboardBtn) => {

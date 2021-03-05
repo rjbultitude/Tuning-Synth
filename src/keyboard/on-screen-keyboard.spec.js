@@ -35,6 +35,58 @@ describe('stopCurrentNote', function() {
   });
 });
 
+describe('getKeyIDFromIndex', function() {
+  it('should return a number', function() {
+    expect(onScreenKB.getKeyIDFromIndex(5, -12)).to.be.a('number');
+  });
+  it('should add numNegativeKeys to index', function() {
+    expect(onScreenKB.getKeyIDFromIndex(5, -12)).to.equal(-7);
+  });
+});
+
+describe('getKeyIDNum', function() {
+  beforeEach(function() {
+    this.item = {
+      id: 'id_1'
+    }
+  });
+  it('should return a number when passed an object with prop id string', function() {
+    expect(onScreenKB.getKeyIDNum(this.item)).to.be.a('number');
+  });
+  it('should return the number it was passed as a string in object', function() {
+    expect(onScreenKB.getKeyIDNum(this.item)).to.equal(1);
+  });
+});
+
+describe('getKeyIDNumAbs', function(){
+  beforeEach(function() {
+    this.item = {
+      id: 'id_1'
+    }
+    this.itemNeg = {
+      id: 'id_-2'
+    }
+  });
+  it('should return a number when passed an object with id prop string', function() {
+    expect(onScreenKB.getKeyIDNumAbs(this.item)).to.be.a('number');
+  });
+  it('should return a postive number when passed a an id string with a negative number', function() {
+    expect(onScreenKB.getKeyIDNumAbs(this.itemNeg)).to.equal(2);
+  });
+});
+
+describe('getIndexFromKeyID', function() {
+  it('should return a number', function() {
+    expect(onScreenKB.getIndexFromKeyID(-12, 5)).to.be.a('number');
+  });
+  it('should always return a positive number', function() {
+    expect(onScreenKB.getIndexFromKeyID(-12, 5)).to.be.gte(0);
+  });
+  it('should convert numNegativeKeys to a positive number and add to index', function() {
+    expect(onScreenKB.getIndexFromKeyID(-12, 5)).to.equal(17);
+  });
+});
+
 describe('highlightOctaves', function() {
   beforeEach(function() {
     this.config = {
