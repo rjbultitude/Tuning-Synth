@@ -87,6 +87,105 @@ describe('getIndexFromKeyID', function() {
   });
 });
 
+describe('highlightCurrKeyCB', function() {
+  beforeEach(function() {
+    this.config = {
+      keyBoardButtonStyles: ['style0', 'style1']
+    };
+    this.argObject = {
+      config: this.config,
+      currKeyID: 1,
+      currentKeyindex: 1,
+      noteOff: true,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      }
+    };
+    this.argObjectFalse = {
+      config: this.config,
+      currKeyID: 1,
+      currentKeyindex: 1,
+      noteOff: false,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      }
+    };
+    this.argObjectcurrKeyIDNoMatch = {
+      config: this.config,
+      currKeyID: 5,
+      currentKeyindex: 1,
+      noteOff: false,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      }
+    };
+  });
+  afterEach(function() {
+    this.argObject.keyboardBtn.style.cssText = null;
+  });
+  it('should set the cssText of key keyboardBtn when noteOff is true and button ID is currKeyID', function() {
+    onScreenKB.highlightCurrKeyCB(this.argObject);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal('style1');
+  });
+  it('should not set the cssText of key keyboardBtn when noteOff is false', function() {
+    onScreenKB.highlightCurrKeyCB(this.argObjectFalse);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal(null);
+  });
+  it('should not set the cssText of key keyboardBtn when button ID is currKeyID don\'t match', function() {
+    onScreenKB.highlightCurrKeyCB(this.argObjectcurrKeyIDNoMatch);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal(null);
+  });
+});
+
+describe('unhighlightPrevKeyCB', function() {
+  beforeEach(function() {
+    this.config = {
+      keyBoardButtonStyles: ['style0', 'style1'],
+      intervalsRange: {
+        lower: 0,
+      },
+      prevKbdBtnID: 1,
+    };
+    this.argObject = {
+      config: this.config,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      },
+      firstTime: false,
+    };
+    this.argObjectTrue = {
+      config: this.config,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      },
+      firstTime: true,
+    };
+  });
+  it('should set keyboardBtn cssText to prevKeyStyle', function() {
+    onScreenKB.unhighlightPrevKeyCB(this.argObject);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal('style1');
+  });
+  it('should not set keyboardBtn cssText to prevKeyStyle if firstTime is true', function() {
+    onScreenKB.unhighlightPrevKeyCB(this.argObjectTrue);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal(null);
+  });
+});
+
 describe('highlightOctaves', function() {
   beforeEach(function() {
     this.config = {
