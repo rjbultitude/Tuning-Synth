@@ -77,7 +77,7 @@ export function drawShape({ p5Sketch, config, x, y }) {
       p5Sketch.ellipse(x, y, config.grainSize);
       break;
     case SHAPES.RECT:
-      p5Sketch.rect(x, y, config.grainSize, 6);
+      p5Sketch.rect(x, y, config.grainSize, p5Sketch.height - y);
       break;
     default:
       p5Sketch.ellipse(x, y, config.grainSize);
