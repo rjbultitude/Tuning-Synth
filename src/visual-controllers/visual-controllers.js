@@ -1,23 +1,33 @@
 import { updateUI } from '../utils/utils';
 import { THEME_RGB, SHAPES } from '../utils/constants';
 
+export function shapeControlCB(event, config) {
+  config.shape = event.target.value;
+  return config;
+}
+
 export function setupShapeControls(config, shapeControl) {
   shapeControl.addEventListener(
     'change',
-    function () {
-      config.shape = this.value;
+    function (e) {
+      shapeControlCB(e, config);
     },
     false
   );
   return shapeControl;
 }
 
+export function grainCtrlCB(e, config, grainTextNode, _updateUI = updateUI) {
+  config.grainSize = e.target.value;
+  updateUI(config.grainSize, grainTextNode);
+  return config;
+}
+
 export function setUpGrainControl(config, grainControl, grainTextNode) {
   grainControl.addEventListener(
     'change',
-    function () {
-      config.grainSize = this.value;
-      updateUI(config.grainSize, grainTextNode);
+    function (e) {
+      grainCtrlCB(e, config, grainTextNode);
     },
     false
   );

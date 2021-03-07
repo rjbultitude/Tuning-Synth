@@ -155,6 +155,13 @@ describe('unhighlightPrevKeyCB', function() {
       },
       prevKbdBtnID: 1,
     };
+    this.configPrevKbdBtnID = {
+      keyBoardButtonStyles: ['style0', 'style1'],
+      intervalsRange: {
+        lower: 0,
+      },
+      prevKbdBtnID: 5,
+    };
     this.argObject = {
       config: this.config,
       keyboardBtn: {
@@ -175,6 +182,16 @@ describe('unhighlightPrevKeyCB', function() {
       },
       firstTime: true,
     };
+    this.argObjectPrevKbdBtnID = {
+      config: this.configPrevKbdBtnID,
+      keyboardBtn: {
+        style: {
+          cssText: null,
+        },
+        id: 'ID_1'
+      },
+      firstTime: false,
+    }
   });
   it('should set keyboardBtn cssText to prevKeyStyle', function() {
     onScreenKB.unhighlightPrevKeyCB(this.argObject);
@@ -183,6 +200,54 @@ describe('unhighlightPrevKeyCB', function() {
   it('should not set keyboardBtn cssText to prevKeyStyle if firstTime is true', function() {
     onScreenKB.unhighlightPrevKeyCB(this.argObjectTrue);
     expect(this.argObject.keyboardBtn.style.cssText).to.equal(null);
+  });
+  it('should not set keyboardBtn cssText to prevKeyStyle if prevKbdBtnID does not match button ID', function() {
+    onScreenKB.unhighlightPrevKeyCB(this.argObjectPrevKbdBtnID);
+    expect(this.argObject.keyboardBtn.style.cssText).to.equal(null);
+  });
+});
+
+describe('highlightNote', function() {
+  beforeEach(function() {
+    this.config = {
+      currKbdBtnID: 1,
+      intervalsRange: {
+        lower: -12,
+      },
+      playMode: 'ONE_SHOT',
+      keyboardButtons: [{
+        id: 'ID_1'
+      }],
+    };
+    this.configSustain = {
+      currKbdBtnID: 1,
+      intervalsRange: {
+        lower: -12,
+      },
+      playMode: 'sustain',
+      keyboardButtons: [{
+        id: 'ID_1'
+      }],
+    };
+    this.currentKeyindex = 1;
+    this.noteOffTrue = true;
+    this.noteOffFalse = false;
+    this.cbHighlightStub = sinon.stub();
+    this.cbunHighlightStub = sinon.stub();
+  });
+  it('should call highlightCurrKeyCB for each keyboardButton', function() {
+    onScreenKB.highlightNote(this.config, this.currentKeyindex, this.noteOffFalse, this.cbHighlightStub);
+    expect(this.cbHighlightStub).called;
+  });
+  it('should call unhighlightPrevKeyCB for each keyboardButton if playmode is SUSTAIN', function() {
+    onScreenKB.highlightNote(
+      this.configSustain,
+      this.currentKeyindex,
+      this.noteOffFalse,
+      () => {},
+      this.cbunHighlightStub
+    );
+    expect(this.cbunHighlightStub).called;
   });
 });
 

@@ -78,15 +78,23 @@ export function unhighlightPrevKeyCB({ config, keyboardBtn, firstTime }) {
   }
 }
 
-export function highlightNote(config, currentKeyindex, noteOff) {
+export function highlightNote(
+  config,
+  currentKeyindex,
+  noteOff,
+  _highlightCurrKeyCB = highlightCurrKeyCB,
+  _unhighlightPrevKeyCB = unhighlightPrevKeyCB
+) {
   const currKeyID = getKeyIDFromIndex(
     config.intervalsRange.lower,
     currentKeyindex
   );
   let firstTime = config.currKbdBtnID === null ? true : false;
   // Set current UI key state
+  // TODO no need to loop
+  // use key to get element by ID
   config.keyboardButtons.forEach((keyboardBtn) => {
-    highlightCurrKeyCB({
+    _highlightCurrKeyCB({
       config,
       currKeyID,
       currentKeyindex,
@@ -98,7 +106,7 @@ export function highlightNote(config, currentKeyindex, noteOff) {
   // For Sustain mode only
   if (config.playMode === SUSTAIN) {
     config.keyboardButtons.forEach((keyboardBtn) => {
-      unhighlightPrevKeyCB({ config, keyboardBtn, firstTime });
+      _unhighlightPrevKeyCB({ config, keyboardBtn, firstTime });
     });
   }
 }
