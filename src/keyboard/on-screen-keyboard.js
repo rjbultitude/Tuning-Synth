@@ -56,14 +56,17 @@ export function highlightCurrKeyCB({
   const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
   // Handle One Shot mode
   if (noteOff) {
-    kbdBtn.style.cssText = keyStyle;
+    console.log('keyStyle', keyStyle);
+    kbdBtn.style.backgroundColor = keyStyle;
+    console.log('kbdBtn.style.backgroundColor', kbdBtn.style.backgroundColor);
   } else {
     kbdBtn.style.backgroundColor = 'white';
+    console.log('kbdBtn.style.backgroundColor', kbdBtn.style.backgroundColor);
     config.prevKbdBtnID =
       config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
     config.currKbdBtnID = keyID;
   }
-  console.log('config.prevKbdBtnID', config.prevKbdBtnID);
+  return kbdBtn;
 }
 
 export function getElIDFromIndex(index) {
@@ -80,11 +83,14 @@ export function unhighlightPrevKeyCB({ config, firstTime }) {
     prevKeyIndex
   );
   const prevElID = getElIDFromIndex(prevKeyID);
+  console.log('prevElID', prevElID);
   const prevKbdBtnEl = document.getElementById(prevElID);
+  console.log('prevKbdBtnEl', prevKbdBtnEl);
   const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
   if (firstTime === false) {
-    prevKbdBtnEl.style.cssText = prevKeyStyle;
+    prevKbdBtnEl.style.backgroundColor = prevKeyStyle;
   }
+  return prevKbdBtnEl;
 }
 
 export function highlightNote(
@@ -232,7 +238,7 @@ export function setKbdBtnStyles({
   index,
 }) {
   const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
-  const btnStyle = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
+  const btnStyle = `rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
   config.keyBoardButtonStyles[index] = btnStyle;
   keyButton.style.cssText = btnStyle;
   return keyButton;
