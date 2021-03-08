@@ -49,32 +49,41 @@ export function highlightCurrKeyCB({
   currKeyID,
   currentKeyindex,
   noteOff,
-  keyboardBtn,
 }) {
-  const keyID = getKeyIDNum(keyboardBtn);
+  const kbdBtnElID = getElIDFromIndex(currKeyID);
+  const kbdBtn = document.getElementById(kbdBtnElID);
+  const keyID = getKeyIDNum(kbdBtn);
   const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
-  if (keyID === currKeyID) {
-    // Handle One Shot mode
-    if (noteOff) {
-      keyboardBtn.style.cssText = keyStyle;
-    } else {
-      keyboardBtn.style.backgroundColor = 'white';
-      config.prevKbdBtnID =
-        config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
-      config.currKbdBtnID = keyID;
-    }
+  // Handle One Shot mode
+  if (noteOff) {
+    kbdBtn.style.cssText = keyStyle;
+  } else {
+    kbdBtn.style.backgroundColor = 'white';
+    config.prevKbdBtnID =
+      config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
+    config.currKbdBtnID = keyID;
   }
+  console.log('config.prevKbdBtnID', config.prevKbdBtnID);
 }
 
-export function unhighlightPrevKeyCB({ config, keyboardBtn, firstTime }) {
-  const keyID = getKeyIDNum(keyboardBtn);
+export function getElIDFromIndex(index) {
+  return `key_${index}`;
+}
+
+export function unhighlightPrevKeyCB({ config, firstTime }) {
   const prevKeyIndex = getIndexFromKeyID(
     config.intervalsRange.lower,
     config.prevKbdBtnID
   );
+  const prevKeyID = getKeyIDFromIndex(
+    config.intervalsRange.lower,
+    prevKeyIndex
+  );
+  const prevElID = getElIDFromIndex(prevKeyID);
+  const prevKbdBtnEl = document.getElementById(prevElID);
   const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
-  if (keyID === config.prevKbdBtnID && firstTime === false) {
-    keyboardBtn.style.cssText = prevKeyStyle;
+  if (firstTime === false) {
+    prevKbdBtnEl.style.cssText = prevKeyStyle;
   }
 }
 
@@ -85,29 +94,22 @@ export function highlightNote(
   _highlightCurrKeyCB = highlightCurrKeyCB,
   _unhighlightPrevKeyCB = unhighlightPrevKeyCB
 ) {
+  let firstTime = config.currKbdBtnID === null ? true : false;
   const currKeyID = getKeyIDFromIndex(
     config.intervalsRange.lower,
     currentKeyindex
   );
-  let firstTime = config.currKbdBtnID === null ? true : false;
   // Set current UI key state
-  // TODO no need to loop
-  // use key to get element by ID
-  config.keyboardButtons.forEach((keyboardBtn) => {
-    _highlightCurrKeyCB({
-      config,
-      currKeyID,
-      currentKeyindex,
-      noteOff,
-      keyboardBtn,
-    });
+  _highlightCurrKeyCB({
+    config,
+    currKeyID,
+    currentKeyindex,
+    noteOff,
   });
   // Set previous UI key state
   // For Sustain mode only
   if (config.playMode === SUSTAIN) {
-    config.keyboardButtons.forEach((keyboardBtn) => {
-      _unhighlightPrevKeyCB({ config, keyboardBtn, firstTime });
-    });
+    _unhighlightPrevKeyCB({ config, firstTime });
   }
 }
 
