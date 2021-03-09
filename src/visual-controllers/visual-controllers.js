@@ -55,9 +55,6 @@ export function setSpectrum(config) {
   config.spectrum = config.fft
     .analyze()
     .slice(config.sliders.one, config.sliders.two);
-  // if (config.playing) {
-  //   console.log('config.spectrum', config.spectrum);
-  // }
   return config;
 }
 

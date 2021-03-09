@@ -11,7 +11,6 @@ export function stopCurrentNote(config) {
 }
 
 export function getKeyIDNum(item) {
-  console.log('item', item);
   const keyID = item.id.split('_')[1];
   const keyIDNum = parseInt(keyID);
   return keyIDNum;
@@ -81,9 +80,7 @@ export function unhighlightPrevKeyCB({ config, firstTime }) {
     prevKeyIndex
   );
   const prevElID = getElIDFromIndex(prevKeyID);
-  console.log('prevElID', prevElID);
   const prevKbdBtnEl = document.getElementById(prevElID);
-  console.log('prevKbdBtnEl', prevKbdBtnEl);
   const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
   if (firstTime === false) {
     prevKbdBtnEl.style.backgroundColor = prevKeyStyle;
@@ -99,12 +96,10 @@ export function highlightNote(
   _unhighlightPrevKeyCB = unhighlightPrevKeyCB
 ) {
   let firstTime = config.currKbdBtnID === null ? true : false;
-  console.log('currentKeyindex', currentKeyindex);
   const currKeyID = getKeyIDFromIndex(
     config.intervalsRange.lower,
     currentKeyindex
   );
-  console.log('currKeyID', currKeyID);
   // Set current UI key state
   _highlightCurrKeyCB({
     config,

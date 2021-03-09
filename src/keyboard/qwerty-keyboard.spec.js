@@ -35,12 +35,12 @@ describe('setQwertyEvents', function() {
   });
 });
 
-describe.only('qwertyKeydownCB', function() {
+describe('qwertyKeydownCB', function() {
   before(function() {
     const btnOne = document.createElement('button');
     const btnTwo = document.createElement('button');
-    btnOne.setAttribute('id', 'key_0');
-    btnTwo.setAttribute('id', 'key_1');
+    btnOne.setAttribute('id', 'key_-12');
+    btnTwo.setAttribute('id', 'key_-11');
     document.body.insertAdjacentElement('afterbegin', btnOne);
     document.body.insertAdjacentElement('afterbegin', btnTwo);
   });
@@ -50,7 +50,7 @@ describe.only('qwertyKeydownCB', function() {
   beforeEach(function() {
     this.argsObjNotPlaying = {
       e: {
-        key: 'd'
+        key: 'q'
       },
       config: {
         playing: false,
@@ -59,6 +59,7 @@ describe.only('qwertyKeydownCB', function() {
           lower: -12,
           upper: 12,
         },
+        keyBoardButtonStyles: ['style0', 'style1'],
         tuningSysNotes: {
           'eqTemp': [220]
         },
@@ -91,7 +92,6 @@ describe.only('qwertyKeydownCB', function() {
     expect(qwertyKbd.qwertyKeydownCB(this.argsObjPlaying)).to.be.false;
   });
   it('should return true if playAndShowNote if playing is false and QWERTY includes e.key', function() {
-    console.log('document.documentElement.innerHTML', document.documentElement.innerHTML);
     const result = qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying, this.playAndShowNoteStub);
     expect(result).to.be.true;
   });
