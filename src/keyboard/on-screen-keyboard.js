@@ -11,6 +11,7 @@ export function stopCurrentNote(config) {
 }
 
 export function getKeyIDNum(item) {
+  console.log('item', item);
   const keyID = item.id.split('_')[1];
   const keyIDNum = parseInt(keyID);
   return keyIDNum;
@@ -56,12 +57,9 @@ export function highlightCurrKeyCB({
   const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
   // Handle One Shot mode
   if (noteOff) {
-    console.log('keyStyle', keyStyle);
     kbdBtn.style.backgroundColor = keyStyle;
-    console.log('kbdBtn.style.backgroundColor', kbdBtn.style.backgroundColor);
   } else {
     kbdBtn.style.backgroundColor = 'white';
-    console.log('kbdBtn.style.backgroundColor', kbdBtn.style.backgroundColor);
     config.prevKbdBtnID =
       config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
     config.currKbdBtnID = keyID;
@@ -101,10 +99,12 @@ export function highlightNote(
   _unhighlightPrevKeyCB = unhighlightPrevKeyCB
 ) {
   let firstTime = config.currKbdBtnID === null ? true : false;
+  console.log('currentKeyindex', currentKeyindex);
   const currKeyID = getKeyIDFromIndex(
     config.intervalsRange.lower,
     currentKeyindex
   );
+  console.log('currKeyID', currKeyID);
   // Set current UI key state
   _highlightCurrKeyCB({
     config,

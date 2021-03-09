@@ -5,8 +5,6 @@ chai.use(sinonChai);
 
 import * as onScreenKB from './on-screen-keyboard';
 
-document.write('<button id="key_0"></button><button id="key_1"></button>');
-
 describe('playCurrentNote', function() {
   beforeEach(function() {
     this.config = {
@@ -90,6 +88,17 @@ describe('getIndexFromKeyID', function() {
 });
 
 describe('highlightCurrKeyCB', function() {
+  before(function() {
+    const btnOne = document.createElement('button');
+    const btnTwo = document.createElement('button');
+    btnOne.setAttribute('id', 'key_0');
+    btnTwo.setAttribute('id', 'key_1');
+    document.body.insertAdjacentElement('afterbegin', btnOne);
+    document.body.insertAdjacentElement('afterbegin', btnTwo);
+  });
+  after(function() {
+    document.body.innerHTML = '';
+  });
   beforeEach(function() {
     this.config = {
       keyBoardButtonStyles: ['rgb(0, 0, 0)', 'rgb(204, 204, 204)'],
@@ -110,7 +119,6 @@ describe('highlightCurrKeyCB', function() {
     };
   });
   it('should set the cssText of key keyboardBtn when noteOff is true and button ID is currKeyID', function() {
-    console.log('this.argObject', this.argObject);
     const btn = onScreenKB.highlightCurrKeyCB(this.argObject);
     expect(btn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
   });
@@ -120,7 +128,18 @@ describe('highlightCurrKeyCB', function() {
   });
 });
 
-describe.only('unhighlightPrevKeyCB', function() {
+describe('unhighlightPrevKeyCB', function() {
+  before(function() {
+    const btnOne = document.createElement('button');
+    const btnTwo = document.createElement('button');
+    btnOne.setAttribute('id', 'key_0');
+    btnTwo.setAttribute('id', 'key_1');
+    document.body.insertAdjacentElement('afterbegin', btnOne);
+    document.body.insertAdjacentElement('afterbegin', btnTwo);
+  });
+  after(function() {
+    document.body.innerHTML = '';
+  });
   beforeEach(function() {
     this.config = {
       keyBoardButtonStyles: ['rgb(0, 0, 0)', 'rgb(204, 204, 204)'],
@@ -153,8 +172,8 @@ describe.only('unhighlightPrevKeyCB', function() {
     };
   });
   it('should set keyboardBtn cssText to prevKeyStyle', function() {
-    const btn = onScreenKB.unhighlightPrevKeyCB(this.argObject);
-    expect(btn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
+    const thisBtn = onScreenKB.unhighlightPrevKeyCB(this.argObject);
+    expect(thisBtn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
   });
   it('should not set keyboardBtn cssText to prevKeyStyle if firstTime is true', function() {
     const btn = onScreenKB.unhighlightPrevKeyCB(this.argObjectTrue);

@@ -12,8 +12,6 @@ tuningSysMap.set('eqTemp','Equal Temperament');
 tuningSysMap.set('pythagorean', 'pythagorean');
 
 const selectValue = 'test';
-//Note: write can only be performed once
-document.write(`<select id="freqiControls"></select><select id="tuningSystem"><option value="${selectValue}" selected></select>`);
 
 describe('setOscFreqToTuningSys', function() {
   beforeEach(function() {
@@ -221,6 +219,18 @@ describe('createTuningSelect', function() {
 })
 
 describe('writeFreqiControls', function() {
+  before(function() {
+    const freqiCtrlsSelect = document.createElement('select');
+    const tuningSystemSelect = document.createElement('select');
+    freqiCtrlsSelect.setAttribute('id', 'freqiControls');
+    tuningSystemSelect.setAttribute('id', 'tuningSystem');
+    tuningSystemSelect.innerHTML = `<option value="${selectValue}" selected>`
+    document.body.insertAdjacentElement('afterbegin', freqiCtrlsSelect);
+    document.body.insertAdjacentElement('afterbegin', tuningSystemSelect);
+  });
+  after(function() {
+    document.body.innerHTML = '';
+  });
   beforeEach(function() {
     this.config = {
       selectedTuningSys: 'eqTemp',
