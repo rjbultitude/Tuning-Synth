@@ -37,10 +37,14 @@ export function togglePlay({ config, updateAudioOutput }) {
   return config;
 }
 
-export function playModeCallBack(e, config) {
+export function playModeCallBack(
+  e,
+  config,
+  _unhighlightPrevKeyCB = unhighlightPrevKeyCB
+) {
   const playModeVal = e.target.options[e.target.selectedIndex].value;
   config.playMode = playModeVal;
-  unhighlightPrevKeyCB({ config });
+  _unhighlightPrevKeyCB(config);
   return config;
 }
 

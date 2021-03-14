@@ -148,35 +148,23 @@ describe('unhighlightPrevKeyCB', function() {
       },
       prevKbdBtnID: 1,
     };
-    this.configZero = {
-      keyBoardButtonStyles: ['rgb(0, 0, 0)', 'rgb(204, 204, 204)'],
-      intervalsRange: {
-        lower: 0,
-      },
-      prevKbdBtnID: 0,
-    };
-    this.configPrevKbdBtnID = {
-      keyBoardButtonStyles: ['rgb(0, 0, 0)', 'rgb(204, 204, 204)'],
-      intervalsRange: {
-        lower: 0,
-      },
-      prevKbdBtnID: 5,
-    };
-    this.argObject = {
-      config: this.config,
-      firstTime: false,
-    };
-    this.argObjectTrue = {
-      config: this.configZero,
-      firstTime: true,
+    this.configNull = {
+      prevKbdBtnID: null,
     };
   });
-  it('should set keyboardBtn cssText to prevKeyStyle', function() {
-    const thisBtn = onScreenKB.unhighlightPrevKeyCB(this.argObject);
+  xit('should set keyboardBtn backgroundColor to prevKeyStyle', function() {
+    const thisBtn = onScreenKB.unhighlightPrevKeyCB(this.config);
     expect(thisBtn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
   });
-  it('should not set keyboardBtn cssText to prevKeyStyle if firstTime is true', function() {
-    const btn = onScreenKB.unhighlightPrevKeyCB(this.argObjectTrue);
+  it('should return undefined currKbdBtnID is null', function() {
+    const config = {
+      currKbdBtnID: null
+    }
+    const btn = onScreenKB.unhighlightPrevKeyCB(config);
+    expect(typeof btn).to.equal('undefined');
+  });
+  xit('should not set keyboardBtn backgroundColor to prevKeyStyle if currKbdBtnID is null', function() {
+    const btn = onScreenKB.unhighlightPrevKeyCB(this.configNull);
     expect(btn.style.backgroundColor).to.equal('');
   });
 });

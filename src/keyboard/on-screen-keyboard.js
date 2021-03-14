@@ -70,8 +70,11 @@ export function getElIDFromIndex(index) {
   return `key_${index}`;
 }
 
-export function unhighlightPrevKeyCB({ config }) {
-  let firstTime = config.currKbdBtnID === null ? true : false;
+export function unhighlightPrevKeyCB(config) {
+  if (config.currKbdBtnID === null) {
+    console.log('IN THE BLOCK');
+    return undefined;
+  }
   const prevKeyIndex = getIndexFromKeyID(
     config.intervalsRange.lower,
     config.prevKbdBtnID
@@ -83,9 +86,7 @@ export function unhighlightPrevKeyCB({ config }) {
   const prevElID = getElIDFromIndex(prevKeyID);
   const prevKbdBtnEl = document.getElementById(prevElID);
   const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
-  if (firstTime === false) {
-    prevKbdBtnEl.style.backgroundColor = prevKeyStyle;
-  }
+  prevKbdBtnEl.style.backgroundColor = prevKeyStyle;
   return prevKbdBtnEl;
 }
 
@@ -110,7 +111,7 @@ export function highlightNote(
   // Set previous UI key state
   // For Sustain mode only
   if (config.playMode === SUSTAIN) {
-    _unhighlightPrevKeyCB({ config });
+    _unhighlightPrevKeyCB(config);
   }
 }
 
