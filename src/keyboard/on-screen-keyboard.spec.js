@@ -148,23 +148,23 @@ describe('unhighlightPrevKeyCB', function() {
       },
       prevKbdBtnID: 1,
     };
-    this.configNull = {
-      prevKbdBtnID: null,
-    };
   });
-  xit('should set keyboardBtn backgroundColor to prevKeyStyle', function() {
+  it('should set keyboardBtn backgroundColor to prevKeyStyle', function() {
     const thisBtn = onScreenKB.unhighlightPrevKeyCB(this.config);
     expect(thisBtn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
   });
   it('should return undefined currKbdBtnID is null', function() {
     const config = {
       currKbdBtnID: null
-    }
+    };
     const btn = onScreenKB.unhighlightPrevKeyCB(config);
     expect(typeof btn).to.equal('undefined');
   });
   xit('should not set keyboardBtn backgroundColor to prevKeyStyle if currKbdBtnID is null', function() {
-    const btn = onScreenKB.unhighlightPrevKeyCB(this.configNull);
+    const config = {
+      currKbdBtnID: null
+    };
+    const btn = onScreenKB.unhighlightPrevKeyCB(config);
     expect(btn.style.backgroundColor).to.equal('');
   });
 });
