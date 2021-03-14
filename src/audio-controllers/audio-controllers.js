@@ -1,5 +1,6 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
 import { WAVE_TYPE_VOLS } from '../utils/constants';
+import { unhighlightPrevKeyCB } from '../keyboard/on-screen-keyboard';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -39,6 +40,7 @@ export function togglePlay({ config, updateAudioOutput }) {
 export function playModeCallBack(e, config) {
   const playModeVal = e.target.options[e.target.selectedIndex].value;
   config.playMode = playModeVal;
+  unhighlightPrevKeyCB({ config });
   return config;
 }
 

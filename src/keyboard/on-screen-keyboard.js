@@ -70,7 +70,8 @@ export function getElIDFromIndex(index) {
   return `key_${index}`;
 }
 
-export function unhighlightPrevKeyCB({ config, firstTime }) {
+export function unhighlightPrevKeyCB({ config }) {
+  let firstTime = config.currKbdBtnID === null ? true : false;
   const prevKeyIndex = getIndexFromKeyID(
     config.intervalsRange.lower,
     config.prevKbdBtnID
@@ -95,7 +96,6 @@ export function highlightNote(
   _highlightCurrKeyCB = highlightCurrKeyCB,
   _unhighlightPrevKeyCB = unhighlightPrevKeyCB
 ) {
-  let firstTime = config.currKbdBtnID === null ? true : false;
   const currKeyID = getKeyIDFromIndex(
     config.intervalsRange.lower,
     currentKeyindex
@@ -110,7 +110,7 @@ export function highlightNote(
   // Set previous UI key state
   // For Sustain mode only
   if (config.playMode === SUSTAIN) {
-    _unhighlightPrevKeyCB({ config, firstTime });
+    _unhighlightPrevKeyCB({ config });
   }
 }
 
@@ -235,7 +235,7 @@ export function setKbdBtnStyles({
   const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
   const btnStyle = `rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
   config.keyBoardButtonStyles[index] = btnStyle;
-  keyButton.style.cssText = btnStyle;
+  keyButton.style.backgroundColor = btnStyle;
   return keyButton;
 }
 
