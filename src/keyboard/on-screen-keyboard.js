@@ -52,17 +52,17 @@ export function highlightCurrKeyCB({
 }) {
   const kbdBtnElID = getElIDFromIndex(currKeyID);
   const kbdBtn = document.getElementById(kbdBtnElID);
-  const keyID = getKeyIDNum(kbdBtn);
   const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
   // Handle One Shot mode
   if (noteOff) {
     kbdBtn.style.backgroundColor = keyStyle;
-  } else {
-    kbdBtn.style.backgroundColor = 'white';
-    config.prevKbdBtnID =
-      config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
-    config.currKbdBtnID = keyID;
+    return;
   }
+  kbdBtn.style.backgroundColor = 'white';
+  const keyID = getKeyIDNum(kbdBtn);
+  config.prevKbdBtnID =
+    config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
+  config.currKbdBtnID = keyID;
   return kbdBtn;
 }
 
@@ -72,7 +72,7 @@ export function getElIDFromIndex(index) {
 
 export function unhighlightPrevKeyCB(config) {
   if (config.currKbdBtnID === null) {
-    console.log('IN THE BLOCK');
+    console.log('currKbdBtnID is null / firstTime call');
     return undefined;
   }
   const prevKeyIndex = getIndexFromKeyID(
@@ -110,7 +110,8 @@ export function highlightNote(
   });
   // Set previous UI key state
   // For Sustain mode only
-  if (config.playMode === SUSTAIN) {
+  const sameNote = config.currKbdBtnID === config.prevKbdBtnID ? true : false;
+  if (config.playMode === SUSTAIN && sameNote === false) {
     _unhighlightPrevKeyCB(config);
   }
 }
