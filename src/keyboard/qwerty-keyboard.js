@@ -3,7 +3,8 @@ import {
   playAndShowNote,
   stopAndHideNote,
   highlightNote,
-  highlightCurrKeyCB,
+  setDefaultBtnStyle,
+  getIndexFromKeyID,
 } from './on-screen-keyboard';
 
 export function isEsc(key) {
@@ -31,12 +32,11 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
 export function qwertyKeyupCB({ e, config, updateAudioOutput }) {
   const currentKeyindex = QWERTY.indexOf(e.key);
   if (isEsc(e.key)) {
-    highlightCurrKeyCB(
-      config,
-      config.currentKeyindex,
-      config.currentKeyindex,
-      true
+    const keyIndex = getIndexFromKeyID(
+      config.intervalsRange.lower,
+      config.currKbdBtnID
     );
+    setDefaultBtnStyle(config, config.currKbdBtnID, keyIndex);
     stopAndHideNote({ config, updateAudioOutput });
   }
   if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {

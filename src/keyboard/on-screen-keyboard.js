@@ -44,21 +44,33 @@ export function getIndexFromKeyID(numNegativeKeys, keyID) {
   return keyID + Math.abs(numNegativeKeys);
 }
 
+export function setDefaultBtnStyle(config, keyID, keyIndex) {
+  const elID = getElIDFromIndex(keyID);
+  const kbdBtn = document.getElementById(elID);
+  const keyStyle = config.keyBoardButtonStyles[keyIndex];
+  kbdBtn.style.backgroundColor = keyStyle;
+  return kbdBtn;
+}
+
+export function setBtnHighlightStyle(keyID) {
+  const elID = getElIDFromIndex(keyID);
+  const kbdBtn = document.getElementById(elID);
+  kbdBtn.style.backgroundColor = 'white';
+  return kbdBtn;
+}
+
 export function highlightCurrKeyCB({
   config,
   currKeyID,
   currentKeyindex,
   noteOff,
 }) {
-  const kbdBtnElID = getElIDFromIndex(currKeyID);
-  const kbdBtn = document.getElementById(kbdBtnElID);
-  const keyStyle = config.keyBoardButtonStyles[currentKeyindex];
   // Handle One Shot mode
   if (noteOff) {
-    kbdBtn.style.backgroundColor = keyStyle;
+    setDefaultBtnStyle(config, currKeyID, currentKeyindex);
     return;
   }
-  kbdBtn.style.backgroundColor = 'white';
+  const kbdBtn = setBtnHighlightStyle(currKeyID);
   const keyID = getKeyIDNum(kbdBtn);
   config.prevKbdBtnID =
     config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
@@ -83,10 +95,7 @@ export function unhighlightPrevKeyCB(config) {
     config.intervalsRange.lower,
     prevKeyIndex
   );
-  const prevElID = getElIDFromIndex(prevKeyID);
-  const prevKbdBtnEl = document.getElementById(prevElID);
-  const prevKeyStyle = config.keyBoardButtonStyles[prevKeyIndex];
-  prevKbdBtnEl.style.backgroundColor = prevKeyStyle;
+  const prevKbdBtnEl = setDefaultBtnStyle(config, prevKeyID, prevKeyIndex);
   return prevKbdBtnEl;
 }
 
