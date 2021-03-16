@@ -118,11 +118,11 @@ describe('highlightCurrKeyCB', function() {
       noteOff: false,
     };
   });
-  it('should set the cssText of key keyboardBtn when noteOff is true and button ID is currKeyID', function() {
+  it('should set the backgroundColor of keyboardBtn when noteOff is true', function() {
     const btn = onScreenKB.highlightCurrKeyCB(this.argObject);
     expect(btn.style.backgroundColor).to.equal('rgb(204, 204, 204)');
   });
-  it('should not set the cssText of key keyboardBtn when noteOff is false', function() {
+  it('should not set the backgroundColor of keyboardBtn when noteOff is false', function() {
     const btn = onScreenKB.highlightCurrKeyCB(this.argObjectFalse);
     expect(btn.style.backgroundColor).to.equal('white');
   });

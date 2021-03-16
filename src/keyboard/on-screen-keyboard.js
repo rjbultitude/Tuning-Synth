@@ -67,15 +67,15 @@ export function highlightCurrKeyCB({
 }) {
   // Handle One Shot mode
   if (noteOff) {
-    setDefaultBtnStyle(config, currKeyID, currentKeyindex);
-    return;
+    const kbdBtn = setDefaultBtnStyle(config, currKeyID, currentKeyindex);
+    return kbdBtn;
   }
-  const kbdBtn = setBtnHighlightStyle(currKeyID);
-  const keyID = getKeyIDNum(kbdBtn);
+  const kbdBtnHighlighted = setBtnHighlightStyle(currKeyID);
+  const keyID = getKeyIDNum(kbdBtnHighlighted);
   config.prevKbdBtnID =
     config.currKbdBtnID === null ? keyID : config.currKbdBtnID;
   config.currKbdBtnID = keyID;
-  return kbdBtn;
+  return kbdBtnHighlighted;
 }
 
 export function getElIDFromIndex(index) {
