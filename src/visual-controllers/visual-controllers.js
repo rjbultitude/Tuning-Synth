@@ -1,23 +1,33 @@
 import { updateUI } from '../utils/utils';
 import { THEME_RGB, SHAPES } from '../utils/constants';
 
+export function shapeControlCB(event, config) {
+  config.shape = event.target.value;
+  return config;
+}
+
 export function setupShapeControls(config, shapeControl) {
   shapeControl.addEventListener(
     'change',
-    function () {
-      config.shape = this.value;
+    function (e) {
+      shapeControlCB(e, config);
     },
     false
   );
   return shapeControl;
 }
 
+export function grainCtrlCB(e, config, grainTextNode, _updateUI = updateUI) {
+  config.grainSize = e.target.value;
+  updateUI(config.grainSize, grainTextNode);
+  return config;
+}
+
 export function setUpGrainControl(config, grainControl, grainTextNode) {
   grainControl.addEventListener(
     'change',
-    function () {
-      config.grainSize = this.value;
-      updateUI(config.grainSize, grainTextNode);
+    function (e) {
+      grainCtrlCB(e, config, grainTextNode);
     },
     false
   );
@@ -45,9 +55,6 @@ export function setSpectrum(config) {
   config.spectrum = config.fft
     .analyze()
     .slice(config.sliders.one, config.sliders.two);
-  // if (config.playing) {
-  //   console.log('config.spectrum', config.spectrum);
-  // }
   return config;
 }
 
@@ -67,7 +74,7 @@ export function drawShape({ p5Sketch, config, x, y }) {
       p5Sketch.ellipse(x, y, config.grainSize);
       break;
     case SHAPES.RECT:
-      p5Sketch.rect(x, y, config.grainSize, 6);
+      p5Sketch.rect(x, y, config.grainSize, p5Sketch.height - y);
       break;
     default:
       p5Sketch.ellipse(x, y, config.grainSize);

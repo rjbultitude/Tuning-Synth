@@ -1,5 +1,6 @@
-import p5 from 'p5';
-import 'p5/lib/addons/p5.sound';
+const p5 = require('p5');
+window.p5 = p5;
+require('p5/lib/addons/p5.sound');
 import freqi from 'freqi';
 import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
@@ -100,6 +101,9 @@ const sketchFn = (p5Sketch) => {
       two: fftResolution,
     },
     keyboardButtons: null,
+    keyBoardButtonStyles: [],
+    currKbdBtnID: null,
+    prevKbdBtnID: null,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,
@@ -147,7 +151,7 @@ const sketchFn = (p5Sketch) => {
     writeFreqiControls(config, updateAudioOutput);
     // Keyboard. Dynamic creation
     setQwertyEvents(config, updateAudioOutput);
-    const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
+    const keyboard = createKeyboard(config, p5Sketch);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
