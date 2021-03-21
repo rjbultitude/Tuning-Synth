@@ -151,7 +151,7 @@ const sketchFn = (p5Sketch) => {
     writeFreqiControls(config, updateAudioOutput);
     // Keyboard. Dynamic creation
     setQwertyEvents(config, updateAudioOutput);
-    const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
+    const keyboard = createKeyboard(config, p5Sketch);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });

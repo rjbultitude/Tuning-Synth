@@ -356,6 +356,30 @@ describe('setBtnAttrs', function() {
   });
 });
 
+describe('onScreenKbdBtnKeyDown', function() {
+  beforeEach(function() {
+    this.config = {
+      playing: true,
+    };
+    this.configFalse = {
+      playing: false,
+    };
+    this.event = {
+      key: 'Enter'
+    };
+    this.stopAndHideNote = sinon.spy();
+    this.playAndShowNote = sinon.spy();
+  });
+  it('should call playAndShowNote if key is Enter and playing is false', function() {
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.configFalse, this.stopAndHideNote, this.playAndShowNote);
+    expect(this.playAndShowNote).to.have.been.called;
+  });
+  it('should call stopAndHideNote if key is Enter and playing is true', function() {
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.config, this.stopAndHideNote, this.playAndShowNote);
+    expect(this.stopAndHideNote).to.have.been.called;
+  });
+});
+
 describe('addBtnListeners', function() {
   beforeEach(function() {
     const button = document.createElement('button');

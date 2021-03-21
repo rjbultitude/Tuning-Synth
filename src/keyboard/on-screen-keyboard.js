@@ -1,4 +1,4 @@
-import { getDefaultIntervals } from '../utils/utils';
+import { getDefaultIntervals, updateAudioOutput } from '../utils/utils';
 import { ONESHOT, SUSTAIN, THEME_RGB } from '../utils/constants';
 
 export function playCurrentNote({ config, freq }) {
@@ -174,6 +174,21 @@ export function setBtnAttrs({ keyButton, num }) {
   return keyButton;
 }
 
+export function onScreenKbdBtnKeyDown(e, index, config, _stopAndHideNote = stopAndHideNote, _playAndShowNote = playAndShowNote) {
+  if (e.key === 'Enter') {
+    if (config.playing) {
+      _stopAndHideNote(config, updateAudioOutput);
+      return;
+    }
+    _playAndShowNote({
+      config,
+      index,
+      updateAudioOutput,
+      playCurrentNote,
+    });
+  }
+}
+
 export function addBtnListeners({
   keyButton,
   config,
@@ -199,18 +214,7 @@ export function addBtnListeners({
   keyButton.addEventListener(
     'keydown',
     (e) => {
-      if (e.key === 'Enter') {
-        if (config.playing) {
-          stopAndHideNote(config, updateAudioOutput);
-          return;
-        }
-        playAndShowNote({
-          config,
-          index,
-          updateAudioOutput,
-          playCurrentNote,
-        });
-      }
+      onScreenKbdBtnKeyDown(e, index, config);
     },
     false
   );
@@ -289,7 +293,7 @@ export function createKeyboardButtons(
   return keyboardWrapper;
 }
 
-export function createKeyboard(config, p5Sketch, updateAudioOutput) {
+export function createKeyboard(config, p5Sketch) {
   const keyboardWrapper = document.createElement('section');
   keyboardWrapper.setAttribute('class', 'keyboard');
   keyboardWrapper.setAttribute('tabindex', '0');
@@ -299,7 +303,6 @@ export function createKeyboard(config, p5Sketch, updateAudioOutput) {
     keyboardWrapper,
     defaultIntervals,
     p5Sketch,
-    updateAudioOutput
   );
   return keyboardWrapper;
 }
