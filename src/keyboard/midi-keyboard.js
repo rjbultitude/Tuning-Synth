@@ -1,14 +1,14 @@
 export function getMIDIMessage(message) {
   let command = message.data[0];
   let note = message.data[1];
-  let velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+  let velocity = message.data.length > 2 ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
 
   switch (command) {
     case 144: // noteOn
       if (velocity > 0) {
-          noteOn(note, velocity);
+        noteOn(note, velocity);
       } else {
-          noteOff(note);
+        noteOff(note);
       }
       break;
     case 128: // noteOff
