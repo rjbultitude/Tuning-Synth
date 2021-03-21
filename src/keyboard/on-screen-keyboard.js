@@ -174,7 +174,13 @@ export function setBtnAttrs({ keyButton, num }) {
   return keyButton;
 }
 
-export function onScreenKbdBtnKeyDown(e, index, config, _stopAndHideNote = stopAndHideNote, _playAndShowNote = playAndShowNote) {
+export function onScreenKbdBtnKeyDown(
+  e,
+  index,
+  config,
+  _stopAndHideNote = stopAndHideNote,
+  _playAndShowNote = playAndShowNote
+) {
   if (e.key === 'Enter') {
     if (config.playing) {
       _stopAndHideNote(config, updateAudioOutput);
@@ -298,11 +304,6 @@ export function createKeyboard(config, p5Sketch) {
   keyboardWrapper.setAttribute('class', 'keyboard');
   keyboardWrapper.setAttribute('tabindex', '0');
   const defaultIntervals = getDefaultIntervals(config);
-  createKeyboardButtons(
-    config,
-    keyboardWrapper,
-    defaultIntervals,
-    p5Sketch,
-  );
+  createKeyboardButtons(config, keyboardWrapper, defaultIntervals, p5Sketch);
   return keyboardWrapper;
 }
