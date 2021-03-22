@@ -1,26 +1,33 @@
 import { MIDI_NOTE_MIDDLE_C } from '../utils/constants';
+import {
+  playAndShowNote,
+  stopAndHideNote,
+  highlightNote,
+} from '../keyboard/on-screen-keyboard';
 
 export function offsetMIDIRange(note) {
   return note - MIDI_NOTE_MIDDLE_C;
 }
 
 export function getMIDIMessage(message, config) {
-  let command = message.data[0];
-  let note = message.data[1];
-  let velocity = message.data.length > 2 ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+  const command = message.data[0];
+  const note = message.data[1];
+  const velocity = message.data.length > 2 ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+  const thisNote = offsetMIDIRange(note);
 
   switch (command) {
     case 144: // noteOn
       if (velocity > 0) {
-        noteOn(note, velocity);
-        const thisNote = offsetMIDIRange(note);
+        // noteOn(note, velocity);
         playAndShowNote({
           config,
           index: thisNote,
         });
+        highlightNote(config, thisNote);
       } else {
-        noteOff(note);
+        // noteOff(note);
         stopAndHideNote(config);
+        highlightNote(config, thisNote, true);
       }
       break;
     case 128: // noteOff
@@ -43,7 +50,7 @@ export function onMIDIFailure() {
 
 export function initMIDIAccess(config) {
   if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess().then((midiAccess, config) => {
+    navigator.requestMIDIAccess().then((midiAccess) => {
       onMIDISuccess(midiAccess, config);
     }, onMIDIFailure);
   } else {

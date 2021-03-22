@@ -83,7 +83,6 @@ export function getElIDFromIndex(index) {
 }
 
 export function unhighlightPrevKeyCB(config) {
-  console.log('config.prevKbdBtnID', config.prevKbdBtnID);
   if (config.currKbdBtnID === null) {
     return undefined;
   }
