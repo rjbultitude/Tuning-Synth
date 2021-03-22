@@ -34,15 +34,90 @@ describe('setQwertyEvents', function () {
   });
 });
 
-describe('qwertyKeydownCB', function () {
-  beforeEach(function () {
+describe('qwertyKeyupCB', function() {
+  before(function() {
+    this.config = {
+      currKbdBtnID: 1,
+      playMode: 'oneShot',
+      intervalsRange: {
+        lower: 0,
+      },
+      keyBoardButtonStyles: ['styleOne', 'styleTwo'],
+      osc: {
+        stop: () => {}
+      }
+    };
+    this.args = {
+      e: {
+        key: 'Esc'
+      },
+      config: {
+        currKbdBtnID: 1,
+        playMode: 'ONESHOT',
+        intervalsRange: {
+          lower: 0,
+        },
+        keyBoardButtonStyles: ['styleOne', 'styleTwo'],
+        osc: {
+          stop: () => {}
+        }
+      },
+      updateAudioOutput: () => {}
+    };
+    this.argsQWERTY = {
+      e: {
+        key: 'q'
+      },
+      config: this.config,
+      updateAudioOutput: () => {}
+    };
+    const btnOne = document.createElement('button');
+    const btnTwo = document.createElement('button');
+    btnOne.setAttribute('id', 'key_0');
+    btnTwo.setAttribute('id', 'key_1');
+    document.body.insertAdjacentElement('afterbegin', btnOne);
+    document.body.insertAdjacentElement('afterbegin', btnTwo);
+  });
+  after(function() {
+    document.body.innerHTML = '';
+  });
+  it('should call getIndexFromKeyID if key is Esc key', function() {
+    const spy = sinon.spy(onScreenKbd, 'getIndexFromKeyID');
+    qwertyKbd.qwertyKeyupCB(this.args, () => {});
+    expect(spy).to.have.been.called;
+  });
+  it('should call highlightNote when key is in QWERTY array', function() {
+    const spy = sinon.spy(onScreenKbd, 'highlightNote');
+    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {});
+    expect(spy).to.have.been.called;
+  });
+})
+
+describe('qwertyKeydownCB', function() {
+  before(function() {
+    const btnOne = document.createElement('button');
+    const btnTwo = document.createElement('button');
+    btnOne.setAttribute('id', 'key_-12');
+    btnTwo.setAttribute('id', 'key_-11');
+    document.body.insertAdjacentElement('afterbegin', btnOne);
+    document.body.insertAdjacentElement('afterbegin', btnTwo);
+  });
+  after(function() {
+    document.body.innerHTML = '';
+  });
+  beforeEach(function() {
     this.argsObjNotPlaying = {
       e: {
-        key: 'a',
+        key: 'q'
       },
       config: {
         playing: false,
         playMode: ONESHOT,
+        intervalsRange: {
+          lower: -12,
+          upper: 12,
+        },
+        keyBoardButtonStyles: ['style0', 'style1'],
         tuningSysNotes: {
           eqTemp: [220],
         },
@@ -57,7 +132,7 @@ describe('qwertyKeydownCB', function () {
     };
     this.argsObjPlaying = {
       e: {
-        key: 'a',
+        key: 'd' //TODO should it be a?
       },
       config: {
         playing: true,

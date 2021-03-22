@@ -18,3 +18,9 @@ _Run (in this directory):_
 
 For dev mode run `npm run start`
 For production mode run `npm run build`
+
+## Dependencies
+
+Tuning Sys Vis depends on the following libraries:
+* Freqi
+* p5 - needs to be now higher than 0.10.2 else p5 add-ons won't work

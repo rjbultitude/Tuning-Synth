@@ -1,5 +1,6 @@
-import p5 from 'p5';
-import 'p5/lib/addons/p5.sound';
+const p5 = require('p5');
+window.p5 = p5;
+require('p5/lib/addons/p5.sound');
 import freqi from 'freqi';
 import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
@@ -100,6 +101,9 @@ const sketchFn = (p5Sketch) => {
       two: fftResolution,
     },
     keyboardButtons: null,
+    keyBoardButtonStyles: [],
+    currKbdBtnID: null,
+    prevKbdBtnID: null,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,

@@ -149,6 +149,9 @@ describe('playModeCallBack', function () {
   beforeEach(function () {
     this.config = {
       playMode: '',
+      intervalsRange: {
+        lower: 0
+      }
     };
     this.playModeCrlEvent = {
       target: {
@@ -160,12 +163,17 @@ describe('playModeCallBack', function () {
         selectedIndex: 0,
       },
     };
+    this.cb = sinon.spy();
   });
   it('should set config playMode to selected value', function () {
-    audioControls.playModeCallBack(this.playModeCrlEvent, this.config);
+    audioControls.playModeCallBack(this.playModeCrlEvent, this.config, () => {});
     expect(this.config.playMode).to.equal(
       this.playModeCrlEvent.target.options[0].value
     );
+  });
+  it('should call the callback', function () {
+    audioControls.playModeCallBack(this.playModeCrlEvent, this.config, this.cb);
+    expect(this.cb).to.have.been.called;
   });
 });
 

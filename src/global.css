@@ -464,11 +464,11 @@ p {
 }
 
 .keyboard__button {
+  background-color: #212121;
   border-top: rgba(0, 0, 0, 1) solid 1px;
   border-bottom: rgba(0, 0, 0, 1) solid 1px;
   border-left: rgba(0, 0, 0, 1) solid 1px;
   border-right: 0 none;
-  background-color: white;
   color: white;
   width: 4%;
   height: 80px;

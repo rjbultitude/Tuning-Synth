@@ -49,5 +49,4 @@ export const QWERTY = [
   'v',
   'b',
   'n',
-  'm',
 ];
