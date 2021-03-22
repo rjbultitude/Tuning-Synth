@@ -32,6 +32,7 @@ import {
   createKeyboard,
   highlightOctaves,
 } from './keyboard/on-screen-keyboard';
+import { initMIDIAccess } from './keyboard/midi-keyboard';
 import { getDOMEls } from './utils/dom-els';
 import {
   getInitialSelectVal,
@@ -149,6 +150,7 @@ const sketchFn = (p5Sketch) => {
     const keyboard = createKeyboard(config, p5Sketch);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
+    initMIDIAccess(config);
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
     updateBody(config.playing, STATUS_STOPPED);
