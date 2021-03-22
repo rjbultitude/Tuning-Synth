@@ -7,25 +7,26 @@ import * as audioControls from './audio-controllers.js';
 import * as freqiCtrls from './freqi-controls';
 import { SINE } from '../utils/constants';
 
-describe('createTuningSystems', function() {
-  beforeEach(function() {
+describe('createTuningSystems', function () {
+  beforeEach(function () {
     this.config = {
       tuningSystems: null,
       tuningSysNotes: {
-        'eqTemp': []
+        eqTemp: [],
       },
       freqiTuningSysMeta: {
-        'eqTemp': {
-          shortName: 'Equal Temperament'
-        }
-      }
-    }
+        eqTemp: {
+          shortName: 'Equal Temperament',
+        },
+      },
+    };
   });
-  afterEach(function() {
+  afterEach(function () {
     this.config = {};
   });
   it('should add a Map to config', function () {
-    const tuningSys = audioControls.createTuningSystems(this.config).tuningSystems;
+    const tuningSys = audioControls.createTuningSystems(this.config)
+      .tuningSystems;
     expect(tuningSys instanceof Map).to.be.true;
   });
 });
@@ -39,7 +40,7 @@ describe('changeWave', function () {
         setType: function (waveType) {
           return waveType;
         },
-        amp: function(volume) {
+        amp: function (volume) {
           return volume;
         },
         started: true,
@@ -50,12 +51,14 @@ describe('changeWave', function () {
     this.setTypeSpy = sinon.spy(this.config.osc, 'setType');
     this.ampSpy = sinon.spy(this.config.osc, 'amp');
   });
-  afterEach(function() {
+  afterEach(function () {
     this.setTypeSpy.restore();
     this.ampSpy.restore();
   });
   it('should return the first argument', function () {
-    expect(audioControls.changeWave('sawtooth', this.config)).to.equal('sawtooth');
+    expect(audioControls.changeWave('sawtooth', this.config)).to.equal(
+      'sawtooth'
+    );
   });
   it('should call the setType method', function () {
     audioControls.changeWave('sawtooth', this.config);
@@ -83,25 +86,29 @@ describe('togglePlay', function () {
         stop: function () {},
       },
     };
-    this.updateAudioOutput = () => {};
     this.startSpy = sinon.spy(this.configStopped.osc, 'start');
     this.stopSpy = sinon.spy(this.configPlaying.osc, 'stop');
+    this.fn = () => {};
   });
   this.afterEach(function () {
     sinon.restore();
   });
   it('should set playing to false if playing is true', function () {
-    expect(audioControls.togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput }).playing).to.be.false;
+    expect(
+      audioControls.togglePlay(this.configPlaying, this.fn).playing
+    ).to.be.false;
   });
   it('should set playing to true if playing is false', function () {
-    expect(audioControls.togglePlay({ config: this.configStopped, updateAudioOutput: this.updateAudioOutput }).playing).to.be.true;
+    expect(
+      audioControls.togglePlay(this.configStopped, this.fn).playing
+    ).to.be.true;
   });
   it('should call play method if playing is false', function () {
-    audioControls.togglePlay({config: this.configStopped, updateAudioOutput: this.updateAudioOutput });
+    audioControls.togglePlay(this.configStopped, this.fn);
     expect(this.startSpy).calledOnce;
   });
   it('should call stop method if playing is true', function () {
-    audioControls.togglePlay({ config: this.configPlaying, updateAudioOutput: this.updateAudioOutput });
+    audioControls.togglePlay(this.configPlaying, this.fn);
     expect(this.stopSpy).calledOnce;
   });
 });
@@ -116,7 +123,7 @@ describe('setupPlayModeControls', function () {
         return this;
       };
       this.options = {
-        one: 'oneShot'
+        one: 'oneShot',
       };
     };
     this.playModeControl = new this.DomNode();
@@ -130,28 +137,35 @@ describe('setupPlayModeControls', function () {
     expect(this.addEventSpy).calledOnce;
   });
   it('should return the arg playModeControl', function () {
-    const playModeCtrl = audioControls.setupPlayModeControls(this.config, this.playModeControl);
+    const playModeCtrl = audioControls.setupPlayModeControls(
+      this.config,
+      this.playModeControl
+    );
     expect(playModeCtrl).to.equal(this.playModeControl);
   });
 });
 
-describe('playModeCallBack', function() {
-  beforeEach(function() {
+describe('playModeCallBack', function () {
+  beforeEach(function () {
     this.config = {
-      playMode: ''
+      playMode: '',
     };
     this.playModeCrlEvent = {
       target: {
-        options: [{
-          value: 'oneShot'
-        }],
+        options: [
+          {
+            value: 'oneShot',
+          },
+        ],
         selectedIndex: 0,
-      }
-    }
+      },
+    };
   });
   it('should set config playMode to selected value', function () {
     audioControls.playModeCallBack(this.playModeCrlEvent, this.config);
-    expect(this.config.playMode).to.equal(this.playModeCrlEvent.target.options[0].value);
+    expect(this.config.playMode).to.equal(
+      this.playModeCrlEvent.target.options[0].value
+    );
   });
 });
 
@@ -176,8 +190,8 @@ describe('setupWaveControls', function () {
   });
 });
 
-describe('waveControlHandler', function() {
-  beforeEach(function() {
+describe('waveControlHandler', function () {
+  beforeEach(function () {
     this.config = {
       osc: {
         amp: () => {},
@@ -187,13 +201,17 @@ describe('waveControlHandler', function() {
     };
     this.waveControlEvent = {
       target: {
-        value: SINE
-      }
+        value: SINE,
+      },
     };
     this.changeWaveSpy = sinon.spy(audioControls, 'changeWave');
   });
-  it('should call changeWave', function() {
-    audioControls.waveControlHandler(this.waveControlEvent, this.config, this.changeWaveSpy);
+  it('should call changeWave', function () {
+    audioControls.waveControlHandler(
+      this.waveControlEvent,
+      this.config,
+      this.changeWaveSpy
+    );
     expect(this.changeWaveSpy).calledOnce;
   });
 });
@@ -213,14 +231,14 @@ describe('setupPitchControls', function () {
   });
 });
 
-describe('pitchCrlCallBack', function() {
-  beforeEach(function() {
+describe('pitchCrlCallBack', function () {
+  beforeEach(function () {
     this.config = {
       startFreq: null,
       currentFreq: 0,
       intervalsRange: {
         lower: 1,
-        upper: 2
+        upper: 2,
       },
       tuningSysNotes: {
         eqTemp: [200],
@@ -229,28 +247,37 @@ describe('pitchCrlCallBack', function() {
       selectedInterval: 0,
       osc: {
         started: false,
-        freq: () => {}
-      }
+        freq: () => {},
+      },
     };
     this.pitchCrlEvent = {
       target: {
-        value: '400'
-      }
+        value: '400',
+      },
     };
     this.pitchCrlEventNumber = {
       target: {
-        value: 400
-      }
+        value: 400,
+      },
     };
     this.fn = () => {};
-    this.setOscFreqToTuningSysSpy = sinon.spy(freqiCtrls, 'setOscFreqToTuningSys');
+    this.setOscFreqToTuningSysSpy = sinon.spy(
+      freqiCtrls,
+      'setOscFreqToTuningSys'
+    );
   });
-  afterEach(function() {
+  afterEach(function () {
     this.setOscFreqToTuningSysSpy.restore();
   });
   it('should set config startFreq to selected value', function () {
-    audioControls.pitchCrlCallBack(this.pitchCrlEventNumber, this.config, this.fn);
-    expect(this.config.startFreq).to.equal(this.pitchCrlEventNumber.target.value);
+    audioControls.pitchCrlCallBack(
+      this.pitchCrlEventNumber,
+      this.config,
+      this.fn
+    );
+    expect(this.config.startFreq).to.equal(
+      this.pitchCrlEventNumber.target.value
+    );
   });
   it('should set config startFreq to a number when el value is a string', function () {
     audioControls.pitchCrlCallBack(this.pitchCrlEvent, this.config, this.fn);

@@ -30,20 +30,24 @@ export function updateUI(value, el, unit = '') {
   return el;
 }
 
-export function updateAudioOutput(config) {
+export function updateAudioOutput(
+  config,
+  _updateUI = updateUI,
+  _updateBody = updateBody
+) {
   const { freqTextNode, statusTextNode } = getDOMEls();
   if (config.playing === false) {
-    utils.updateUI('', freqTextNode);
-    utils.updateUI('Stopped', statusTextNode);
+    _updateUI('', freqTextNode);
+    _updateUI('Stopped', statusTextNode);
     if (config.playMode === SUSTAIN) {
       updateBody(config.playing, STATUS_STOPPED);
     }
   } else {
-    utils.updateUI(config.currentFreq, freqTextNode, FREQ_UNIT);
-    utils.updateUI('Playing', statusTextNode);
-    utils.updateBody(config.playing);
+    _updateUI(config.currentFreq, freqTextNode, FREQ_UNIT);
+    _updateUI('Playing', statusTextNode);
+    _updateBody(config.playing);
     if (config.playMode === SUSTAIN) {
-      utils.updateBody(config.playing, STATUS_STOPPED);
+      _updateBody(config.playing, STATUS_STOPPED);
     }
   }
 }
@@ -76,6 +80,7 @@ export function getGridLinesPosArr(config) {
   return gridLinesPosArr;
 }
 
+// TODO remove this
 export const utils = {
   getFormInputVal,
   updateBody,

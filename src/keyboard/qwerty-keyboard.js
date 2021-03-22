@@ -7,7 +7,7 @@ export function isEsc(key) {
   }
 }
 
-export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
+export function qwertyKeydownCB({ e, config }) {
   if (config.playing && config.playMode === ONESHOT) {
     return false;
   }
@@ -16,27 +16,26 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
     playAndShowNote({
       config,
       index: currentKeyindex,
-      updateAudioOutput,
     });
     return true;
   }
 }
 
-export function qwertyKeyupCB({ e, config, updateAudioOutput }) {
+export function qwertyKeyupCB({ e, config }) {
   if ((QWERTY.includes(e.key) && config.playMode === ONESHOT) || isEsc(e.key)) {
-    stopAndHideNote({ config, updateAudioOutput });
+    stopAndHideNote(config);
   }
 }
 
-export function setQwertyEvents(config, updateAudioOutput) {
+export function setQwertyEvents(config) {
   document.addEventListener(
     'keydown',
     (e) => {
-      qwertyKeydownCB({ e, config, updateAudioOutput });
+      qwertyKeydownCB({ e, config });
     },
     false
   );
   document.addEventListener('keyup', (e) => {
-    qwertyKeyupCB({ e, config, updateAudioOutput });
+    qwertyKeyupCB({ e, config });
   });
 }

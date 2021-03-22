@@ -34,7 +34,6 @@ import {
 } from './keyboard/on-screen-keyboard';
 import { getDOMEls } from './utils/dom-els';
 import {
-  updateAudioOutput,
   getInitialSelectVal,
   updateBody,
   updateUI,
@@ -128,13 +127,13 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay({ config, p5Sketch, updateAudioOutput });
+      togglePlay(config);
     });
     createIdleStateArr(config);
     setupWaveControls(config, waveControl);
     setupPlayModeControls(config, playModeControl);
     // Pitch / Root note / start freq
-    setupPitchControls(config, pitchControl, updateAudioOutput);
+    setupPitchControls(config, pitchControl);
     // UI, Grain size
     setUpGrainControl(config, grainControl, grainTextNode);
     updateUI(grainSizeVal, grainTextNode);
@@ -144,10 +143,10 @@ const sketchFn = (p5Sketch) => {
     // Tuning System controls. Dynamic creation
     createTuningSysNotes(config);
     createTuningSystems(config);
-    writeFreqiControls(config, updateAudioOutput);
+    writeFreqiControls(config);
     // Keyboard. Dynamic creation
-    setQwertyEvents(config, updateAudioOutput);
-    const keyboard = createKeyboard(config, p5Sketch, updateAudioOutput);
+    setQwertyEvents(config);
+    const keyboard = createKeyboard(config, p5Sketch);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });

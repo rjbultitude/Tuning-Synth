@@ -1,4 +1,4 @@
-import { getDefaultIntervals } from '../utils/utils';
+import { getDefaultIntervals, updateAudioOutput } from '../utils/utils';
 import { ONESHOT, THEME_RGB } from '../utils/constants';
 
 export function playCurrentNote({ config, freq }) {
@@ -26,21 +26,25 @@ export function highlightOctaves({ config, KEYBOARD_OCT_STYLE }) {
   });
 }
 
-export function stopAndHideNote({ config, updateAudioOutput }) {
+export function stopAndHideNote(
+  config,
+  _updateAudioOutput = updateAudioOutput
+) {
   config.playing = false;
-  updateAudioOutput(config);
+  _updateAudioOutput(config);
   stopCurrentNote(config);
 }
 
 export function playAndShowNote(
-  { config, index, updateAudioOutput },
-  _playCurrentNote = playCurrentNote
+  { config, index },
+  _playCurrentNote = playCurrentNote,
+  _updateAudioOutput = updateAudioOutput
 ) {
   const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
   config.playing = true;
   config.currentFreq = currFreq;
   config.selectedInterval = index;
-  updateAudioOutput(config);
+  _updateAudioOutput(config);
   _playCurrentNote({ config, freq: currFreq });
   return config;
 }
@@ -75,16 +79,11 @@ export function setBtnAttrs({ keyButton, num }) {
   return keyButton;
 }
 
-export function addBtnListeners({
-  keyButton,
-  config,
-  index,
-  updateAudioOutput,
-}) {
+export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'mousedown',
     () => {
-      playAndShowNote({ config, index, updateAudioOutput, playCurrentNote });
+      playAndShowNote({ config, index });
     },
     false
   );
@@ -92,7 +91,7 @@ export function addBtnListeners({
     'mouseup',
     () => {
       if (config.playMode === ONESHOT) {
-        stopAndHideNote({ config, updateAudioOutput });
+        stopAndHideNote({ config });
       }
     },
     false
@@ -102,14 +101,12 @@ export function addBtnListeners({
     (e) => {
       if (e.key === 'Enter') {
         if (config.playing) {
-          stopAndHideNote(config, updateAudioOutput);
+          stopAndHideNote(config);
           return;
         }
         playAndShowNote({
           config,
           index,
-          updateAudioOutput,
-          playCurrentNote,
         });
       }
     },
@@ -121,8 +118,6 @@ export function addBtnListeners({
       playAndShowNote({
         config,
         index,
-        updateAudioOutput,
-        playCurrentNote,
       });
     },
     false
@@ -130,7 +125,7 @@ export function addBtnListeners({
   keyButton.addEventListener(
     'touchend',
     () => {
-      stopAndHideNote({ config, updateAudioOutput });
+      stopAndHideNote({ config });
     },
     false
   );
@@ -145,12 +140,11 @@ export function createEachKbdBn({
   keyButton,
   defaultIntervals,
   p5Sketch,
-  updateAudioOutput,
 }) {
   const btnColour = getBtnColour(index, defaultIntervals, p5Sketch);
   keyButton.style.cssText = `background-color: rgba(${btnColour.r},${btnColour.g},${btnColour.b}`;
   setBtnAttrs({ keyButton, num });
-  addBtnListeners({ keyButton, config, index, updateAudioOutput });
+  addBtnListeners({ keyButton, config, index });
   keyboardWrapper.appendChild(keyButton);
 }
 
@@ -158,8 +152,7 @@ export function createKeyboardButtons(
   config,
   keyboardWrapper,
   defaultIntervals,
-  p5Sketch,
-  updateAudioOutput
+  p5Sketch
 ) {
   defaultIntervals.forEach((num, index) => {
     const keyButton = document.createElement('button');
@@ -171,23 +164,16 @@ export function createKeyboardButtons(
       keyButton,
       defaultIntervals,
       p5Sketch,
-      updateAudioOutput,
     });
   });
   return keyboardWrapper;
 }
 
-export function createKeyboard(config, p5Sketch, updateAudioOutput) {
+export function createKeyboard(config, p5Sketch) {
   const keyboardWrapper = document.createElement('section');
   keyboardWrapper.setAttribute('class', 'keyboard');
   keyboardWrapper.setAttribute('tabindex', '0');
   const defaultIntervals = getDefaultIntervals(config);
-  createKeyboardButtons(
-    config,
-    keyboardWrapper,
-    defaultIntervals,
-    p5Sketch,
-    updateAudioOutput
-  );
+  createKeyboardButtons(config, keyboardWrapper, defaultIntervals, p5Sketch);
   return keyboardWrapper;
 }
