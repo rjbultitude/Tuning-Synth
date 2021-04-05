@@ -45,8 +45,6 @@ export function getIndexFromKeyID(numNegativeKeys, keyID) {
 }
 
 export function setDefaultBtnStyle(keyBoardButtonStyles, keyID, keyIndex) {
-  console.log('keyID', keyID);
-  console.log('keyIndex', keyIndex);
   const elID = getElIDFromIndex(keyID);
   const kbdBtn = document.getElementById(elID);
   const keyStyle = keyBoardButtonStyles[keyIndex];
