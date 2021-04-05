@@ -31,6 +31,9 @@ export function qwertyKeydownCB({ e, config }) {
 export function qwertyKeyupCB({ e, config }, _stopPlayback = stopPlayback) {
   const currentKeyindex = QWERTY.indexOf(e.key);
   if (isEsc(e.key)) {
+    // TODO DRY
+    // Only is playing
+    _stopPlayback(config);
     const keyIndex = getIndexFromKeyID(
       config.intervalsRange.lower,
       config.currKbdBtnID
@@ -40,7 +43,6 @@ export function qwertyKeyupCB({ e, config }, _stopPlayback = stopPlayback) {
       config.currKbdBtnID,
       keyIndex
     );
-    _stopPlayback(config);
     return;
   }
   if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {

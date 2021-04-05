@@ -5,7 +5,6 @@ import freqi from 'freqi';
 import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
 import {
-  togglePlay,
   setupPlayModeControls,
   setupWaveControls,
   createTuningSystems,
@@ -34,6 +33,7 @@ import {
   getIndexFromKeyID,
   highlightOctaves,
   setDefaultBtnStyle,
+  stopPlayback,
 } from './keyboard/on-screen-keyboard';
 import { initMIDIAccess } from './keyboard/midi-keyboard';
 import { getDOMEls } from './utils/dom-els';
@@ -136,7 +136,9 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay(config);
+      // TODO DRY
+      // Only is playing
+      stopPlayback(config);
       const keyIndex = getIndexFromKeyID(
         config.intervalsRange.lower,
         config.currKbdBtnID

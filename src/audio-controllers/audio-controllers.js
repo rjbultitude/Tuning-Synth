@@ -49,6 +49,8 @@ export function playModeCallBack(
 ) {
   const playModeVal = e.target.options[e.target.selectedIndex].value;
   config.playMode = playModeVal;
+  // TODO DRY
+  // Only is playing
   _stopPlayback(config);
   const keyIndex = getIndexFromKeyID(
     config.intervalsRange.lower,

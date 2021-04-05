@@ -49,6 +49,7 @@ export function setDefaultBtnStyle(keyBoardButtonStyles, keyID, keyIndex) {
   const kbdBtn = document.getElementById(elID);
   const keyStyle = keyBoardButtonStyles[keyIndex];
   kbdBtn.style.backgroundColor = keyStyle;
+  kbdBtn.style.color = 'white';
   return kbdBtn;
 }
 
@@ -56,6 +57,7 @@ export function setBtnHighlightStyle(keyID) {
   const elID = getElIDFromIndex(keyID);
   const kbdBtn = document.getElementById(elID);
   kbdBtn.style.backgroundColor = 'white';
+  kbdBtn.style.color = 'black';
   return kbdBtn;
 }
 
