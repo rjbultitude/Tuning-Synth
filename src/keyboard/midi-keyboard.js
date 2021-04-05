@@ -1,7 +1,7 @@
 import { MIDI_NOTE_MIDDLE_C } from '../utils/constants';
 import {
   playAndShowNote,
-  stopAndHideNote,
+  stopPlayback,
   highlightNote,
 } from '../keyboard/on-screen-keyboard';
 
@@ -26,7 +26,7 @@ export function getMIDIMessage(message, config) {
         highlightNote(config, thisNote);
       } else {
         // noteOff(note);
-        stopAndHideNote(config);
+        stopPlayback(config);
         highlightNote(config, thisNote, true);
       }
       break;

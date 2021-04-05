@@ -259,7 +259,7 @@ describe('highlightOctaves', function() {
   });
 });
 
-describe('stopAndHideNote', function () {
+describe('stopPlayback', function () {
   beforeEach(function () {
     this.config = {
       playing: true,
@@ -272,11 +272,11 @@ describe('stopAndHideNote', function () {
   });
   it('should call cb', function () {
     const spy = sinon.spy();
-    onScreenKB.stopAndHideNote(this.config, spy);
+    onScreenKB.stopPlayback(this.config, spy);
     expect(spy).to.have.been.called;
   });
   it('should set config playing to false', function () {
-    onScreenKB.stopAndHideNote(this.config, this.fn);
+    onScreenKB.stopPlayback(this.config, this.fn);
     expect(this.config.playing).to.be.false;
   });
 });
@@ -386,16 +386,16 @@ describe('onScreenKbdBtnKeyDown', function() {
     this.event = {
       key: 'Enter'
     };
-    this.stopAndHideNote = sinon.spy();
+    this.stopPlayback = sinon.spy();
     this.playAndShowNote = sinon.spy();
   });
   it('should call playAndShowNote if key is Enter and playing is false', function() {
-    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.configFalse, this.stopAndHideNote, this.playAndShowNote);
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.configFalse, this.stopPlayback, this.playAndShowNote);
     expect(this.playAndShowNote).to.have.been.called;
   });
-  it('should call stopAndHideNote if key is Enter and playing is true', function() {
-    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.config, this.stopAndHideNote, this.playAndShowNote);
-    expect(this.stopAndHideNote).to.have.been.called;
+  it('should call stopPlayback if key is Enter and playing is true', function() {
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.config, this.stopPlayback, this.playAndShowNote);
+    expect(this.stopPlayback).to.have.been.called;
   });
 });
 

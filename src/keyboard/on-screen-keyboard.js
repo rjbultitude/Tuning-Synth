@@ -44,10 +44,12 @@ export function getIndexFromKeyID(numNegativeKeys, keyID) {
   return keyID + Math.abs(numNegativeKeys);
 }
 
-export function setDefaultBtnStyle(config, keyID, keyIndex) {
+export function setDefaultBtnStyle(keyBoardButtonStyles, keyID, keyIndex) {
+  console.log('keyID', keyID);
+  console.log('keyIndex', keyIndex);
   const elID = getElIDFromIndex(keyID);
   const kbdBtn = document.getElementById(elID);
-  const keyStyle = config.keyBoardButtonStyles[keyIndex];
+  const keyStyle = keyBoardButtonStyles[keyIndex];
   kbdBtn.style.backgroundColor = keyStyle;
   return kbdBtn;
 }
@@ -67,7 +69,11 @@ export function highlightCurrKeyCB({
 }) {
   // Handle One Shot mode
   if (noteOff) {
-    const kbdBtn = setDefaultBtnStyle(config, currKeyID, currentKeyindex);
+    const kbdBtn = setDefaultBtnStyle(
+      config.keyBoardButtonStyles,
+      currKeyID,
+      currentKeyindex
+    );
     return kbdBtn;
   }
   const kbdBtnHighlighted = setBtnHighlightStyle(currKeyID);
@@ -94,7 +100,11 @@ export function unhighlightPrevKeyCB(config) {
     config.intervalsRange.lower,
     prevKeyIndex
   );
-  const prevKbdBtnEl = setDefaultBtnStyle(config, prevKeyID, prevKeyIndex);
+  const prevKbdBtnEl = setDefaultBtnStyle(
+    config.keyBoardButtonStyles,
+    prevKeyID,
+    prevKeyIndex
+  );
   return prevKbdBtnEl;
 }
 
@@ -124,10 +134,7 @@ export function highlightNote(
   }
 }
 
-export function stopAndHideNote(
-  config,
-  _updateAudioOutput = updateAudioOutput
-) {
+export function stopPlayback(config, _updateAudioOutput = updateAudioOutput) {
   config.playing = false;
   _updateAudioOutput(config);
   stopCurrentNote(config);
@@ -181,12 +188,12 @@ export function onScreenKbdBtnKeyDown(
   e,
   index,
   config,
-  _stopAndHideNote = stopAndHideNote,
+  _stopPlayback = stopPlayback,
   _playAndShowNote = playAndShowNote
 ) {
   if (e.key === 'Enter') {
     if (config.playing) {
-      _stopAndHideNote(config, updateAudioOutput);
+      _stopPlayback(config, updateAudioOutput);
       return;
     }
     _playAndShowNote({
@@ -210,7 +217,7 @@ export function addBtnListeners({ keyButton, config, index }) {
     'mouseup',
     () => {
       if (config.playMode === ONESHOT) {
-        stopAndHideNote({ config });
+        stopPlayback({ config });
       }
     },
     false
@@ -235,7 +242,7 @@ export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'touchend',
     () => {
-      stopAndHideNote({ config });
+      stopPlayback({ config });
     },
     false
   );
