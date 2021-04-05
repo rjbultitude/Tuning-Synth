@@ -40,6 +40,7 @@ import { getDOMEls } from './utils/dom-els';
 import {
   getInitialSelectVal,
   updateBody,
+  updateInstructions,
   updateUI,
   getFormInputVal,
   getGridLinesPosArr,
@@ -106,6 +107,7 @@ const sketchFn = (p5Sketch) => {
     keyBoardButtonStyles: [],
     currKbdBtnID: null,
     prevKbdBtnID: null,
+    MIDINotSupported: false,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,
@@ -166,6 +168,7 @@ const sketchFn = (p5Sketch) => {
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
     initMIDIAccess(config);
+    updateInstructions(config);
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
     updateBody(config.playing, STATUS_STOPPED);

@@ -1,8 +1,16 @@
 import { getDOMEls } from './dom-els';
 import { FREQ_UNIT, STATUS_STOPPED, SUSTAIN } from './constants';
+import { config } from 'chai';
 
 export function getFormInputVal(formEl) {
   return formEl.value;
+}
+
+export function updateInstructions(config) {
+  const midiText = document.getElementById('midiText');
+  if (config.MIDINotSupported) {
+    midiText.style.display = 'none';
+  }
 }
 
 export function updateBody(playing, className) {
