@@ -331,6 +331,29 @@ describe('playAndShowNote', function () {
   });
 });
 
+describe('stopAndResetKbd', function() {
+  before(function() {
+    this.config = {
+      playing: true,
+      intervalsRange: {
+        lower: -12
+      },
+      currKbdBtnID: 0,
+      keyBoardButtonStyles: ['style1', 'style2']
+    }
+  });
+  it('should call stopPlayback callback if config playing is true', function() {
+    const spy = sinon.spy();
+    onScreenKB.stopAndResetKbd(this.config, spy, () => {});
+    expect(spy).to.have.been.called;
+  });
+  it('should call setDefaultBtnStyle callback if config playing is true', function() {
+    const spy = sinon.spy();
+    onScreenKB.stopAndResetKbd(this.config, () => {}, spy);
+    expect(spy).to.have.been.called;
+  });
+});
+
 describe('getBtnColour', function () {
   beforeEach(function () {
     this.index = 1;

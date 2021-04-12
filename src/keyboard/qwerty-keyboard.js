@@ -1,10 +1,9 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
+import { stopAndResetKbd } from '../utils/utils';
 import {
   playAndShowNote,
   stopPlayback,
   highlightNote,
-  setDefaultBtnStyle,
-  getIndexFromKeyID,
 } from './on-screen-keyboard';
 
 export function isEsc(key) {
@@ -28,21 +27,14 @@ export function qwertyKeydownCB({ e, config }) {
   }
 }
 
-export function qwertyKeyupCB({ e, config }, _stopPlayback = stopPlayback) {
+export function qwertyKeyupCB(
+  { e, config },
+  _stopAndResetKbd = stopAndResetKbd,
+  _stopPlayback = stopPlayback
+) {
   const currentKeyindex = QWERTY.indexOf(e.key);
   if (isEsc(e.key)) {
-    // TODO DRY
-    // Only is playing
-    _stopPlayback(config);
-    const keyIndex = getIndexFromKeyID(
-      config.intervalsRange.lower,
-      config.currKbdBtnID
-    );
-    setDefaultBtnStyle(
-      config.keyBoardButtonStyles,
-      config.currKbdBtnID,
-      keyIndex
-    );
+    _stopAndResetKbd(config);
     return;
   }
   if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {

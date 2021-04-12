@@ -30,10 +30,8 @@ import {
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import {
   createKeyboard,
-  getIndexFromKeyID,
   highlightOctaves,
-  setDefaultBtnStyle,
-  stopPlayback,
+  stopAndResetKbd,
 } from './keyboard/on-screen-keyboard';
 import { initMIDIAccess } from './keyboard/midi-keyboard';
 import { getDOMEls } from './utils/dom-els';
@@ -136,18 +134,7 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      // TODO DRY
-      // Only is playing
-      stopPlayback(config);
-      const keyIndex = getIndexFromKeyID(
-        config.intervalsRange.lower,
-        config.currKbdBtnID
-      );
-      setDefaultBtnStyle(
-        config.keyBoardButtonStyles,
-        config.currKbdBtnID,
-        keyIndex
-      );
+      stopAndResetKbd(config);
     });
     createIdleStateArr(config);
     setupWaveControls(config, waveControl);

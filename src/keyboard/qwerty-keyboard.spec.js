@@ -81,14 +81,14 @@ describe('qwertyKeyupCB', function() {
   after(function() {
     document.body.innerHTML = '';
   });
-  it('should call getIndexFromKeyID if key is Esc key', function() {
-    const spy = sinon.spy(onScreenKbd, 'getIndexFromKeyID');
-    qwertyKbd.qwertyKeyupCB(this.args, () => {});
+  it('should call stopAndResetKbd if key is Esc key', function() {
+    const spy = sinon.spy();
+    qwertyKbd.qwertyKeyupCB(this.args, spy, () => {});
     expect(spy).to.have.been.called;
   });
   it('should call highlightNote when key is in QWERTY array', function() {
     const spy = sinon.spy(onScreenKbd, 'highlightNote');
-    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {});
+    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {}, () => {});
     expect(spy).to.have.been.called;
   });
 })

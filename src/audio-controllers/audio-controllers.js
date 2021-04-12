@@ -1,12 +1,7 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
 import { WAVE_TYPE_VOLS } from '../utils/constants';
 import { updateAudioOutput } from '../utils/utils';
-import {
-  stopPlayback,
-  unhighlightPrevKeyCB,
-  getIndexFromKeyID,
-  setDefaultBtnStyle,
-} from '../keyboard/on-screen-keyboard';
+import { stopAndResetKbd } from '../keyboard/on-screen-keyboard';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -44,23 +39,11 @@ export function togglePlay(config, _updateAudioOutput = updateAudioOutput) {
 export function playModeCallBack(
   e,
   config,
-  _setDefaultBtnStyle = setDefaultBtnStyle,
-  _stopPlayback = stopPlayback
+  _stopAndResetKbd = stopAndResetKbd
 ) {
   const playModeVal = e.target.options[e.target.selectedIndex].value;
   config.playMode = playModeVal;
-  // TODO DRY
-  // Only is playing
-  _stopPlayback(config);
-  const keyIndex = getIndexFromKeyID(
-    config.intervalsRange.lower,
-    config.currKbdBtnID
-  );
-  _setDefaultBtnStyle(
-    config.keyBoardButtonStyles,
-    config.currKbdBtnID,
-    keyIndex
-  );
+  _stopAndResetKbd(config);
   return config;
 }
 

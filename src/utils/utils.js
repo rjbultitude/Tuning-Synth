@@ -1,6 +1,5 @@
 import { getDOMEls } from './dom-els';
 import { FREQ_UNIT, STATUS_STOPPED, SUSTAIN } from './constants';
-import { config } from 'chai';
 
 export function getFormInputVal(formEl) {
   return formEl.value;

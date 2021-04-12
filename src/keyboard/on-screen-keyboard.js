@@ -154,6 +154,25 @@ export function playAndShowNote(
   return config;
 }
 
+export function stopAndResetKbd(
+  config,
+  _stopPlayback = stopPlayback,
+  _setDefaultBtnStyle = setDefaultBtnStyle
+) {
+  if (config.playing) {
+    _stopPlayback(config);
+    const keyIndex = getIndexFromKeyID(
+      config.intervalsRange.lower,
+      config.currKbdBtnID
+    );
+    _setDefaultBtnStyle(
+      config.keyBoardButtonStyles,
+      config.currKbdBtnID,
+      keyIndex
+    );
+  }
+}
+
 export function getBtnColour(index, defaultIntervals, p5Sketch) {
   const r = p5Sketch.map(
     index,
