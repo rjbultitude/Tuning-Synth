@@ -7,29 +7,28 @@ chai.use(sinonChai);
 import * as qwertyKbd from './qwerty-keyboard';
 import * as onScreenKbd from './on-screen-keyboard';
 
-describe('isEsc', function() {
-  it('should return true if key arg is "Escape"', function() {
+describe('isEsc', function () {
+  it('should return true if key arg is "Escape"', function () {
     expect(qwertyKbd.isEsc('Escape')).to.be.true;
   });
-  it('should return true if key arg is "Esc"', function() {
+  it('should return true if key arg is "Esc"', function () {
     expect(qwertyKbd.isEsc('Esc')).to.be.true;
   });
-  it('should return true if key arg is 27', function() {
+  it('should return true if key arg is 27', function () {
     expect(qwertyKbd.isEsc(27)).to.be.true;
   });
 });
 
-describe('setQwertyEvents', function() {
-  beforeEach(function() {
-    this.config = {
-    };
+describe('setQwertyEvents', function () {
+  beforeEach(function () {
+    this.config = {};
     this.cb = () => {};
     this.eventListenerSpy = sinon.spy(document, 'addEventListener');
   });
-  afterEach(function() {
+  afterEach(function () {
     this.eventListenerSpy.restore();
   });
-  it('should call addEventListener', function() {
+  it('should call addEventListener', function () {
     qwertyKbd.setQwertyEvents();
     expect(this.eventListenerSpy).called;
   });
@@ -82,14 +81,14 @@ describe('qwertyKeyupCB', function() {
   after(function() {
     document.body.innerHTML = '';
   });
-  it('should call getIndexFromKeyID if key is Esc key', function() {
-    const spy = sinon.spy(onScreenKbd, 'getIndexFromKeyID');
-    qwertyKbd.qwertyKeyupCB(this.args);
+  it('should call stopAndResetKbd if key is Esc key', function() {
+    const spy = sinon.spy();
+    qwertyKbd.qwertyKeyupCB(this.args, spy, () => {});
     expect(spy).to.have.been.called;
   });
   it('should call highlightNote when key is in QWERTY array', function() {
     const spy = sinon.spy(onScreenKbd, 'highlightNote');
-    qwertyKbd.qwertyKeyupCB(this.argsQWERTY);
+    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {}, () => {});
     expect(spy).to.have.been.called;
   });
 })
@@ -120,45 +119,46 @@ describe('qwertyKeydownCB', function() {
         },
         keyBoardButtonStyles: ['style0', 'style1'],
         tuningSysNotes: {
-          'eqTemp': [220]
+          eqTemp: [220],
         },
         selectedTuningSys: 'eqTemp',
         currentFreq: 440,
         selectedInterval: 0,
         osc: {
           freq: (freq) => {},
-          start: (start) => {}
-        }
+          start: (start) => {},
+        },
       },
-      updateAudioOutput: () => {}
     };
     this.argsObjPlaying = {
       e: {
-        key: 'd'
+        key: 'd' //TODO should it be a?
       },
       config: {
         playing: true,
-        playMode: ONESHOT
+        playMode: ONESHOT,
       },
-      updateAudioOutput: () => {}
     };
     this.playAndShowNoteStub = sinon.stub(onScreenKbd, 'playAndShowNote');
   });
-  afterEach(function() {
+  afterEach(function () {
     this.playAndShowNoteStub.restore();
   });
-  it('should return false if config playing is true and playMode is oneshot', function() {
+  it('should return false if config playing is true and playMode is oneshot', function () {
     expect(qwertyKbd.qwertyKeydownCB(this.argsObjPlaying)).to.be.false;
   });
-  it('should return true if playAndShowNote if playing is false and QWERTY includes e.key', function() {
-    const result = qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying, this.playAndShowNoteStub);
+  it('should return true if playAndShowNote if playing is false and QWERTY includes e.key', function () {
+    const result = qwertyKbd.qwertyKeydownCB(
+      this.argsObjNotPlaying,
+      this.playAndShowNoteStub
+    );
     expect(result).to.be.true;
   });
-  it('should call playAndShowNote if playing is false and QWERTY includes e.key', function() {
+  it('should call playAndShowNote if playing is false and QWERTY includes e.key', function () {
     qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying);
     expect(this.playAndShowNoteStub).called;
   });
-  it('should call playCurrentNoteSpy', function() {
+  it('should call playCurrentNoteSpy', function () {
     qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying);
     expect(this.playAndShowNoteStub).called;
   });

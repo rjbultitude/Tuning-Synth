@@ -1,11 +1,9 @@
 import { expect } from 'chai';
 
-import {
-  createTuningSysNotes,
-} from './freqi-freqs';
+import { createTuningSysNotes } from './freqi-freqs';
 
-describe('createTuningSysNotes', function() {
-  beforeEach(function() {
+describe('createTuningSysNotes', function () {
+  beforeEach(function () {
     this.config = {
       startFreq: 1,
       intervals: [0],
@@ -13,10 +11,12 @@ describe('createTuningSysNotes', function() {
         lower: -2,
         upper: 2,
       },
-      freqiModes: ['eqTemp']
+      freqiModes: ['eqTemp'],
     };
   });
-  it('should create an object with one key', function() {
-    expect(Object.keys(createTuningSysNotes(this.config).tuningSysNotes)).to.have.length(1);
+  it('should create an object with one key', function () {
+    expect(
+      Object.keys(createTuningSysNotes(this.config).tuningSysNotes)
+    ).to.have.length(1);
   });
 });

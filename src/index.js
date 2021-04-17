@@ -5,7 +5,6 @@ import freqi from 'freqi';
 import { writeFreqiControls } from './audio-controllers/freqi-controls';
 import './global.css';
 import {
-  togglePlay,
   setupPlayModeControls,
   setupWaveControls,
   createTuningSystems,
@@ -32,12 +31,14 @@ import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import {
   createKeyboard,
   highlightOctaves,
+  stopAndResetKbd,
 } from './keyboard/on-screen-keyboard';
+import { initMIDIAccess } from './keyboard/midi-keyboard';
 import { getDOMEls } from './utils/dom-els';
 import {
-  updateAudioOutput,
   getInitialSelectVal,
   updateBody,
+  updateInstructions,
   updateUI,
   getFormInputVal,
   getGridLinesPosArr,
@@ -104,6 +105,7 @@ const sketchFn = (p5Sketch) => {
     keyBoardButtonStyles: [],
     currKbdBtnID: null,
     prevKbdBtnID: null,
+    MIDINotSupported: false,
     tuningSystems: null,
     freqiTuningSysMeta: freqi.tuningSystemsData,
     freqiModes: freqi.freqiModes,
@@ -132,13 +134,13 @@ const sketchFn = (p5Sketch) => {
     );
     cnv.parent('wrapper');
     cnv.mouseClicked(function () {
-      togglePlay({ config, p5Sketch, updateAudioOutput });
+      stopAndResetKbd(config);
     });
     createIdleStateArr(config);
     setupWaveControls(config, waveControl);
     setupPlayModeControls(config, playModeControl);
     // Pitch / Root note / start freq
-    setupPitchControls(config, pitchControl, updateAudioOutput);
+    setupPitchControls(config, pitchControl);
     // UI, Grain size
     setUpGrainControl(config, grainControl, grainTextNode);
     updateUI(grainSizeVal, grainTextNode);
@@ -148,12 +150,14 @@ const sketchFn = (p5Sketch) => {
     // Tuning System controls. Dynamic creation
     createTuningSysNotes(config);
     createTuningSystems(config);
-    writeFreqiControls(config, updateAudioOutput);
+    writeFreqiControls(config);
     // Keyboard. Dynamic creation
-    setQwertyEvents(config, updateAudioOutput);
+    setQwertyEvents(config);
     const keyboard = createKeyboard(config, p5Sketch);
     pageWrapper.insertBefore(keyboard, visualControls);
     config.keyboardButtons = document.querySelectorAll('.keyboard__button');
+    initMIDIAccess(config);
+    updateInstructions(config);
     highlightOctaves({ config, KEYBOARD_OCT_STYLE });
     // Global status
     updateBody(config.playing, STATUS_STOPPED);

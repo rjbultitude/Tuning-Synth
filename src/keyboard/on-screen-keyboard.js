@@ -44,11 +44,12 @@ export function getIndexFromKeyID(numNegativeKeys, keyID) {
   return keyID + Math.abs(numNegativeKeys);
 }
 
-export function setDefaultBtnStyle(config, keyID, keyIndex) {
+export function setDefaultBtnStyle(keyBoardButtonStyles, keyID, keyIndex) {
   const elID = getElIDFromIndex(keyID);
   const kbdBtn = document.getElementById(elID);
-  const keyStyle = config.keyBoardButtonStyles[keyIndex];
+  const keyStyle = keyBoardButtonStyles[keyIndex];
   kbdBtn.style.backgroundColor = keyStyle;
+  kbdBtn.style.color = 'white';
   return kbdBtn;
 }
 
@@ -56,6 +57,7 @@ export function setBtnHighlightStyle(keyID) {
   const elID = getElIDFromIndex(keyID);
   const kbdBtn = document.getElementById(elID);
   kbdBtn.style.backgroundColor = 'white';
+  kbdBtn.style.color = 'black';
   return kbdBtn;
 }
 
@@ -67,7 +69,11 @@ export function highlightCurrKeyCB({
 }) {
   // Handle One Shot mode
   if (noteOff) {
-    const kbdBtn = setDefaultBtnStyle(config, currKeyID, currentKeyindex);
+    const kbdBtn = setDefaultBtnStyle(
+      config.keyBoardButtonStyles,
+      currKeyID,
+      currentKeyindex
+    );
     return kbdBtn;
   }
   const kbdBtnHighlighted = setBtnHighlightStyle(currKeyID);
@@ -84,7 +90,6 @@ export function getElIDFromIndex(index) {
 
 export function unhighlightPrevKeyCB(config) {
   if (config.currKbdBtnID === null) {
-    console.log('currKbdBtnID is null / firstTime call');
     return undefined;
   }
   const prevKeyIndex = getIndexFromKeyID(
@@ -95,7 +100,11 @@ export function unhighlightPrevKeyCB(config) {
     config.intervalsRange.lower,
     prevKeyIndex
   );
-  const prevKbdBtnEl = setDefaultBtnStyle(config, prevKeyID, prevKeyIndex);
+  const prevKbdBtnEl = setDefaultBtnStyle(
+    config.keyBoardButtonStyles,
+    prevKeyID,
+    prevKeyIndex
+  );
   return prevKbdBtnEl;
 }
 
@@ -125,23 +134,43 @@ export function highlightNote(
   }
 }
 
-export function stopAndHideNote({ config, updateAudioOutput }) {
+export function stopPlayback(config, _updateAudioOutput = updateAudioOutput) {
   config.playing = false;
-  updateAudioOutput(config);
+  _updateAudioOutput(config);
   stopCurrentNote(config);
 }
 
 export function playAndShowNote(
-  { config, index, updateAudioOutput },
-  _playCurrentNote = playCurrentNote
+  { config, index },
+  _playCurrentNote = playCurrentNote,
+  _updateAudioOutput = updateAudioOutput
 ) {
   const currFreq = config.tuningSysNotes[config.selectedTuningSys][index];
   config.playing = true;
   config.currentFreq = currFreq;
   config.selectedInterval = index;
-  updateAudioOutput(config);
+  _updateAudioOutput(config);
   _playCurrentNote({ config, freq: currFreq });
   return config;
+}
+
+export function stopAndResetKbd(
+  config,
+  _stopPlayback = stopPlayback,
+  _setDefaultBtnStyle = setDefaultBtnStyle
+) {
+  if (config.playing) {
+    _stopPlayback(config);
+    const keyIndex = getIndexFromKeyID(
+      config.intervalsRange.lower,
+      config.currKbdBtnID
+    );
+    _setDefaultBtnStyle(
+      config.keyBoardButtonStyles,
+      config.currKbdBtnID,
+      keyIndex
+    );
+  }
 }
 
 export function getBtnColour(index, defaultIntervals, p5Sketch) {
@@ -178,12 +207,12 @@ export function onScreenKbdBtnKeyDown(
   e,
   index,
   config,
-  _stopAndHideNote = stopAndHideNote,
+  _stopPlayback = stopPlayback,
   _playAndShowNote = playAndShowNote
 ) {
   if (e.key === 'Enter') {
     if (config.playing) {
-      _stopAndHideNote(config, updateAudioOutput);
+      _stopPlayback(config, updateAudioOutput);
       return;
     }
     _playAndShowNote({
@@ -195,16 +224,11 @@ export function onScreenKbdBtnKeyDown(
   }
 }
 
-export function addBtnListeners({
-  keyButton,
-  config,
-  index,
-  updateAudioOutput,
-}) {
+export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'mousedown',
     () => {
-      playAndShowNote({ config, index, updateAudioOutput, playCurrentNote });
+      playAndShowNote({ config, index });
     },
     false
   );
@@ -212,7 +236,7 @@ export function addBtnListeners({
     'mouseup',
     () => {
       if (config.playMode === ONESHOT) {
-        stopAndHideNote({ config, updateAudioOutput });
+        stopPlayback({ config });
       }
     },
     false
@@ -230,8 +254,6 @@ export function addBtnListeners({
       playAndShowNote({
         config,
         index,
-        updateAudioOutput,
-        playCurrentNote,
       });
     },
     false
@@ -239,7 +261,7 @@ export function addBtnListeners({
   keyButton.addEventListener(
     'touchend',
     () => {
-      stopAndHideNote({ config, updateAudioOutput });
+      stopPlayback({ config });
     },
     false
   );
@@ -268,11 +290,10 @@ export function createEachKbdBn({
   keyButton,
   defaultIntervals,
   p5Sketch,
-  updateAudioOutput,
 }) {
   setKbdBtnStyles({ p5Sketch, config, keyButton, defaultIntervals, index });
   setBtnAttrs({ keyButton, num });
-  addBtnListeners({ keyButton, config, index, updateAudioOutput });
+  addBtnListeners({ keyButton, config, index });
   keyboardWrapper.appendChild(keyButton);
 }
 
@@ -280,8 +301,7 @@ export function createKeyboardButtons(
   config,
   keyboardWrapper,
   defaultIntervals,
-  p5Sketch,
-  updateAudioOutput
+  p5Sketch
 ) {
   defaultIntervals.forEach((num, index) => {
     const keyButton = document.createElement('button');
@@ -293,7 +313,6 @@ export function createKeyboardButtons(
       keyButton,
       defaultIntervals,
       p5Sketch,
-      updateAudioOutput,
     });
   });
   return keyboardWrapper;

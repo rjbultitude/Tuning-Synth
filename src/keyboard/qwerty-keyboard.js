@@ -1,10 +1,9 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
+import { stopAndResetKbd } from '../utils/utils';
 import {
   playAndShowNote,
-  stopAndHideNote,
+  stopPlayback,
   highlightNote,
-  setDefaultBtnStyle,
-  getIndexFromKeyID,
 } from './on-screen-keyboard';
 
 export function isEsc(key) {
@@ -13,7 +12,7 @@ export function isEsc(key) {
   }
 }
 
-export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
+export function qwertyKeydownCB({ e, config }) {
   if (config.playing && config.playMode === ONESHOT) {
     return false;
   }
@@ -22,38 +21,37 @@ export function qwertyKeydownCB({ e, config, updateAudioOutput }) {
     playAndShowNote({
       config,
       index: currentKeyindex,
-      updateAudioOutput,
     });
     highlightNote(config, currentKeyindex, false);
     return true;
   }
 }
 
-export function qwertyKeyupCB({ e, config, updateAudioOutput }) {
+export function qwertyKeyupCB(
+  { e, config },
+  _stopAndResetKbd = stopAndResetKbd,
+  _stopPlayback = stopPlayback
+) {
   const currentKeyindex = QWERTY.indexOf(e.key);
   if (isEsc(e.key)) {
-    const keyIndex = getIndexFromKeyID(
-      config.intervalsRange.lower,
-      config.currKbdBtnID
-    );
-    setDefaultBtnStyle(config, config.currKbdBtnID, keyIndex);
-    stopAndHideNote({ config, updateAudioOutput });
+    _stopAndResetKbd(config);
+    return;
   }
   if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {
     highlightNote(config, currentKeyindex, true);
-    stopAndHideNote({ config, updateAudioOutput });
+    _stopPlayback(config);
   }
 }
 
-export function setQwertyEvents(config, updateAudioOutput) {
+export function setQwertyEvents(config) {
   document.addEventListener(
     'keydown',
     (e) => {
-      qwertyKeydownCB({ e, config, updateAudioOutput });
+      qwertyKeydownCB({ e, config });
     },
     false
   );
   document.addEventListener('keyup', (e) => {
-    qwertyKeyupCB({ e, config, updateAudioOutput });
+    qwertyKeyupCB({ e, config });
   });
 }

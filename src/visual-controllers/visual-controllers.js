@@ -1,5 +1,9 @@
 import { updateUI } from '../utils/utils';
-import { THEME_RGB, SHAPES } from '../utils/constants';
+import {
+  THEME_RGB,
+  SHAPES,
+  IDLE_STATE_ARR_DENOMINATOR,
+} from '../utils/constants';
 
 export function shapeControlCB(event, config) {
   config.shape = event.target.value;
@@ -35,7 +39,7 @@ export function setUpGrainControl(config, grainControl, grainTextNode) {
 }
 
 export function createIdleStateArr(config) {
-  const numItems = config.numFreqBands / 8;
+  const numItems = config.numFreqBands / IDLE_STATE_ARR_DENOMINATOR;
   let count = 0;
   for (let i = 0; i < numItems; i++) {
     config.idleStateArr.push(count);

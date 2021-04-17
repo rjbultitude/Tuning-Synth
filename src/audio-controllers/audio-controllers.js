@@ -1,6 +1,7 @@
 import { setOscFreqToTuningSys } from './freqi-controls';
 import { WAVE_TYPE_VOLS } from '../utils/constants';
-import { unhighlightPrevKeyCB } from '../keyboard/on-screen-keyboard';
+import { updateAudioOutput } from '../utils/utils';
+import { stopAndResetKbd } from '../keyboard/on-screen-keyboard';
 
 export function createTuningSystems(config) {
   const tuningSystems = new Map();
@@ -22,29 +23,27 @@ export function changeWave(waveTypeStr, config) {
   return waveTypeStr;
 }
 
-export function togglePlay({ config, updateAudioOutput }) {
+export function togglePlay(config, _updateAudioOutput = updateAudioOutput) {
   if (config.playing) {
     config.osc.stop();
     config.playing = false;
-    // p5Sketch.noLoop();
   } else {
     config.osc.start();
     config.playing = true;
-    // p5Sketch.loop();
   }
   // update UI
-  updateAudioOutput(config);
+  _updateAudioOutput(config);
   return config;
 }
 
 export function playModeCallBack(
   e,
   config,
-  _unhighlightPrevKeyCB = unhighlightPrevKeyCB
+  _stopAndResetKbd = stopAndResetKbd
 ) {
   const playModeVal = e.target.options[e.target.selectedIndex].value;
   config.playMode = playModeVal;
-  _unhighlightPrevKeyCB(config);
+  _stopAndResetKbd(config);
   return config;
 }
 
@@ -70,15 +69,19 @@ export function setupWaveControls(config, waveControl) {
   return waveControl;
 }
 
-export function pitchCrlCallBack(e, config, updateAudioOutput) {
+export function pitchCrlCallBack(
+  e,
+  config,
+  _updateAudioOutput = updateAudioOutput
+) {
   config.startFreq = parseInt(e.target.value);
   // read state and update Osc
-  setOscFreqToTuningSys(config, updateAudioOutput);
+  setOscFreqToTuningSys(config, _updateAudioOutput);
   return config;
 }
 
-export function setupPitchControls(config, pitchControl, updateAudioOutput) {
+export function setupPitchControls(config, pitchControl) {
   pitchControl.addEventListener('change', (e) => {
-    pitchCrlCallBack(e, config, updateAudioOutput);
+    pitchCrlCallBack(e, config);
   });
 }

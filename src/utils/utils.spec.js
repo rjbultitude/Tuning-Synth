@@ -4,14 +4,14 @@ import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
 import { SUSTAIN } from './constants';
-import { utils } from './utils';
+import * as utils from './utils';
 import { SINE, SAWTOOTH } from './constants';
 
-describe('getFormInputVal', function() {
-  it('should return value prop of el passed in', function() {
+describe('getFormInputVal', function () {
+  it('should return value prop of el passed in', function () {
     const el = {
-      value: 'test'
-    }
+      value: 'test',
+    };
     expect(utils.getFormInputVal(el)).to.equal('test');
   });
 });
@@ -29,7 +29,7 @@ describe('updateUI', function () {
   beforeEach(function () {
     this.el = {
       innerText: '',
-    }
+    };
   });
   afterEach(function () {
     this.el = null;
@@ -53,19 +53,24 @@ describe('updateUI', function () {
   });
 });
 
-describe('updateAudioOutput', function() {
-  beforeEach(function() {
+describe('updateAudioOutput', function () {
+  beforeEach(function () {
     this.config = {
       playing: false,
-      playMode: SUSTAIN
+      playMode: SUSTAIN,
     };
     this.el = {
       innerText: '',
     };
-    this.updateUISpy = sinon.stub(utils, 'updateUI');
+    this.updateUISpy = sinon.spy();
+    this.updateBodySpy = sinon.spy();
   });
-  it('should call updateUI when playing is false', function() {
-    utils.updateAudioOutput(this.config);
+  it('should call updateUI when playing is false', function () {
+    utils.updateAudioOutput(this.config, this.updateUISpy, this.updateBodySpy);
+    expect(this.updateUISpy).to.have.been.called;
+  });
+  it('should call updateUI when playing is false', function () {
+    utils.updateAudioOutput(this.config, this.updateUISpy, this.updateBodySpy);
     expect(this.updateUISpy).to.have.been.called;
   });
 });
@@ -90,7 +95,7 @@ describe('getDefaultIntervals', function () {
 describe('getInitialSelectVal', function () {
   this.beforeEach(function () {
     this.el = {
-      value: SAWTOOTH
+      value: SAWTOOTH,
     };
   });
   it('should return "sine" when default argument is "sine" but no el is passed', function () {
@@ -101,21 +106,21 @@ describe('getInitialSelectVal', function () {
   });
 });
 
-describe('getGridLinesPosArr', function() {
-  beforeEach(function() {
+describe('getGridLinesPosArr', function () {
+  beforeEach(function () {
     this.config = {
       gridResolution: 10,
       displaySize: {
-        width: 100
-      }
-    }
+        width: 100,
+      },
+    };
   });
-  it('should return an array', function() {
+  it('should return an array', function () {
     const result = utils.getGridLinesPosArr(this.config);
     expect(Array.isArray(result)).to.be.true;
   });
-  it('should return array of length gridResolution', function() {
+  it('should return array of length gridResolution', function () {
     const result = utils.getGridLinesPosArr(this.config);
-    expect((result.length)).to.equal(this.config.gridResolution);
+    expect(result.length).to.equal(this.config.gridResolution);
   });
 });
