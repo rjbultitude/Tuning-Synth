@@ -36,6 +36,57 @@ describe('MIDIKeyInRange', function () {
   it('should return true if note is greater than 0 but less than 20', function () {
     expect(midiKbd.MIDIKeyInRange(this.config, 10)).to.be.true;
   });
+  it('should return false if note is less than zero', function () {
+    expect(midiKbd.MIDIKeyInRange(this.config, -2)).to.be.false;
+  });
+  it('should return false if note is larger than highest note', function () {
+    expect(midiKbd.MIDIKeyInRange(this.config, 22)).to.be.false;
+  });
+});
+
+describe('getVelocity', function() {
+  before(function() {
+    this.message = {
+      data: [0, 1, 100]
+    };
+    this.messageNoVel = {
+      data: [0, 1]
+    }
+  });
+  it('should return third item of data array (velocity) if it\'s length is greater than 2', function() {
+    expect(midiKbd.getVelocity(this.message)).to.equal(100);
+  });
+  it('should return velocity if message data length is less than 2', function() {
+    expect(midiKbd.getVelocity(this.messageNoVel)).to.equal(0);
+  });
+});
+
+describe('getMIDIMessage', function() {
+  before(function() {
+    this.message = {
+      data: [144, 60, 100]
+    };
+    this.messageNoteOff = {
+      data: [128, 60, 100]
+    };
+    this.config = {
+      playMode: 'oneShot',
+      intervalsRange: {
+        lower: -10,
+        upper: 10
+      }
+    };
+    this.noteOnSpy = sinon.spy();
+    this.noteOffSpy = sinon.spy();
+  });
+  it('should call playAndShow if command (1st item in data array) is 144', function() {
+    midiKbd.getMIDIMessage(this.message, this.config, this.noteOnSpy, () => {});
+    expect(this.noteOnSpy).to.have.been.called;
+  });
+  it('should call stopPlayback if command (1st item in data array) is 128', function() {
+    midiKbd.getMIDIMessage(this.messageNoteOff, this.config, () => {}, this.noteOffSpy);
+    expect(this.noteOffSpy).to.have.been.called;
+  });
 });
 
 describe('onMIDISuccess', function() {
@@ -60,16 +111,24 @@ describe('onMIDISuccess', function() {
 });
 
 describe('initMIDIAccess', function() {
-  before(function() {
+  beforeEach(function() {
     global.navigator = {
       requestMIDIAccess: () => new Promise((resolve, reject) => { return true })
     };
     this.config = {
       MIDINotSupported: false,
-    }
+    };
   });
-  it('should set config.midisupported to false', function() {
-    console.log('global.navigator', global.navigator);
+  afterEach(function() {
+    global.navigator = {
+      requestMIDIAccess: undefined
+    };
+  });
+  it('should set config.midisupported to false if requestMIDIAccess is truthy', function() {
     expect(midiKbd.initMIDIAccess(this.config).MIDINotSupported).to.be.false;
+  });
+  it('should set config.midisupported to true if requestMIDIAccess is falsy', function() {
+    global.navigator.requestMIDIAccess = null;
+    expect(midiKbd.initMIDIAccess(this.config).MIDINotSupported).to.be.true;
   });
 });

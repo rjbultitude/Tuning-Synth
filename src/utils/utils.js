@@ -10,6 +10,7 @@ export function updateInstructions(config) {
   if (config.MIDINotSupported) {
     midiText.style.display = 'none';
   }
+  return midiText;
 }
 
 export function updateBody(playing, className) {

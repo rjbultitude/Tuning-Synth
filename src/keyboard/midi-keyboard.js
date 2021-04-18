@@ -1,9 +1,4 @@
 import { MIDI_NOTE_MIDDLE_C, ONESHOT } from '../utils/constants';
-import {
-  playAndShowNote,
-  stopPlayback,
-  highlightNote,
-} from '../keyboard/on-screen-keyboard';
 
 export function offsetMIDIRange(config, note) {
   return Math.abs(config.intervalsRange.lower) + note - MIDI_NOTE_MIDDLE_C;
@@ -21,28 +16,31 @@ export function MIDIKeyInRange(config, note) {
   return true;
 }
 
-export function getMIDIMessage(message, config) {
+export function getVelocity(message) {
+  // a velocity value might not be included with a noteOff command
+  return message.data.length > 2 ? message.data[2] : 0;
+}
+
+export function getMIDIMessage(
+  message,
+  config,
+  _noteOn = noteOn,
+  _noteOff = noteOff
+) {
   const command = message.data[0];
   const note = message.data[1];
-  const velocity = message.data.length > 2 ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+  const velocity = getVelocity(message);
   const thisNote = offsetMIDIRange(config, note);
 
   switch (command) {
     case 144: // noteOn
-      // TODO make sure notes are in range
       if (velocity > 0 && MIDIKeyInRange(config, thisNote)) {
-        playAndShowNote({
-          config,
-          index: thisNote,
-        });
-        highlightNote(config, thisNote, false);
+        _noteOn(config, thisNote);
       }
       break;
     case 128: // noteOff
-      // TODO make sure notes are in range
       if (MIDIKeyInRange(config, thisNote) && config.playMode === ONESHOT) {
-        highlightNote(config, thisNote, true);
-        stopPlayback(config);
+        _noteOff(config, thisNote);
       }
       break;
   }

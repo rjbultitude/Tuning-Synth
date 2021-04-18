@@ -1,10 +1,7 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
 import { stopAndResetKbd } from '../utils/utils';
-import {
-  playAndShowNote,
-  stopPlayback,
-  highlightNote,
-} from './on-screen-keyboard';
+import { stopPlayback } from './on-screen-keyboard';
+import { noteOn, noteOff } from './keyboard-utils';
 
 export function isEsc(key) {
   if (key === 'Escape' || key === 'Esc' || key === 27) {
@@ -12,17 +9,13 @@ export function isEsc(key) {
   }
 }
 
-export function qwertyKeydownCB({ e, config }) {
+export function qwertyKeydownCB({ e, config }, _noteOn = noteOn) {
   if (config.playing && config.playMode === ONESHOT) {
     return false;
   }
   if (QWERTY.includes(e.key)) {
     const currentKeyindex = QWERTY.indexOf(e.key);
-    playAndShowNote({
-      config,
-      index: currentKeyindex,
-    });
-    highlightNote(config, currentKeyindex, false);
+    _noteOn(config, currentKeyindex);
     return true;
   }
 }
@@ -30,7 +23,7 @@ export function qwertyKeydownCB({ e, config }) {
 export function qwertyKeyupCB(
   { e, config },
   _stopAndResetKbd = stopAndResetKbd,
-  _stopPlayback = stopPlayback
+  _noteOff = noteOff
 ) {
   const currentKeyindex = QWERTY.indexOf(e.key);
   if (isEsc(e.key)) {
@@ -38,8 +31,7 @@ export function qwertyKeyupCB(
     return;
   }
   if (QWERTY.includes(e.key) && config.playMode === ONESHOT) {
-    highlightNote(config, currentKeyindex, true);
-    _stopPlayback(config);
+    _noteOff(config, currentKeyindex);
   }
 }
 

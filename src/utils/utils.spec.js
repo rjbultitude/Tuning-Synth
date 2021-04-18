@@ -16,6 +16,20 @@ describe('getFormInputVal', function () {
   });
 });
 
+describe('updateInstructions', function() {
+  before(function() {
+    this.config = {
+      MIDINotSupported: true
+    };
+    const midiText = document.createElement('div');
+    midiText.setAttribute('id', 'midiText');
+    document.body.insertAdjacentElement('afterbegin', midiText);
+  });
+  it('should set miditext to display none if midi not supported', function() {
+    expect(utils.updateInstructions(this.config).style.display).to.equal('none');
+  });
+});
+
 describe('updateBody', function () {
   it('returns empty string when playing arg is truthy ', function () {
     expect(utils.updateBody(true, 'test')).to.equal('');

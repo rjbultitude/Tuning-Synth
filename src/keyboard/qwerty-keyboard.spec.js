@@ -62,21 +62,13 @@ describe('qwertyKeyupCB', function() {
           stop: () => {}
         }
       },
-      updateAudioOutput: () => {}
     };
     this.argsQWERTY = {
       e: {
         key: 'q'
       },
       config: this.config,
-      updateAudioOutput: () => {}
     };
-    const btnOne = document.createElement('button');
-    const btnTwo = document.createElement('button');
-    btnOne.setAttribute('id', 'key_0');
-    btnTwo.setAttribute('id', 'key_1');
-    document.body.insertAdjacentElement('afterbegin', btnOne);
-    document.body.insertAdjacentElement('afterbegin', btnTwo);
   });
   after(function() {
     document.body.innerHTML = '';
@@ -86,25 +78,14 @@ describe('qwertyKeyupCB', function() {
     qwertyKbd.qwertyKeyupCB(this.args, spy, () => {});
     expect(spy).to.have.been.called;
   });
-  it('should call highlightNote when key is in QWERTY array', function() {
-    const spy = sinon.spy(onScreenKbd, 'highlightNote');
-    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {}, () => {});
+  it('should call noteOff when key is in QWERTY array', function() {
+    const spy = sinon.spy();
+    qwertyKbd.qwertyKeyupCB(this.argsQWERTY, () => {}, spy);
     expect(spy).to.have.been.called;
   });
 })
 
 describe('qwertyKeydownCB', function() {
-  before(function() {
-    const btnOne = document.createElement('button');
-    const btnTwo = document.createElement('button');
-    btnOne.setAttribute('id', 'key_-12');
-    btnTwo.setAttribute('id', 'key_-11');
-    document.body.insertAdjacentElement('afterbegin', btnOne);
-    document.body.insertAdjacentElement('afterbegin', btnTwo);
-  });
-  after(function() {
-    document.body.innerHTML = '';
-  });
   beforeEach(function() {
     this.argsObjNotPlaying = {
       e: {
@@ -117,17 +98,6 @@ describe('qwertyKeydownCB', function() {
           lower: -12,
           upper: 12,
         },
-        keyBoardButtonStyles: ['style0', 'style1'],
-        tuningSysNotes: {
-          eqTemp: [220],
-        },
-        selectedTuningSys: 'eqTemp',
-        currentFreq: 440,
-        selectedInterval: 0,
-        osc: {
-          freq: (freq) => {},
-          start: (start) => {},
-        },
       },
     };
     this.argsObjPlaying = {
@@ -139,27 +109,16 @@ describe('qwertyKeydownCB', function() {
         playMode: ONESHOT,
       },
     };
-    this.playAndShowNoteStub = sinon.stub(onScreenKbd, 'playAndShowNote');
-  });
-  afterEach(function () {
-    this.playAndShowNoteStub.restore();
+    this.noteOnSpy = sinon.spy();
   });
   it('should return false if config playing is true and playMode is oneshot', function () {
     expect(qwertyKbd.qwertyKeydownCB(this.argsObjPlaying)).to.be.false;
   });
-  it('should return true if playAndShowNote if playing is false and QWERTY includes e.key', function () {
+  it('should call noteOnSpy if playing is false or playMode is not oneShot and QWERTY includes e.key', function () {
     const result = qwertyKbd.qwertyKeydownCB(
       this.argsObjNotPlaying,
-      this.playAndShowNoteStub
+      this.noteOnSpy
     );
-    expect(result).to.be.true;
-  });
-  it('should call playAndShowNote if playing is false and QWERTY includes e.key', function () {
-    qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying);
-    expect(this.playAndShowNoteStub).called;
-  });
-  it('should call playCurrentNoteSpy', function () {
-    qwertyKbd.qwertyKeydownCB(this.argsObjNotPlaying);
-    expect(this.playAndShowNoteStub).called;
+    expect(this.noteOnSpy).to.have.been.called;
   });
 });
