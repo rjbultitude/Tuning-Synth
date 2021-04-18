@@ -48,12 +48,17 @@ export function getMIDIMessage(message, config) {
   }
 }
 
-export function onMIDISuccess(midiAccess, config) {
+export function onMIDISuccess(
+  midiAccess,
+  config,
+  _getMIDIMessage = getMIDIMessage
+) {
   for (let input of midiAccess.inputs.values()) {
     input.onmidimessage = (message) => {
-      getMIDIMessage(message, config);
+      _getMIDIMessage(message, config);
     };
   }
+  return midiAccess;
 }
 
 export function onMIDIFailure() {
@@ -70,4 +75,5 @@ export function initMIDIAccess(config) {
     config.MIDINotSupported = true;
     console.warn('WebMIDI is not supported in this browser.');
   }
+  return config;
 }
