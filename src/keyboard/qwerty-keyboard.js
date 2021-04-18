@@ -1,6 +1,5 @@
 import { ONESHOT, QWERTY } from '../utils/constants';
-import { stopAndResetKbd } from '../utils/utils';
-import { stopPlayback } from './on-screen-keyboard';
+import { stopAndResetKbd } from './on-screen-keyboard';
 import { noteOn, noteOff } from './keyboard-utils';
 
 export function isEsc(key) {
