@@ -51,3 +51,6 @@ Desktop.ini
 /audio
 .nyc_output/
 /coverage
+/cypress/screenshots
+/cypress/videos
+/cypress/*/examples
