@@ -15,6 +15,7 @@
   --colour-red: rgba(255, 80, 50, 1);
   --axis-size: 10px;
   --article-inst-width: 18rem;
+  --article-inst-width-vw: 34vw;
 }
 
 main,
@@ -104,8 +105,8 @@ p {
   justify-content: center;
   position: absolute;
   left: -999em;
-  top: calc(50% - (var(--article-inst-width) / 2));
   text-align: center;
+  top: calc(50% - (var(--article-inst-width) / 2));
   width: var(--article-inst-width);
   height: var(--article-inst-width);
   z-index: 1;
@@ -184,6 +185,7 @@ p {
 }
 
 .visual-controls {
+  background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid #4f4f4f;
   color: white;
   padding: 0 var(--spacing);
@@ -494,6 +496,20 @@ p {
 }
 
 @media all and (max-width: 960px) {
+  .status-stopped .article--instructions {
+    left: calc(50% - (var(--article-inst-width-vw) / 2));
+  }
+
+  .article--instructions {
+    top: calc(50% - (var(--article-inst-width-vw) / 2));
+    width: var(--article-inst-width-vw);
+    height: var(--article-inst-width-vw);
+  }
+
+  .article--instructions p {
+    font-size: 3vw;
+  }
+
   .grid__controls {
     display: none;
   }
@@ -502,10 +518,6 @@ p {
 @media all and (max-width: 650px) {
   body {
     margin: 0 calc(var(--spacing) * 2);
-  }
-
-  .article--instructions p {
-    font-size: 0.75rem;
   }
 
   .audio-controls {

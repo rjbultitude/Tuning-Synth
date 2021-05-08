@@ -14,9 +14,9 @@ export const SHAPES = {
   RECT: 'rect',
 };
 export const WAVE_TYPE_VOLS = new Map();
-WAVE_TYPE_VOLS.set(SINE, 0.75);
-WAVE_TYPE_VOLS.set(SAWTOOTH, 0.08);
-WAVE_TYPE_VOLS.set(SQUARE, 0.03);
+WAVE_TYPE_VOLS.set(SINE, 0.7);
+WAVE_TYPE_VOLS.set(SAWTOOTH, 0.1);
+WAVE_TYPE_VOLS.set(SQUARE, 0.04);
 WAVE_TYPE_VOLS.set(TRIANGLE, 0.35);
 export const THEME_RGB = {
   low: 50,
