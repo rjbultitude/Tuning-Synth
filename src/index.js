@@ -12,7 +12,6 @@ import {
 } from './audio-controllers/audio-controllers';
 import {
   createIdleStateArr,
-  resetIdleStateArray,
   setupShapeControls,
   setUpGrainControl,
   drawFreqs,
@@ -92,8 +91,8 @@ const sketchFn = (p5Sketch) => {
     numFreqBands: fftResolution,
     mouseInCanvas: false,
     displaySize: {
-      width: 1920,
-      height: 1080,
+      width: 1280,
+      height: 720,
     },
     spectrum: [],
     idleStateArr: [],
