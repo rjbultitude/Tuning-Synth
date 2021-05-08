@@ -1,3 +1,4 @@
+import { noteOn, noteOff } from './keyboard-utils';
 import { MIDI_NOTE_MIDDLE_C, ONESHOT } from '../utils/constants';
 
 export function offsetMIDIRange(config, note) {
