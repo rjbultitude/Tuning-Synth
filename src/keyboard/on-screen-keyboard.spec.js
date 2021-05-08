@@ -266,6 +266,8 @@ describe('stopPlayback', function () {
         start: function () {},
         stop: function () {},
       },
+      idleStateLeft: true,
+      idleStateArr: []
     };
     this.fn = () => {};
   });
