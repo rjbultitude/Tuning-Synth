@@ -1,3 +1,4 @@
+import { setIdleState } from '../visual-controllers/visual-controllers';
 import { getDefaultIntervals, updateAudioOutput } from '../utils/utils';
 import { ONESHOT, SUSTAIN, THEME_RGB } from '../utils/constants';
 
@@ -135,12 +136,13 @@ export function highlightNote(
 }
 
 export function stopPlayback(config, _updateAudioOutput = updateAudioOutput) {
+  setIdleState(config);
   config.playing = false;
   _updateAudioOutput(config);
   stopCurrentNote(config);
 }
 
-export function playAndShowNote(
+export function startPlayback(
   { config, index },
   _playCurrentNote = playCurrentNote,
   _updateAudioOutput = updateAudioOutput
@@ -208,14 +210,14 @@ export function onScreenKbdBtnKeyDown(
   index,
   config,
   _stopPlayback = stopPlayback,
-  _playAndShowNote = playAndShowNote
+  _startPlayback = startPlayback
 ) {
   if (e.key === 'Enter') {
     if (config.playing) {
       _stopPlayback(config, updateAudioOutput);
       return;
     }
-    _playAndShowNote({
+    _startPlayback({
       config,
       index,
       updateAudioOutput,
@@ -228,7 +230,7 @@ export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'mousedown',
     () => {
-      playAndShowNote({ config, index });
+      startPlayback({ config, index });
     },
     false
   );
@@ -251,7 +253,7 @@ export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'touchstart',
     () => {
-      playAndShowNote({
+      startPlayback({
         config,
         index,
       });

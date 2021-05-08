@@ -40,15 +40,20 @@ export function setUpGrainControl(config, grainControl, grainTextNode) {
 
 export function createIdleStateArr(config) {
   const numItems = config.numFreqBands / IDLE_STATE_ARR_DENOMINATOR;
-  let count = 0;
   for (let i = 0; i < numItems; i++) {
-    config.idleStateArr.push(count);
-    count = count + 1;
+    config.idleStateArr.push(i);
   }
+  console.log('idleStateArr.length', config.idleStateArr.length);
   return config;
 }
 
 export function resetIdleStateArray(config) {
+  if (config.idleStateLeft) {
+    for (let i = config.idleStateArr.length - 1; i >= 0; i--) {
+      config.idleStateArr[i] = i;
+    }
+    return config;
+  }
   for (let i = 0; i < config.idleStateArr.length; i++) {
     config.idleStateArr[i] = i;
   }
@@ -107,26 +112,44 @@ export function getIdleStateYPos(p5Sketch, spectrum, i) {
   return p5Sketch.map(spectrum[i], 0, 800, p5Sketch.height / 2, 0);
 }
 
+export function setIdleState(config) {
+  resetIdleStateArray(config);
+  config.counter = 0;
+  config.idleStateLeft = !config.idleStateLeft;
+  return config;
+}
+
 export function updateIdleYPos(p5Sketch, config, inc, i) {
   const currentY = config.idleStateArr[i];
   const y = currentY + p5Sketch.sin(inc) * 10;
   config.idleStateArr[i] = y;
 }
 
+export function drawIdleStateItem(p5Sketch, config, i) {
+  let r = getRed(p5Sketch, config.idleStateArr, i);
+  let b = getBlue(p5Sketch, config.idleStateArr, i);
+  let x = getXPos(p5Sketch, config.idleStateArr, i);
+  let y = getIdleStateYPos(p5Sketch, config.idleStateArr, i);
+  p5Sketch.fill(r, THEME_RGB.mid, b);
+  drawShape({ p5Sketch, config, x, y });
+  // Update
+  config.idleStateInc += config.counter / 100;
+  updateIdleYPos(p5Sketch, config, config.idleStateInc, i);
+}
+
 export function drawIdleState(p5Sketch, config) {
   p5Sketch.noStroke();
-  let inc = config.radian;
-  for (let i = 0; i < config.idleStateArr.length; i++) {
-    let r = getRed(p5Sketch, config.idleStateArr, i);
-    let b = getBlue(p5Sketch, config.idleStateArr, i);
-    let x = getXPos(p5Sketch, config.idleStateArr, i);
-    let y = getIdleStateYPos(p5Sketch, config.idleStateArr, i);
-    p5Sketch.fill(r, THEME_RGB.mid, b);
-    drawShape({ p5Sketch, config, x, y });
-    // Update
-    inc += config.counter / 100;
-    updateIdleYPos(p5Sketch, config, inc, i);
+  config.idleStateInc = config.radian;
+  if (config.idleStateLeft) {
+    for (let i = 0; i < config.idleStateArr.length; i++) {
+      drawIdleStateItem(p5Sketch, config, i);
+    }
+    return config;
   }
+  for (let i = config.idleStateArr.length - 1; i >= 0; i--) {
+    drawIdleStateItem(p5Sketch, config, i);
+  }
+  return config;
 }
 
 export function drawFreqs(p5Sketch, config) {

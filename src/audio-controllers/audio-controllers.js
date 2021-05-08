@@ -23,19 +23,6 @@ export function changeWave(waveTypeStr, config) {
   return waveTypeStr;
 }
 
-export function togglePlay(config, _updateAudioOutput = updateAudioOutput) {
-  if (config.playing) {
-    config.osc.stop();
-    config.playing = false;
-  } else {
-    config.osc.start();
-    config.playing = true;
-  }
-  // update UI
-  _updateAudioOutput(config);
-  return config;
-}
-
 export function playModeCallBack(
   e,
   config,

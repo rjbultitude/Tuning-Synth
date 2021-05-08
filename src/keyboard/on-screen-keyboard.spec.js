@@ -266,6 +266,8 @@ describe('stopPlayback', function () {
         start: function () {},
         stop: function () {},
       },
+      idleStateLeft: true,
+      idleStateArr: []
     };
     this.fn = () => {};
   });
@@ -280,7 +282,7 @@ describe('stopPlayback', function () {
   });
 });
 
-describe('playAndShowNote', function () {
+describe('startPlayback', function () {
   beforeEach(function () {
     this.config = {
       osc: {
@@ -301,11 +303,11 @@ describe('playAndShowNote', function () {
     this.updateSpy = sinon.spy();
   });
   it('should set config playing to true', function () {
-    onScreenKB.playAndShowNote({ config: this.config, index: this.index }, this.fn, this.fn);
+    onScreenKB.startPlayback({ config: this.config, index: this.index }, this.fn, this.fn);
     expect(this.config.playing).to.be.true;
   });
   it('should call updateAudioOutput', function () {
-    onScreenKB.playAndShowNote({
+    onScreenKB.startPlayback({
       config: this.config,
       index: this.index,
     },
@@ -315,7 +317,7 @@ describe('playAndShowNote', function () {
     expect(this.updateSpy).to.have.been.called;
   });
   it('should set config selectedInterval to index', function () {
-    onScreenKB.playAndShowNote({
+    onScreenKB.startPlayback({
       config: this.config,
       index: this.index
     },
@@ -325,7 +327,7 @@ describe('playAndShowNote', function () {
     expect(this.config.selectedInterval).to.equal(this.index);
   });
   it('should have called playCurrentNote', function () {
-    onScreenKB.playAndShowNote({ config: this.config, index: this.index }, this.playCB, this.fn);
+    onScreenKB.startPlayback({ config: this.config, index: this.index }, this.playCB, this.fn);
     expect(this.playCB).to.have.been.called;
   });
 });
@@ -409,14 +411,14 @@ describe('onScreenKbdBtnKeyDown', function() {
       key: 'Enter'
     };
     this.stopPlayback = sinon.spy();
-    this.playAndShowNote = sinon.spy();
+    this.startPlayback = sinon.spy();
   });
-  it('should call playAndShowNote if key is Enter and playing is false', function() {
-    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.configFalse, this.stopPlayback, this.playAndShowNote);
-    expect(this.playAndShowNote).to.have.been.called;
+  it('should call startPlayback if key is Enter and playing is false', function() {
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.configFalse, this.stopPlayback, this.startPlayback);
+    expect(this.startPlayback).to.have.been.called;
   });
   it('should call stopPlayback if key is Enter and playing is true', function() {
-    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.config, this.stopPlayback, this.playAndShowNote);
+    onScreenKB.onScreenKbdBtnKeyDown(this.event, 1, this.config, this.stopPlayback, this.startPlayback);
     expect(this.stopPlayback).to.have.been.called;
   });
 });
