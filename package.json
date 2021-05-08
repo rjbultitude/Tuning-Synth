@@ -1,7 +1,7 @@
 {
   "name": "tuning-sys-vis",
   "version": "1.0.0",
-  "description": "A tuning systems visualizer",
+  "description": "A web synth and tuning systems visualizer",
   "main": "./dist/main.js",
   "scripts": {
     "start": "npm run build:devserver",

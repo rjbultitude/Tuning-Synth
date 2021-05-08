@@ -70,49 +70,6 @@ describe('changeWave', function () {
   });
 });
 
-describe('togglePlay', function () {
-  this.beforeEach(function () {
-    this.configPlaying = {
-      playing: true,
-      osc: {
-        start: function () {},
-        stop: function () {},
-      },
-    };
-    this.configStopped = {
-      playing: false,
-      osc: {
-        start: function () {},
-        stop: function () {},
-      },
-    };
-    this.startSpy = sinon.spy(this.configStopped.osc, 'start');
-    this.stopSpy = sinon.spy(this.configPlaying.osc, 'stop');
-    this.fn = () => {};
-  });
-  this.afterEach(function () {
-    sinon.restore();
-  });
-  it('should set playing to false if playing is true', function () {
-    expect(
-      audioControls.togglePlay(this.configPlaying, this.fn).playing
-    ).to.be.false;
-  });
-  it('should set playing to true if playing is false', function () {
-    expect(
-      audioControls.togglePlay(this.configStopped, this.fn).playing
-    ).to.be.true;
-  });
-  it('should call play method if playing is false', function () {
-    audioControls.togglePlay(this.configStopped, this.fn);
-    expect(this.startSpy).calledOnce;
-  });
-  it('should call stop method if playing is true', function () {
-    audioControls.togglePlay(this.configPlaying, this.fn);
-    expect(this.stopSpy).calledOnce;
-  });
-});
-
 describe('setupPlayModeControls', function () {
   this.beforeEach(function () {
     this.config = {

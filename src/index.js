@@ -97,6 +97,8 @@ const sketchFn = (p5Sketch) => {
     },
     spectrum: [],
     idleStateArr: [],
+    idleStateLeft: true,
+    idleStateInc: 0,
     sliders: {
       one: 0,
       two: fftResolution,
@@ -174,9 +176,6 @@ const sketchFn = (p5Sketch) => {
     if (config.playing) {
       setSpectrum(config);
       drawFreqs(p5Sketch, config);
-      // Reset the Idlestate
-      resetIdleStateArray(config);
-      config.counter = 0;
     } else {
       drawIdleState(p5Sketch, config);
       config.counter += 1;

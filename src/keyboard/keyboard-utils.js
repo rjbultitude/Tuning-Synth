@@ -1,5 +1,5 @@
 import {
-  playAndShowNote,
+  startPlayback,
   highlightNote,
   stopPlayback,
 } from './on-screen-keyboard';
@@ -7,10 +7,10 @@ import {
 export function noteOn(
   config,
   index,
-  _playAndShowNote = playAndShowNote,
+  _startPlayback = startPlayback,
   _highlightNote = highlightNote
 ) {
-  _playAndShowNote({
+  _startPlayback({
     config,
     index,
   });
