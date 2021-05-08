@@ -43,12 +43,10 @@ export function createIdleStateArr(config) {
   for (let i = 0; i < numItems; i++) {
     config.idleStateArr.push(i);
   }
-  console.log('config.idleStateArr', config.idleStateArr);
   return config;
 }
 
 export function resetIdleStateArray(config) {
-  console.log('config.idleStateArr', config.idleStateArr);
   if (config.idleStateLeft) {
     for (let i = config.idleStateArr.length - 1; i >= 0; i--) {
       config.idleStateArr[i] = i;

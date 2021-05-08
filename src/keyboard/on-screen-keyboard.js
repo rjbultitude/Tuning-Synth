@@ -1,6 +1,7 @@
 import { setIdleState } from '../visual-controllers/visual-controllers';
 import { getDefaultIntervals, updateAudioOutput } from '../utils/utils';
 import { ONESHOT, SUSTAIN, THEME_RGB } from '../utils/constants';
+import { noteOff, noteOn } from './keyboard-utils';
 
 export function playCurrentNote({ config, freq }) {
   config.osc.freq(freq);
@@ -230,7 +231,8 @@ export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'mousedown',
     () => {
-      startPlayback({ config, index });
+      //startPlayback({ config, index });
+      noteOn(config, index);
     },
     false
   );
@@ -238,7 +240,7 @@ export function addBtnListeners({ keyButton, config, index }) {
     'mouseup',
     () => {
       if (config.playMode === ONESHOT) {
-        stopPlayback({ config });
+        noteOff(config, index);
       }
     },
     false
@@ -253,17 +255,14 @@ export function addBtnListeners({ keyButton, config, index }) {
   keyButton.addEventListener(
     'touchstart',
     () => {
-      startPlayback({
-        config,
-        index,
-      });
+      noteOn(config, index);
     },
     false
   );
   keyButton.addEventListener(
     'touchend',
     () => {
-      stopPlayback({ config });
+      noteOff(config, index);
     },
     false
   );
