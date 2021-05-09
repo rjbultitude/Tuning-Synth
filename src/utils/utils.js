@@ -77,24 +77,3 @@ export function getInitialSelectVal(el, defaultVal) {
   }
   return defaultVal;
 }
-
-export function getGridLinesPosArr(config) {
-  const gridLinesPosArr = [];
-  for (let index = 0; index < config.gridResolution; index++) {
-    let pos = index * (config.displaySize.width / config.gridResolution);
-    gridLinesPosArr.push(pos);
-  }
-  config.gridLinesPosArr = gridLinesPosArr;
-  return gridLinesPosArr;
-}
-
-// TODO remove this
-export const utils = {
-  getFormInputVal,
-  updateBody,
-  updateUI,
-  updateAudioOutput,
-  getDefaultIntervals,
-  getInitialSelectVal,
-  getGridLinesPosArr,
-};

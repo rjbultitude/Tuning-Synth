@@ -119,22 +119,3 @@ describe('getInitialSelectVal', function () {
     expect(utils.getInitialSelectVal(this.el)).to.equal(SAWTOOTH);
   });
 });
-
-describe('getGridLinesPosArr', function () {
-  beforeEach(function () {
-    this.config = {
-      gridResolution: 10,
-      displaySize: {
-        width: 100,
-      },
-    };
-  });
-  it('should return an array', function () {
-    const result = utils.getGridLinesPosArr(this.config);
-    expect(Array.isArray(result)).to.be.true;
-  });
-  it('should return array of length gridResolution', function () {
-    const result = utils.getGridLinesPosArr(this.config);
-    expect(result.length).to.equal(this.config.gridResolution);
-  });
-});

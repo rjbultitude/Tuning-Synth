@@ -108,7 +108,7 @@ export function getYPos(p5Sketch, spectrum, i) {
 }
 
 export function getIdleStateYPos(p5Sketch, spectrum, i) {
-  return p5Sketch.map(spectrum[i], 0, 800, p5Sketch.height / 2, 0);
+  return p5Sketch.map(spectrum[i], 0, 800, p5Sketch.height / 1.8, 0);
 }
 
 export function setIdleState(config) {

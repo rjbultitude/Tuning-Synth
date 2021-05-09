@@ -21,11 +21,6 @@ import {
 } from './visual-controllers/visual-controllers';
 import { createTuningSysNotes } from './freqi-freqs/freqi-freqs';
 import { setupSpectrumZoom } from './visual-controllers/range-slider';
-import {
-  drawGrid,
-  setupGridControl,
-  setGridMediaListener,
-} from './visual-controllers/grid';
 import { setQwertyEvents } from './keyboard/qwerty-keyboard';
 import {
   createKeyboard,
@@ -40,7 +35,6 @@ import {
   updateInstructions,
   updateUI,
   getFormInputVal,
-  getGridLinesPosArr,
 } from './utils/utils';
 import {
   ONESHOT,
@@ -53,7 +47,6 @@ import {
 const {
   pageWrapper,
   visualControls,
-  gridControl,
   shapeControl,
   grainControl,
   grainTextNode,
@@ -113,9 +106,6 @@ const sketchFn = (p5Sketch) => {
     selectedTuningSys: '',
     tuningSysNotes: null,
     playMode: ONESHOT,
-    gridVisible: false,
-    gridResolution: 20,
-    gridLinesPosArr: null,
   };
 
   p5Sketch.preload = function preload() {
@@ -164,10 +154,6 @@ const sketchFn = (p5Sketch) => {
     updateBody(config.playing, STATUS_STOPPED);
     // Shape
     setupShapeControls(config, shapeControl);
-    // Grid
-    getGridLinesPosArr(config);
-    setupGridControl(config, gridControl);
-    setGridMediaListener(config, gridControl);
   };
 
   p5Sketch.draw = function draw() {
@@ -180,7 +166,6 @@ const sketchFn = (p5Sketch) => {
       config.counter += 1;
     }
     p5Sketch.stroke(255);
-    drawGrid(config, p5Sketch);
   };
 };
 
