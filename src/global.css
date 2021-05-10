@@ -28,6 +28,10 @@ button {
   box-sizing: border-box;
 }
 
+select {
+  font-size: 1rem;
+}
+
 html {
   font-size: 1em;
 }
@@ -262,11 +266,6 @@ p {
   padding: var(--spacing) 0;
 }
 
-.fieldset + .fieldset {
-  margin-top: var(--spacing);
-  padding-top: var(--spacing);
-}
-
 .audio-controls .controls__label {
   flex-basis: 30%;
 }
@@ -423,10 +422,6 @@ p {
   /* height: var(--slider-height); */
 }
 
-.duel-range-slider input[type='range'] + input[type='range'] {
-  background-color: transparent;
-}
-
 .duel-range-slider input[type='range']::-webkit-slider-thumb {
   pointer-events: all;
   position: relative;
@@ -454,10 +449,10 @@ p {
 
 .duel-range-slider input::-moz-range-track {
   position: relative;
-  height: 3px;
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 0.2);
+  /* height: 3px; */
+  /* background-color: rgba(0, 0, 0, 0.2); */
   border: 0;
+  z-index: -1;
 }
 .duel-range-slider input:last-of-type::-moz-range-track {
   -moz-appearance: none;
