@@ -4,6 +4,7 @@
   --slider-height: 20px;
   --toggle-label-width: 60px;
   --label-width: 26%;
+  --label-line-height: 1.6rem;
   --input-thumb-colour: #000;
   --spacing: 6px;
   --triple-space: calc(var(--spacing) * 3);
@@ -268,6 +269,7 @@ p {
 
 .audio-controls .controls__label {
   flex-basis: 30%;
+  line-height: var(--label-line-height);
 }
 
 .audio-controls .controls__input {
@@ -292,7 +294,7 @@ p {
   flex-basis: 25%;
   margin: 0;
   font-size: 1rem;
-  line-height: 1.6rem;
+  line-height: var(--label-line-height);
   font-weight: normal;
 }
 
@@ -301,21 +303,8 @@ p {
   flex-basis: 14%;
 }
 
-.radio-wrapper {
-  display: flex;
-  flex-direction: row-reverse;
-  padding-left: 0 6px;
-  margin: 0 auto;
-  flex-basis: 25%;
-}
-
-.radio-wrapper input,
-.radio-wrapper label {
-  position: relative;
-  left: -30%;
-}
-
 .range__input {
+  -webkit-appearance: none;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
   border: 0 none;
@@ -326,6 +315,10 @@ p {
 .range__input:focus {
   outline: 1px dotted #212121;
   outline: 5px auto -webkit-focus-ring-color;
+}
+
+.range__input::-webkit-slider-thumb {
+  background-color: white;
 }
 
 /* .range__input::-moz-range-track,
@@ -427,16 +420,6 @@ p {
   position: relative;
   z-index: 1;
   outline: 0;
-  -webkit-appearance: none;
-  width: var(--slider-height);
-  height: var(--slider-height);
-  border: none;
-  background-color: black;
-  background-image: linear-gradient(
-    to bottom,
-    lighten(var(--input-thumb-colour), 60%) 0,
-    var(--input-thumb-colour) 100%
-  );
 }
 
 .duel-range-slider input::-moz-range-thumb {
@@ -454,7 +437,7 @@ p {
   border: 0;
   z-index: -1;
 }
-.duel-range-slider input:last-of-type::-moz-range-track {
+.duel-range-slider input:last-of-type {
   -moz-appearance: none;
   background: none transparent;
   border: 0;
