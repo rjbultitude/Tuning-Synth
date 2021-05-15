@@ -201,13 +201,6 @@ p {
   z-index: 1;
 }
 
-.visual-controls .controls__select-input {
-  background-color: black;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: white;
-  flex-basis: 50%;
-}
-
 .form__heading {
   position: absolute;
   left: -999em;
@@ -257,6 +250,10 @@ p {
 .audio-controls .form__heading,
 .visual-controls .form__heading {
   flex-basis: 100%;
+}
+
+.visual-controls .controls__select-input {
+  flex-basis: 50%;
 }
 
 .audio-controls .fieldset {
@@ -318,15 +315,14 @@ p {
 }
 
 .range__input::-webkit-slider-thumb {
-  background-color: white;
+  -webkit-appearance: none;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #bdc3c7;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
-
-/* .range__input::-moz-range-track,
-.range__input::-webkit-slider-runnable-track {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-} */
 
 .range__input-wrapper .controls__select-wrapper,
 .range__input-wrapper .controls__toggle-wrapper {
@@ -412,7 +408,6 @@ p {
   position: absolute;
   left: 0;
   top: 5%;
-  /* height: var(--slider-height); */
 }
 
 .duel-range-slider input[type='range']::-webkit-slider-thumb {
@@ -423,17 +418,12 @@ p {
 }
 
 .duel-range-slider input::-moz-range-thumb {
-  border-radius: 7px;
   pointer-events: all;
   z-index: 10;
-  width: 14px;
-  height: 14px;
 }
 
 .duel-range-slider input::-moz-range-track {
   position: relative;
-  /* height: 3px; */
-  /* background-color: rgba(0, 0, 0, 0.2); */
   border: 0;
   z-index: -1;
 }
@@ -447,18 +437,18 @@ p {
 }
 
 .duel-range-slider input[type='range']::-ms-thumb {
+  -ms-appearance: none;
   pointer-events: all;
   position: relative;
   z-index: 10;
-  -ms-appearance: none;
-  width: var(--slider-height);
-  height: var(--slider-height);
   border: 0;
+  /* width: var(--slider-height);
+  height: var(--slider-height);
   background-image: linear-gradient(
     to bottom,
     lighten(var(--input-thumb-colour), 60%) 0,
     var(--input-thumb-colour) 100%
-  );
+  ); */
 }
 
 .keyboard__button {
@@ -486,6 +476,14 @@ p {
   background-color: gray;
 }
 
+@media all and (min-width: 950px) {
+  .visual-controls .controls__select-input {
+    background-color: black;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+  }
+}
+
 @media all and (max-width: 960px) {
   .status-stopped .article--instructions {
     left: calc(50% - (var(--article-inst-width-vw) / 2));
@@ -500,6 +498,23 @@ p {
   .article--instructions p {
     font-size: 3vw;
   }
+
+  .visual-controls {
+    background-color: transparent;
+    border: 0 none;
+    color: black;
+    padding: calc(var(--spacing) * 2) 0;
+    position: static;
+    width: auto;
+  }
+
+  .range__input {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .range__input::-webkit-slider-thumb {
+    background-color: var(--colour-blue);
+  }
 }
 
 @media all and (max-width: 650px) {
@@ -512,20 +527,6 @@ p {
     margin-top: 0;
   }
 
-  .visual-controls {
-    background-color: transparent;
-    border: 0 none;
-    color: black;
-    padding: calc(var(--spacing) * 2) 0;
-    position: static;
-    width: auto;
-  }
-
-  .visual-controls .controls__select-input {
-    background-color: white;
-    color: currentcolor;
-  }
-
   .audio-controls .fieldset {
     flex-basis: 100%;
   }
@@ -535,21 +536,6 @@ p {
     display: none;
   }
 
-  .keyboard__button {
-    text-indent: -999em;
-  }
-
-  .range-wrapper {
-    padding: var(--spacing) 0;
-  }
-
-  .range-wrapper .controls__label,
-  .audio-controls .controls__label {
-    flex-basis: var(--label-width);
-  }
-}
-
-@media all and (max-width: 580px) {
   .keyboard {
     display: flex;
     flex-wrap: wrap;
@@ -567,6 +553,15 @@ p {
   .keyboard__button {
     width: 8.3%;
     text-indent: 0;
+  }
+
+  .range-wrapper {
+    padding: var(--spacing) 0;
+  }
+
+  .range-wrapper .controls__label,
+  .audio-controls .controls__label {
+    flex-basis: var(--label-width);
   }
 }
 
