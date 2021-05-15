@@ -1,10 +1,10 @@
-# Tuning Sys Vis
+# Tuning Synth
 
 ## Project Introduction
 
 _Making audio visible since 2020_
 
-The purpose of this app is to visualise the frequency domain of a given sound and to show the differences between different tuning systems. 
+The purpose of this web app is to demonstrate the differences between the same intervals in various tuning systemas, both visualy and sonically. 
 
 It's also just a fun web synth that you can play to your heart's content.
 
@@ -21,6 +21,6 @@ For production mode run `npm run build`
 
 ## Dependencies
 
-Tuning Sys Vis depends on the following libraries:
+Tuning Synth depends on the following libraries:
 * Freqi
-* p5 - needs to be now higher than 0.10.2 else p5 add-ons won't work
+* p5
