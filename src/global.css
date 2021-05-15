@@ -145,10 +145,11 @@ p {
 }
 
 .video-wrapper {
-  width: 100%;
+  background-color: black;
   height: 0;
   position: relative;
   padding-bottom: 56.25%;
+  width: 100%;
 }
 
 .video-wrapper canvas {
