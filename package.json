@@ -54,7 +54,7 @@
     "pretty-quick": "^2.0.1",
     "sinon": "^9.2.4",
     "sinon-chai": "^3.5.0",
-    "stylelint": "^13.5.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-prettier": "^1.1.2",
     "webpack": "^4.42.1",
